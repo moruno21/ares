@@ -1,7 +1,11 @@
 {
-  "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+  "env": { "browser": true },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -20,16 +24,36 @@
           }
         ]
       }
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
-      "rules": {}
     }
-  ]
+  ],
+  "plugins": [
+    "@nrwl/nx",
+    "@typescript-eslint",
+    "import",
+    "jsx-a11y",
+    "prettier",
+    "react",
+    "simple-import-sort",
+    "sort"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error",
+    "camelcase": "error",
+    "default-case-last": "error",
+    "default-param-last": "error",
+    "dot-notation": "error",
+    "eqeqeq": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "no-shadow": "error",
+    "react/jsx-no-bind": "warn",
+    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort/destructuring-properties": "error",
+    "sort/object-properties": "error",
+    "sort/type-properties": "error"
+  }
 }
