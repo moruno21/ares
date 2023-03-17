@@ -43,16 +43,16 @@
   "generators": {
     "@nrwl/react": {
       "application": {
-        "style": "css",
+        "style": "styled-components",
         "linter": "eslint",
         "bundler": "vite",
         "babel": true
       },
       "component": {
-        "style": "css"
+        "style": "styled-components"
       },
       "library": {
-        "style": "css",
+        "style": "styled-components",
         "linter": "eslint"
       }
     }
