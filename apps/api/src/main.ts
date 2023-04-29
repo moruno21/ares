@@ -13,6 +13,11 @@ async function bootstrap() {
         : ['log', 'error', 'warn'],
   })
   app.setGlobalPrefix(GLOBAL_PREFIX)
+  app.enableCors({
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    origin: true,
+  })
 
   const port = process.env.PORT || 3333
   await app.listen(port)
