@@ -6,7 +6,8 @@
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "prepare": "husky install",
-    "storybook": "nx storybook ui"
+    "serve": "npx nx run-many --parallel -t serve -p web api",
+    "storybook": "npx nx storybook ui"
   },
   "private": true,
   "dependencies": {
