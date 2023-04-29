@@ -6,7 +6,7 @@
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "prepare": "husky install",
-    "serve": "npx nx run-many --parallel -t serve -p web api",
+    "serve": "npx nx run-many -t serve -p web api",
     "storybook": "npx nx storybook ui"
   },
   "private": true,
@@ -14,6 +14,7 @@
     "@nestjs/common": "9.0.0",
     "@nestjs/core": "9.0.0",
     "@nestjs/platform-express": "9.0.0",
+    "@nestjs/swagger": "6.3.0",
     "axios": "1.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
