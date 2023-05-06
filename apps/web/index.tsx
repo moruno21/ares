@@ -1,9 +1,18 @@
+import GlobalStyles from '@ares/ui/styles/global'
+import theme from '@ares/ui/styles/theme'
 import { StrictMode } from 'react'
-import * as ReactDOM from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
+import { ThemeProvider } from 'styled-components'
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-root.render(
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <GlobalStyles />
+    Hello World
+  </ThemeProvider>
+)
+
+createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <>Hello World</>
+    <App />
   </StrictMode>,
 )
