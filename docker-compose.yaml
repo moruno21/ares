@@ -41,4 +41,3 @@ volumes:
   eventstore-volume-data:
   eventstore-volume-logs:
   mongo-volume-data:
-  mongoclient-volume-data:
