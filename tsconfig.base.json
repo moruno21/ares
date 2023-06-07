@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ares/ui/*": ["libs/ui/*"]
+      "@ares/*": ["libs/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -7,12 +7,15 @@
     "strict": true,
     "types": ["vite/client", "vitest"]
   },
+  "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
+  "path": {
+    "~/*": ["./*"]
+  },
   "references": [
     {
       "path": "./tsconfig.app.json"
     }
-  ],
-  "extends": "../../tsconfig.base.json"
+  ]
 }
