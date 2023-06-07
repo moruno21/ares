@@ -8,8 +8,8 @@ import { CqrsModule } from '@nestjs/cqrs'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConsoleModule } from 'nestjs-console'
 
-import configuration from './config/configuration'
-import { LoggerMiddleware } from './middleware/logger'
+import configuration from '~/config/configuration'
+import { LoggerMiddleware } from '~/middleware/logger'
 
 @Module({
   imports: [
