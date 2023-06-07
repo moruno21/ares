@@ -7,7 +7,9 @@
     "lint": "eslint --fix .",
     "prepare": "husky install",
     "serve": "npx nx run-many -t serve -p web api",
-    "storybook": "npx nx storybook ui"
+    "storybook": "npx nx storybook ui",
+    "test": "nx test api",
+    "test:watch": "nx test api --watch"
   },
   "private": true,
   "dependencies": {
