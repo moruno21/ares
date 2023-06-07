@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
   "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
-  "path": {
-    "~/*": ["./*"]
-  },
   "references": [
     {
       "path": "./tsconfig.app.json"
