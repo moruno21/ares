@@ -10,9 +10,6 @@
     "lib": ["es2017", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
-    "paths": {
-      "@ares/*": ["libs/*"]
-    },
     "rootDir": ".",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
