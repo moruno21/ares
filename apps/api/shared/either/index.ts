@@ -1,12 +1,12 @@
-import NameType from '~/shared/name-type'
+import NamedType from '~/shared/named-type'
 
 const left = 'left'
 
-type Left<Value> = NameType<{ value: Value }, typeof left>
+type Left<Value> = NamedType<{ value: Value }, typeof left>
 
 const right = 'right'
 
-type Right<Value> = NameType<{ value: Value }, typeof right>
+type Right<Value> = NamedType<{ value: Value }, typeof right>
 
 type Either<L, R> = Left<L> | Right<R>
 

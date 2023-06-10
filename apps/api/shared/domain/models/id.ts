@@ -1,10 +1,10 @@
 import Either from '~/shared/either'
-import NameType from '~/shared/name-type'
+import NamedType from '~/shared/named-type'
 
 import InvalidId from '../exceptions/invalid-id'
 import ValueObject from './value-object'
 
-type Id<Type extends number | string = number | string> = NameType<
+type Id<Type extends number | string = number | string> = NamedType<
   ValueObject<Type>,
   'Id'
 >

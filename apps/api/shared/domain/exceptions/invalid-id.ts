@@ -1,4 +1,4 @@
-import NameType from '~/shared/name-type'
+import NamedType from '~/shared/named-type'
 
 import Exception from '../models/exception'
 
@@ -6,7 +6,7 @@ const __name__ = 'InvalidId'
 
 type Code = 'blank'
 
-type InvalidId = NameType<Exception<Code>, typeof __name__>
+type InvalidId = NamedType<Exception<Code>, typeof __name__>
 
 const InvalidId = {
   cause: (reason: { code: Code; message: string }): InvalidId => ({
