@@ -14,21 +14,16 @@ services:
       - '1113:1113'
       - '2113:2113'
     volumes:
-      - type: volume
-        source: eventstore-volume-data
-        target: /var/lib/eventstore
-      - type: volume
-        source: eventstore-volume-logs
-        target: /var/log/eventstore
+      - eventstore-volume-data:/var/lib/eventstore
+      - eventstore-volume-logs:/var/log/eventstore
 
   mongo:
     image: mongo:latest
     ports:
       - 27017:27017
     volumes:
-      - type: volume
-        source: mongo-volume-data
-        target: /data/db
+      - mongo-config:/data/configdb
+      - mongo-data:/data/db
 
   mongo-express:
     depends_on:
@@ -36,8 +31,10 @@ services:
     image: mongo-express:latest
     ports:
       - 8081:8081
+    restart: unless-stopped
 
 volumes:
   eventstore-volume-data:
   eventstore-volume-logs:
-  mongo-volume-data:
+  mongo-config:
+  mongo-data:
