@@ -1,31 +1,35 @@
-import {
-  EVENTSTORE_KEYSTORE_CONNECTION,
-  EventStoreModule,
-} from '@aulasoftwarelibre/nestjs-eventstore'
+import { EventStoreDBClient } from '@eventstore/db-client'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { CqrsModule } from '@nestjs/cqrs'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConsoleModule } from 'nestjs-console'
 
-import configuration from '~/config/configuration'
 import { LoggerMiddleware } from '~/middleware/logger'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: [
+        `.env.${process.env.NODE_ENV}.local`,
+        `.env.${process.env.NODE_ENV}`,
+        '.env.local',
+        '.env',
+      ],
       isGlobal: true,
-      load: [configuration],
     }),
     CqrsModule,
     ConsoleModule,
-    EventStoreModule.forRoot({
-      connection: process.env.EVENTSTORE_URL || '',
+    MongooseModule.forRootAsync({
+      useFactory: () => ({ uri: process.env.MONGODB_URI }),
     }),
-    MongooseModule.forRoot(process.env.DATABASE_URL || '', {}),
-    MongooseModule.forRoot(process.env.KEYSTORE_URI || '', {
-      connectionName: EVENTSTORE_KEYSTORE_CONNECTION,
-    }),
+  ],
+  providers: [
+    {
+      provide: EventStoreDBClient,
+      useFactory: () =>
+        EventStoreDBClient.connectionString(process.env.EVENTSTOREDB_URI),
+    },
   ],
 })
 export class AppModule implements NestModule {

@@ -13,8 +13,7 @@
   },
   "private": true,
   "dependencies": {
-    "@akanass/nestjsx-crypto": "4.0.0",
-    "@aulasoftwarelibre/nestjs-eventstore": "^0.7.0",
+    "@eventstore/db-client": "5.0.1",
     "@nestjs/common": "9.0.0",
     "@nestjs/config": "2.3.1",
     "@nestjs/core": "9.0.0",
