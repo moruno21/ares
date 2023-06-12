@@ -12,6 +12,7 @@ class ExerciseCreatedHandler implements IEventHandler<ExerciseCreated> {
   async handle(event: ExerciseCreated): Promise<void> {
     await this.views.add({
       __name__: 'ExerciseView',
+      description: event.description,
       id: event.id,
       name: event.name,
     })

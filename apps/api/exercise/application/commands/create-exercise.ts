@@ -1,10 +1,22 @@
 import { ICommand } from '@nestjs/cqrs'
 
 class CreateExercise implements ICommand {
-  private constructor(readonly id: string, readonly name: string) {}
+  private constructor(
+    readonly id: string,
+    readonly description: string,
+    readonly name: string,
+  ) {}
 
-  static with({ id, name }: { id: string; name: string }): CreateExercise {
-    return new this(id, name)
+  static with({
+    description,
+    id,
+    name,
+  }: {
+    description: string
+    id: string
+    name: string
+  }): CreateExercise {
+    return new this(id, description, name)
   }
 }
 

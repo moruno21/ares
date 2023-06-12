@@ -8,6 +8,9 @@ class MongooseExerciseView implements Omit<ExerciseView, '__name__' | 'id'> {
   readonly _id: string
 
   @Prop()
+  readonly description: string
+
+  @Prop()
   readonly name: string
 }
 

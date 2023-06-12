@@ -7,15 +7,23 @@ class ExerciseDto {
   readonly id: string
 
   @ApiProperty()
+  readonly description: string
+
+  @ApiProperty()
   readonly name: string
 
-  private constructor(id: string, name: string) {
+  private constructor(id: string, description: string, name: string) {
     this.id = id
     this.name = name
+    this.description = description
   }
 
   static fromExercise(exercise: Exercise): ExerciseDto {
-    return new this(exercise.id.value, exercise.name.value)
+    return new this(
+      exercise.id.value,
+      exercise.description.value,
+      exercise.name.value,
+    )
   }
 }
 

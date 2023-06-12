@@ -16,6 +16,7 @@ class EventStoreExercises implements Exercises {
       `${Exercise.name}-${exercise.id.value}`,
       jsonEvent({
         data: {
+          description: exercise.description.value,
           id: exercise.id.value,
           name: exercise.name.value,
         },

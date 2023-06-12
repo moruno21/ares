@@ -3,6 +3,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
 
 import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
 import NotCreatedExercise from '~/exercise/domain/exceptions/not-created'
+import ExerciseDescription from '~/exercise/domain/models/description'
 import Exercise from '~/exercise/domain/models/exercise'
 import ExerciseId from '~/exercise/domain/models/id'
 import ExerciseName from '~/exercise/domain/models/name'
@@ -27,9 +28,11 @@ class CreateExerciseHandler implements ICommandHandler {
     Either<(InvalidUuid | InvalidExerciseName | NotCreatedExercise)[], Exercise>
   > {
     const id = ExerciseId.fromString(command.id)
+    const description = ExerciseDescription.fromString(command.description)
     const name = ExerciseName.fromString(command.name)
 
     const isInvalidId = Either.isLeft(id)
+    const isInvalidDescription = Either.isLeft(description)
     const isInvalidName = Either.isLeft(name)
     const existsWithName =
       !isInvalidName &&
@@ -37,16 +40,21 @@ class CreateExerciseHandler implements ICommandHandler {
 
     const exceptions = []
     if (isInvalidId) exceptions.push(id.value)
+    if (isInvalidDescription) exceptions.push(description.value)
     if (isInvalidName) exceptions.push(name.value)
     if (existsWithName)
       exceptions.push(
         NotCreatedExercise.causeAlreadyExistsOneWithName(name.value.value),
       )
-    if (isInvalidId || isInvalidName || existsWithName)
+    if (isInvalidId || isInvalidDescription || isInvalidName || existsWithName)
       return Either.left(exceptions)
 
     const exercise = this.publisher.mergeObjectContext(
-      Exercise.create({ id: id.value, name: name.value }),
+      Exercise.create({
+        description: description.value,
+        id: id.value,
+        name: name.value,
+      }),
     )
     exercise.commit()
 

@@ -34,7 +34,13 @@ class PostExercise {
     const id = uuid()
 
     const response: Awaited<ReturnType<CreateExerciseHandler['execute']>> =
-      await this.commandBus.execute(CreateExercise.with({ id, name: dto.name }))
+      await this.commandBus.execute(
+        CreateExercise.with({
+          description: dto.description,
+          id,
+          name: dto.name,
+        }),
+      )
 
     if (Either.isLeft(response))
       return new BadRequestException(HttpError.fromExceptions(response.value))
