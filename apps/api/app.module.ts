@@ -1,11 +1,12 @@
 import { EventStoreDBClient } from '@eventstore/db-client'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { CqrsModule } from '@nestjs/cqrs'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConsoleModule } from 'nestjs-console'
 
 import { LoggerMiddleware } from '~/middleware/logger'
+
+import ExerciseModule from './exercise/infrastructure/module'
 
 @Module({
   imports: [
@@ -18,11 +19,11 @@ import { LoggerMiddleware } from '~/middleware/logger'
       ],
       isGlobal: true,
     }),
-    CqrsModule,
     ConsoleModule,
     MongooseModule.forRootAsync({
       useFactory: () => ({ uri: process.env.MONGODB_URI }),
     }),
+    ExerciseModule,
   ],
   providers: [
     {

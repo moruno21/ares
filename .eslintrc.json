@@ -17,7 +17,10 @@
     "sort"
   ],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "ignoreRestSiblings": true }
+    ],
     "camelcase": "error",
     "default-case-last": "error",
     "default-param-last": "error",
