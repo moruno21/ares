@@ -15,6 +15,6 @@ const NotFoundExercise = {
     }),
     __name__,
   }),
-}
+} as const
 
 export default NotFoundExercise
