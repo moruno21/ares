@@ -3,15 +3,26 @@ import NamedType from '~/shared/named-type'
 
 const __name__ = 'InvalidExerciseName'
 
-const code = 'blank'
+const blankCode = 'blank'
+const longCode = 'too_long_name'
 
-type InvalidExerciseName = NamedType<Exception<typeof code>, typeof __name__>
+type InvalidExerciseName = NamedType<
+  Exception<typeof blankCode | typeof longCode>,
+  typeof __name__
+>
 
 const InvalidExerciseName = {
   causeIsBlank: (): InvalidExerciseName => ({
     ...Exception.cause({
-      code,
+      code: blankCode,
       message: 'Exercise name cannot be blank',
+    }),
+    __name__,
+  }),
+  causeIsTooLong: (): InvalidExerciseName => ({
+    ...Exception.cause({
+      code: longCode,
+      message: 'Exercise name cannot be longer than 50 characters',
     }),
     __name__,
   }),

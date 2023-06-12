@@ -14,6 +14,9 @@ const ExerciseName = {
 
     if (isBlank) return Either.left(InvalidExerciseName.causeIsBlank())
 
+    if (value.length > 50)
+      return Either.left(InvalidExerciseName.causeIsTooLong())
+
     return Either.right({ __name__, value })
   },
 } as const
