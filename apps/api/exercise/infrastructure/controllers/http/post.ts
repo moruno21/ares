@@ -23,7 +23,7 @@ class PostExercise {
 
   @ApiOperation({ summary: 'Creates an Exercise' })
   @ApiCreatedResponse({
-    description: 'Exercise resource created',
+    description: 'Exercise created',
     type: ExerciseDto,
   })
   @ApiBadRequestResponse({ description: 'Invalid input' })
