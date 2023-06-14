@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common'
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
 
+import InvalidExerciseDescription from '~/exercise/domain/exceptions/invalid-description'
 import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
 import NotCreatedExercise from '~/exercise/domain/exceptions/not-created'
 import ExerciseDescription from '~/exercise/domain/models/description'
@@ -25,7 +26,15 @@ class CreateExerciseHandler implements ICommandHandler {
   async execute(
     command: CreateExercise,
   ): Promise<
-    Either<(InvalidUuid | InvalidExerciseName | NotCreatedExercise)[], Exercise>
+    Either<
+      (
+        | InvalidUuid
+        | InvalidExerciseName
+        | NotCreatedExercise
+        | InvalidExerciseDescription
+      )[],
+      Exercise
+    >
   > {
     const id = ExerciseId.fromString(command.id)
     const description = ExerciseDescription.fromString(command.description)
