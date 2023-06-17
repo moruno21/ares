@@ -7,8 +7,8 @@ import CreateExercise from '~/exercise/application/commands/create-exercise'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
 import Either from '~/shared/either'
 
+import ExerciseDto from '../models/dto/dto'
 import { Exercise, ExerciseInput } from '../models/graphql/model'
-import ExerciseDto from '../models/http/dto'
 
 @Resolver(() => Exercise)
 class CreateExerciseResolver {

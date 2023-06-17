@@ -13,8 +13,8 @@ import CreateExerciseHandler from '~/exercise/application/commands/handlers/crea
 import Either from '~/shared/either'
 import HttpError from '~/shared/http/error'
 
-import ExerciseDto from '../models/http/dto'
-import PostExerciseDto from '../models/http/post-dto'
+import ExerciseDto from '../models/dto/dto'
+import PostExerciseDto from '../models/dto/post-dto'
 
 @ApiTags('Exercises')
 @Controller('exercises')
