@@ -8,6 +8,13 @@ const code = 'not_found'
 type NotFoundExercise = NamedType<Exception<typeof code>, typeof __name__>
 
 const NotFoundExercise = {
+  withId: (id: string): NotFoundExercise => ({
+    ...Exception.cause({
+      code,
+      message: `Exercise with id '${id}' cannot be found`,
+    }),
+    __name__,
+  }),
   withName: (name: string): NotFoundExercise => ({
     ...Exception.cause({
       code,

@@ -27,6 +27,26 @@ class MongooseExerciseViews implements ExerciseViews {
     return view
   }
 
+  async getAll(): Promise<ExerciseView[]> {
+    const mongooseViews = await this.views.find().lean().exec()
+
+    return mongooseViews.map((mongooseView) => {
+      const { _id, ...view } = mongooseView
+
+      return { ...view, __name__: 'ExerciseView', id: _id }
+    })
+  }
+
+  async withId(id: string): Promise<Either<NotFoundExercise, ExerciseView>> {
+    const mongooseView = await this.views.findOne({ _id: id }).lean().exec()
+
+    if (!mongooseView) return Either.left(NotFoundExercise.withId(id))
+
+    const { _id, ...view } = mongooseView
+
+    return Either.right({ ...view, __name__: 'ExerciseView', id })
+  }
+
   async withName(
     name: string,
   ): Promise<Either<NotFoundExercise, ExerciseView>> {

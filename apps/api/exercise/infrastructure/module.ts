@@ -12,7 +12,9 @@ import { MongooseModule, SchemaFactory } from '@nestjs/mongoose'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
 import ExerciseCreatedHandler from '~/exercise/application/event-handlers/exercise-created'
 
-import PostExercise from './controllers/exercise'
+import GetExerciseHandler from '../application/queries/handlers/get-exercise'
+import GetExercisesHandler from '../application/queries/handlers/get-exercises'
+import PostExercise from './controllers/exercises'
 import MongooseExerciseView from './models/mongoose/view'
 import exerciseProviders from './providers'
 import CreateExerciseResolver from './resolvers/create-exercise'
@@ -20,6 +22,7 @@ import CreateExerciseResolver from './resolvers/create-exercise'
 const resolvers = [CreateExerciseResolver]
 const controllers = [PostExercise]
 const commandHandlers = [CreateExerciseHandler]
+const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
 const eventHandlers = [ExerciseCreatedHandler]
 
 @Module({
@@ -40,6 +43,7 @@ const eventHandlers = [ExerciseCreatedHandler]
     ]),
   ],
   providers: [
+    ...queryHandlers,
     ...commandHandlers,
     ...eventHandlers,
     ...exerciseProviders,

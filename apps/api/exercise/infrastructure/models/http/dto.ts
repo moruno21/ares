@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 
+import ExerciseView from '~/exercise/application/models/view'
 import Exercise from '~/exercise/domain/models/exercise'
 
 class ExerciseDto {
@@ -23,6 +24,14 @@ class ExerciseDto {
       exercise.id.value,
       exercise.description.value,
       exercise.name.value,
+    )
+  }
+
+  static fromExerciseView(exerciseView: ExerciseView): ExerciseDto {
+    return new this(
+      exerciseView.id,
+      exerciseView.description,
+      exerciseView.name,
     )
   }
 }
