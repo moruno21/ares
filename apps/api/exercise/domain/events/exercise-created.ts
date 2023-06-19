@@ -1,8 +1,8 @@
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 class ExerciseCreated
   implements
-    NamedType<
+    NameType<
       Readonly<{
         description: string
         id: string

@@ -1,11 +1,11 @@
 import { Exception } from '~/shared/domain'
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 const __name__ = 'NotCreatedExercise'
 
 const code = 'name_already_in_use'
 
-type NotCreatedExercise = NamedType<Exception<typeof code>, typeof __name__>
+type NotCreatedExercise = NameType<Exception<typeof code>, typeof __name__>
 
 const NotCreatedExercise = {
   causeAlreadyExistsOneWithName: (name: string): NotCreatedExercise => ({

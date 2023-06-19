@@ -1,11 +1,11 @@
 import { Exception } from '~/shared/domain'
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 const __name__ = 'NotFoundExercise'
 
 const code = 'not_found'
 
-type NotFoundExercise = NamedType<Exception<typeof code>, typeof __name__>
+type NotFoundExercise = NameType<Exception<typeof code>, typeof __name__>
 
 const NotFoundExercise = {
   withId: (id: string): NotFoundExercise => ({

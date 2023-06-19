@@ -1,11 +1,11 @@
 import { Exception } from '~/shared/domain'
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 const __name__ = 'InvalidExerciseDescription'
 
 const code = 'too_long_description'
 
-type InvalidExerciseDescription = NamedType<
+type InvalidExerciseDescription = NameType<
   Exception<typeof code>,
   typeof __name__
 >

@@ -1,4 +1,4 @@
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 type ValueObject<Type extends boolean | number | string> = Readonly<{
   value: Type
@@ -6,8 +6,8 @@ type ValueObject<Type extends boolean | number | string> = Readonly<{
 
 const ValueObject = {
   equals: <Name extends string, Type extends boolean | number | string>(
-    a: NamedType<ValueObject<Type>, Name>,
-    b: NamedType<ValueObject<Type>, Name>,
+    a: NameType<ValueObject<Type>, Name>,
+    b: NameType<ValueObject<Type>, Name>,
   ): boolean => a.__name__ === b.__name__ && a.value === b.value,
 } as const
 

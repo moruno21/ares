@@ -1,12 +1,12 @@
 import { validate, version } from 'uuid'
 
 import Either from '~/shared/either'
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 import InvalidUuid from '../exceptions/invalid-uuid'
 import Id from './id'
 
-type Uuid = NamedType<Id<string>, 'Uuid'>
+type Uuid = NameType<Id<string>, 'Uuid'>
 
 const Uuid = {
   fromString: (value: string): Either<InvalidUuid, Uuid> => {

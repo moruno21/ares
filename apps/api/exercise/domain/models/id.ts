@@ -1,10 +1,10 @@
 import { InvalidUuid, Uuid } from '~/shared/domain'
 import Either from '~/shared/either'
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 const __name__ = 'ExerciseId'
 
-type ExerciseId = NamedType<Uuid, typeof __name__>
+type ExerciseId = NameType<Uuid, typeof __name__>
 
 const ExerciseId = {
   fromString: (value: string): Either<InvalidUuid, ExerciseId> => {

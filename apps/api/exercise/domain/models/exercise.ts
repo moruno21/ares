@@ -1,7 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs'
 
 import { Entity } from '~/shared/domain'
-import NamedType from '~/shared/named-type'
+import NameType from '~/shared/name-type'
 
 import ExerciseCreated from '../events/exercise-created'
 import ExerciseDescription from './description'
@@ -10,7 +10,7 @@ import ExerciseName from './name'
 
 class Exercise
   extends AggregateRoot
-  implements NamedType<Entity<ExerciseId>, 'Exercise'>
+  implements NameType<Entity<ExerciseId>, 'Exercise'>
 {
   readonly __name__: 'Exercise'
 
