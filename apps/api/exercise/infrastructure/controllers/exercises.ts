@@ -46,7 +46,9 @@ class ExercisesController {
     const response: Awaited<ReturnType<GetExercisesHandler['execute']>> =
       await this.queryBus.execute(GetExercises.all())
 
-    return response.map((view) => ExerciseDto.fromExerciseView(view))
+    return response.map((exerciseView) =>
+      ExerciseDto.fromExerciseView(exerciseView),
+    )
   }
 
   @ApiOperation({ summary: 'Gets an Exercise' })
