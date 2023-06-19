@@ -12,7 +12,7 @@ import { MongooseModule, SchemaFactory } from '@nestjs/mongoose'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
 import ExerciseCreatedHandler from '~/exercise/application/event-handlers/exercise-created'
 
-import PostExercise from './controllers/post'
+import PostExercise from './controllers/exercise'
 import MongooseExerciseView from './models/mongoose/view'
 import exerciseProviders from './providers'
 import CreateExerciseResolver from './resolvers/create-exercise'

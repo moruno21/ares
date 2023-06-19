@@ -18,7 +18,7 @@ import PostExerciseDto from '../models/http/post-dto'
 
 @ApiTags('Exercises')
 @Controller('exercises')
-class PostExercise {
+class ExercisesController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @ApiOperation({ summary: 'Creates an Exercise' })
@@ -28,7 +28,7 @@ class PostExercise {
   })
   @ApiBadRequestResponse({ description: 'Invalid input' })
   @Post()
-  async with(
+  async createExercise(
     @Body() dto: PostExerciseDto,
   ): Promise<ExerciseDto | BadRequestException> {
     const id = uuid()
@@ -49,4 +49,4 @@ class PostExercise {
   }
 }
 
-export default PostExercise
+export default ExercisesController
