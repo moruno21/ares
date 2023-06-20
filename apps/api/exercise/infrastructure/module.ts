@@ -14,13 +14,13 @@ import ExerciseCreatedHandler from '~/exercise/application/event-handlers/exerci
 
 import GetExerciseHandler from '../application/queries/handlers/get-exercise'
 import GetExercisesHandler from '../application/queries/handlers/get-exercises'
-import PostExercise from './controllers/exercises'
+import ExercisesController from './controllers/exercises'
 import MongooseExerciseView from './models/mongoose/view'
 import exerciseProviders from './providers'
-import CreateExerciseResolver from './resolvers/create-exercise'
+import ExercisesResolver from './resolvers/exercises'
 
-const resolvers = [CreateExerciseResolver]
-const controllers = [PostExercise]
+const resolvers = [ExercisesResolver]
+const controllers = [ExercisesController]
 const commandHandlers = [CreateExerciseHandler]
 const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
 const eventHandlers = [ExerciseCreatedHandler]

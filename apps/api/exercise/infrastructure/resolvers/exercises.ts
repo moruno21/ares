@@ -11,7 +11,7 @@ import { Exercise, ExerciseInput } from '../models/graphql/model'
 import ExerciseDto from '../models/http/dto'
 
 @Resolver(() => Exercise)
-class CreateExerciseResolver {
+class ExercisesResolver {
   constructor(private readonly commandBus: CommandBus) {}
 
   @Mutation(() => Exercise, { name: 'exercise' })
@@ -38,4 +38,4 @@ class CreateExerciseResolver {
   }
 }
 
-export default CreateExerciseResolver
+export default ExercisesResolver
