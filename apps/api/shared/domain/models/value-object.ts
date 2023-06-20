@@ -1,3 +1,4 @@
+import deepEquals from '~/shared/deep-equals'
 import NameType from '~/shared/name-type'
 
 type ValueType =
@@ -19,7 +20,7 @@ const ValueObject = {
   equals: <Name extends string, Value extends ValueType>(
     a: ValueObject<Name, Value>,
     b: ValueObject<Name, Value>,
-  ): boolean => a.__name__ === b.__name__ && a.value === b.value,
+  ): boolean => a.__name__ === b.__name__ && deepEquals(a, b),
   with: <Name extends string, Value extends ValueType>(
     props: ValueObject<Name, Value>,
   ): ValueObject<Name, Value> => props,
