@@ -1,14 +1,28 @@
 import NameType from '~/shared/name-type'
 
-type ValueObject<Type extends boolean | number | string> = Readonly<{
-  value: Type
-}>
+type ValueType =
+  | {
+      [key: string]: ValueType
+    }
+  | boolean
+  | number
+  | string
+  | undefined
+  | ValueType[]
+
+type ValueObject<
+  Name extends string,
+  Value extends ValueType = ValueType,
+> = NameType<Readonly<{ value: Value }>, Name>
 
 const ValueObject = {
-  equals: <Name extends string, Type extends boolean | number | string>(
-    a: NameType<ValueObject<Type>, Name>,
-    b: NameType<ValueObject<Type>, Name>,
+  equals: <Name extends string, Value extends ValueType>(
+    a: ValueObject<Name, Value>,
+    b: ValueObject<Name, Value>,
   ): boolean => a.__name__ === b.__name__ && a.value === b.value,
+  with: <Name extends string, Value extends ValueType>(
+    props: ValueObject<Name, Value>,
+  ): ValueObject<Name, Value> => props,
 } as const
 
 export default ValueObject
