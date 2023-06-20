@@ -1,10 +1,14 @@
-import { CommandBus } from '@nestjs/cqrs'
-import { Args, Mutation, Resolver } from '@nestjs/graphql'
+import { CommandBus, QueryBus } from '@nestjs/cqrs'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { GraphQLError } from 'graphql'
 import { v4 as uuid } from 'uuid'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
+import GetExercise from '~/exercise/application/queries/get-exercise'
+import GetExercises from '~/exercise/application/queries/get-exercises'
+import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exercise'
+import GetExercisesHandler from '~/exercise/application/queries/handlers/get-exercises'
 import Either from '~/shared/either'
 
 import { Exercise, ExerciseInput } from '../models/graphql/model'
@@ -12,9 +16,35 @@ import ExerciseDto from '../models/http/dto'
 
 @Resolver(() => Exercise)
 class ExercisesResolver {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
-  @Mutation(() => Exercise, { name: 'exercise' })
+  @Query(() => [Exercise])
+  async exercises(): Promise<ExerciseDto[]> {
+    const response: Awaited<ReturnType<GetExercisesHandler['execute']>> =
+      await this.queryBus.execute(GetExercises.all())
+
+    return response.map((exerciseView) =>
+      ExerciseDto.fromExerciseView(exerciseView),
+    )
+  }
+
+  @Query(() => Exercise)
+  async exercise(@Args('id') id: string): Promise<ExerciseDto | GraphQLError> {
+    const response: Awaited<ReturnType<GetExerciseHandler['execute']>> =
+      await this.queryBus.execute(GetExercise.with({ id }))
+
+    if (Either.isLeft(response))
+      return new GraphQLError(response.value.message, {
+        extensions: { code: response.value.code },
+      })
+
+    return ExerciseDto.fromExerciseView(response.value)
+  }
+
+  @Mutation(() => Exercise)
   async createExercise(
     @Args('exerciseInput') exerciseInput: ExerciseInput,
   ): Promise<ExerciseDto | GraphQLError> {
