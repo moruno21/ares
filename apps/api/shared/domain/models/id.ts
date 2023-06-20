@@ -1,12 +1,13 @@
 import Either from '~/shared/either'
-import NameType from '~/shared/name-type'
 
 import InvalidId from '../exceptions/invalid-id'
 import ValueObject from './value-object'
 
-type Id<Type extends number | string = number | string> = NameType<
-  ValueObject<Type>,
-  'Id'
+const __name__ = 'Id'
+
+type Id<Type extends number | string = number | string> = ValueObject<
+  typeof __name__,
+  Type
 >
 
 const Id = {

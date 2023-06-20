@@ -20,7 +20,7 @@ const ValueObject = {
   equals: <Name extends string, Value extends ValueType>(
     a: ValueObject<Name, Value>,
     b: ValueObject<Name, Value>,
-  ): boolean => a.__name__ === b.__name__ && deepEquals(a, b),
+  ): boolean => a.__name__ === b.__name__ && deepEquals(a.value, b.value),
   with: <Name extends string, Value extends ValueType>(
     props: ValueObject<Name, Value>,
   ): ValueObject<Name, Value> => props,

@@ -10,7 +10,7 @@ import ExerciseName from './name'
 
 class Exercise
   extends AggregateRoot
-  implements NameType<Entity<ExerciseId>, 'Exercise'>
+  implements NameType<Entity<'Exercise', ExerciseId>, 'Exercise'>
 {
   readonly __name__: 'Exercise'
 

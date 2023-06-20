@@ -1,12 +1,11 @@
 import { ValueObject } from '~/shared/domain'
 import Either from '~/shared/either'
-import NameType from '~/shared/name-type'
 
 import InvalidExerciseName from '../exceptions/invalid-name'
 
 const __name__ = 'ExerciseName'
 
-type ExerciseName = NameType<ValueObject<string>, typeof __name__>
+type ExerciseName = ValueObject<typeof __name__, string>
 
 const ExerciseName = {
   fromString: (value: string): Either<InvalidExerciseName, ExerciseName> => {

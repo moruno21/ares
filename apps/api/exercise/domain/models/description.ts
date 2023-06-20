@@ -1,12 +1,11 @@
 import { ValueObject } from '~/shared/domain'
 import Either from '~/shared/either'
-import NameType from '~/shared/name-type'
 
 import InvalidExerciseDescription from '../exceptions/invalid-description'
 
 const __name__ = 'ExerciseDescription'
 
-type ExerciseDescription = NameType<ValueObject<string>, typeof __name__>
+type ExerciseDescription = ValueObject<typeof __name__, string>
 
 const ExerciseDescription = {
   fromString: (
