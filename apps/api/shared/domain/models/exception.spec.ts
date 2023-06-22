@@ -1,16 +1,17 @@
 import Exception from './exception'
 
 describe('Exception', () => {
-  it('has a reason', () => {
-    const exception = Exception.cause({ code: 'code', message: 'message' })
+  const exception = Exception.cause({ code: 'code', message: 'message' })
 
+  it.concurrent('has a code', () => {
     expect(exception.code).toBe('code')
+  })
+
+  it.concurrent('has a message', () => {
     expect(exception.message).toBe('message')
   })
 
-  it('has a trace', () => {
-    const exception = Exception.cause({ code: 'code', message: 'message' })
-
+  it.concurrent('has a trace', () => {
     expect(exception.trace).toMatch(/^Exception: message/)
   })
 })

@@ -1,6 +1,15 @@
 import ValueObject from './value-object'
 
 describe('ValueObject', () => {
+  it.concurrent('checks that it is created correctly', () => {
+    const value = 'value'
+    const __name__ = 'name'
+    const valueObject = ValueObject.with({ __name__, value })
+
+    expect(valueObject.__name__ === __name__).toBe(true)
+    expect(valueObject.value === value).toBe(true)
+  })
+
   it.concurrent(
     'checks that different value objects with different values are not equal',
     () => {

@@ -2,11 +2,11 @@ import NameType from '~/shared/name-type'
 
 const left = 'left'
 
-type Left<Value> = NameType<{ value: Value }, typeof left>
+export type Left<Value> = NameType<{ value: Value }, typeof left>
 
 const right = 'right'
 
-type Right<Value> = NameType<{ value: Value }, typeof right>
+export type Right<Value> = NameType<{ value: Value }, typeof right>
 
 type Either<L, R> = Left<L> | Right<R>
 
