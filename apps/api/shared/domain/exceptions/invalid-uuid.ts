@@ -1,20 +1,15 @@
-import NameType from '~/shared/name-type'
-
 import Exception from '../models/exception'
 
 const __name__ = 'InvalidUuid'
 
-type Code = 'format'
+const code = 'format'
 
-type InvalidUuid = NameType<Exception<Code>, typeof __name__>
+type InvalidUuid = Exception<typeof __name__, typeof code>
 
 const InvalidUuid = {
-  cause: (reason: { code: Code; message: string }): InvalidUuid => ({
-    ...Exception.cause(reason),
-    __name__,
-  }),
   causeTheFormatIsNotValid: (value: string): InvalidUuid =>
-    InvalidUuid.cause({
+    Exception.with({
+      __name__,
       code: 'format',
       message: `${value} has not a valid uuid format`,
     }),

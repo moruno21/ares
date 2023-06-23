@@ -1,22 +1,18 @@
 import { Exception } from '~/shared/domain'
-import NameType from '~/shared/name-type'
 
 const __name__ = 'InvalidExerciseDescription'
 
 const code = 'too_long_description'
 
-type InvalidExerciseDescription = NameType<
-  Exception<typeof code>,
-  typeof __name__
->
+type InvalidExerciseDescription = Exception<typeof __name__, typeof code>
 
 const InvalidExerciseDescription = {
   causeIsTooLong: (): InvalidExerciseDescription => ({
-    ...Exception.cause({
+    ...Exception.with({
+      __name__,
       code,
       message: 'Exercise description cannot be longer than 250 characters',
     }),
-    __name__,
   }),
 } as const
 

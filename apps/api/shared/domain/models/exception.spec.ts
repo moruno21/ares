@@ -1,7 +1,11 @@
 import Exception from './exception'
 
 describe('Exception', () => {
-  const exception = Exception.cause({ code: 'code', message: 'message' })
+  const exception = Exception.with({
+    __name__: 'Exception',
+    code: 'code',
+    message: 'message',
+  })
 
   it.concurrent('has a code', () => {
     expect(exception.code).toBe('code')

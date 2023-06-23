@@ -1,30 +1,29 @@
 import { Exception } from '~/shared/domain'
-import NameType from '~/shared/name-type'
 
 const __name__ = 'InvalidExerciseName'
 
 const blankCode = 'blank'
 const longCode = 'too_long_name'
 
-type InvalidExerciseName = NameType<
-  Exception<typeof blankCode | typeof longCode>,
-  typeof __name__
+type InvalidExerciseName = Exception<
+  typeof __name__,
+  typeof blankCode | typeof longCode
 >
 
 const InvalidExerciseName = {
   causeIsBlank: (): InvalidExerciseName => ({
-    ...Exception.cause({
+    ...Exception.with({
+      __name__,
       code: blankCode,
       message: 'Exercise name cannot be blank',
     }),
-    __name__,
   }),
   causeIsTooLong: (): InvalidExerciseName => ({
-    ...Exception.cause({
+    ...Exception.with({
+      __name__,
       code: longCode,
       message: 'Exercise name cannot be longer than 50 characters',
     }),
-    __name__,
   }),
 } as const
 
