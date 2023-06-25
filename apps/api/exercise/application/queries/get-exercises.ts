@@ -1,6 +1,15 @@
-import { IQuery } from '@nestjs/cqrs'
+import NameType from '~/shared/name-type'
 
-class GetExercises implements IQuery {
+const __name__ = 'GetExercises'
+
+type GetExercisesType = NameType<
+  Readonly<Record<never, never>>,
+  typeof __name__
+>
+
+class GetExercises implements GetExercisesType {
+  readonly __name__ = __name__
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 

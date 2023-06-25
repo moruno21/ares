@@ -1,6 +1,19 @@
-import { ICommand } from '@nestjs/cqrs'
+import NameType from '~/shared/name-type'
 
-class CreateExercise implements ICommand {
+const __name__ = 'ExerciseCreated'
+
+type CreateExerciseType = NameType<
+  Readonly<{
+    description: string
+    id: string
+    name: string
+  }>,
+  typeof __name__
+>
+
+class CreateExercise implements CreateExerciseType {
+  readonly __name__ = __name__
+
   private constructor(
     readonly id: string,
     readonly description: string,
@@ -11,11 +24,7 @@ class CreateExercise implements ICommand {
     description,
     id,
     name,
-  }: {
-    description: string
-    id: string
-    name: string
-  }): CreateExercise {
+  }: Omit<CreateExerciseType, '__name__'>): CreateExercise {
     return new this(id, description, name)
   }
 }

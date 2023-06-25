@@ -1,17 +1,18 @@
 import NameType from '~/shared/name-type'
 
-class ExerciseCreated
-  implements
-    NameType<
-      Readonly<{
-        description: string
-        id: string
-        name: string
-      }>,
-      'ExerciseCreated'
-    >
-{
-  readonly __name__ = 'ExerciseCreated'
+const __name__ = 'ExerciseCreated'
+
+type ExerciseCreatedType = NameType<
+  Readonly<{
+    description: string
+    id: string
+    name: string
+  }>,
+  'ExerciseCreated'
+>
+
+class ExerciseCreated implements ExerciseCreatedType {
+  readonly __name__ = __name__
 
   private constructor(
     readonly id: string,
@@ -23,7 +24,7 @@ class ExerciseCreated
     description,
     id,
     name,
-  }: Omit<ExerciseCreated, '__name__'>): ExerciseCreated {
+  }: Omit<ExerciseCreatedType, '__name__'>): ExerciseCreated {
     return new this(id, description, name)
   }
 }
