@@ -1,4 +1,4 @@
-import deepEquals from '~/shared/deep-equals'
+import deepEquals from './index'
 
 describe('deepEquals on arrays', () => {
   const array = [1, '2', true]

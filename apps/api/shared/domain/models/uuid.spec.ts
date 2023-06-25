@@ -1,5 +1,6 @@
-import Uuid from '~/shared/domain/models/uuid'
 import Either, { Right } from '~/shared/either'
+
+import Uuid from './uuid'
 
 describe('Uuid', () => {
   it.concurrent('can be created from string', () => {

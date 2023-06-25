@@ -1,4 +1,4 @@
-import Exception from '~/shared/domain/models/exception'
+import Exception from './exception'
 
 describe('Exception', () => {
   const exception = Exception.with({
