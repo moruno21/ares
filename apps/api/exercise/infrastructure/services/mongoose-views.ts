@@ -17,12 +17,7 @@ class MongooseExerciseViews implements ExerciseViews {
   ) {}
 
   async add(view: ExerciseView): Promise<ExerciseView> {
-    const { __name__, id, ...mongooseView } = view
-
-    await this.views.create({
-      ...mongooseView,
-      _id: id,
-    })
+    await this.views.create(MongooseExerciseView.fromExerciseView(view))
 
     return view
   }
@@ -30,11 +25,9 @@ class MongooseExerciseViews implements ExerciseViews {
   async getAll(): Promise<ExerciseView[]> {
     const mongooseViews = await this.views.find().lean().exec()
 
-    return mongooseViews.map((mongooseView) => {
-      const { _id, ...view } = mongooseView
-
-      return { ...view, __name__: 'ExerciseView', id: _id }
-    })
+    return mongooseViews.map((mongooseView) =>
+      MongooseExerciseView.toExerciseView(mongooseView),
+    )
   }
 
   async withId(id: string): Promise<Either<NotFoundExercise, ExerciseView>> {
@@ -42,9 +35,7 @@ class MongooseExerciseViews implements ExerciseViews {
 
     if (!mongooseView) return Either.left(NotFoundExercise.withId(id))
 
-    const { _id, ...view } = mongooseView
-
-    return Either.right({ ...view, __name__: 'ExerciseView', id })
+    return Either.right(MongooseExerciseView.toExerciseView(mongooseView))
   }
 
   async withName(
@@ -54,9 +45,7 @@ class MongooseExerciseViews implements ExerciseViews {
 
     if (!mongooseView) return Either.left(NotFoundExercise.withName(name))
 
-    const { _id, ...view } = mongooseView
-
-    return Either.right({ ...view, __name__: 'ExerciseView', id: _id })
+    return Either.right(MongooseExerciseView.toExerciseView(mongooseView))
   }
 }
 
