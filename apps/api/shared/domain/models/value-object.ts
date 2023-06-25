@@ -12,7 +12,7 @@ type ValueType =
   | ValueType[]
 
 type ValueObject<
-  Name extends string,
+  Name extends string = string,
   Value extends ValueType = ValueType,
 > = NameType<Readonly<{ value: Value }>, Name>
 
