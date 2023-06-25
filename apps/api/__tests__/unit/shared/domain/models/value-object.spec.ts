@@ -1,4 +1,4 @@
-import ValueObject from './value-object'
+import ValueObject from '~/shared/domain/models/value-object'
 
 describe('ValueObject', () => {
   it.concurrent('checks that it is created correctly', () => {

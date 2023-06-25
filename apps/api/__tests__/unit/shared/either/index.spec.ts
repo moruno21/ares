@@ -1,4 +1,4 @@
-import Either from './index'
+import Either from '~/shared/either'
 
 describe('Either', () => {
   it('checks that a right value is right', () => {

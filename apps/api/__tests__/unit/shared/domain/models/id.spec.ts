@@ -1,6 +1,5 @@
+import Id from '~/shared/domain/models/id'
 import Either from '~/shared/either'
-
-import Id from './id'
 
 describe('Id', () => {
   it.concurrent('can be created from number', () => {

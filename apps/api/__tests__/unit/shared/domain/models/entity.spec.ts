@@ -1,5 +1,5 @@
-import Entity from './entity'
-import ValueObject from './value-object'
+import Entity from '~/shared/domain/models/entity'
+import ValueObject from '~/shared/domain/models/value-object'
 
 describe('Entity', () => {
   it.concurrent('checks that it is created correctly', () => {
