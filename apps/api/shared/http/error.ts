@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 
 import { Exception } from '~/shared/domain'
-import NameType from '~/shared/name-type'
 
 type Error = Readonly<{
   code: number | string
@@ -17,7 +16,7 @@ class HttpError {
     this.errors = errors
   }
 
-  static fromExceptions(exceptions: NameType<Exception, string>[]): HttpError {
+  static fromExceptions(exceptions: Exception<string>[]): HttpError {
     return new this(
       exceptions.map((exception) => ({
         code: exception.code,
