@@ -16,7 +16,7 @@ class HttpError {
     this.errors = errors
   }
 
-  static fromExceptions(exceptions: Exception<string>[]): HttpError {
+  static fromExceptions(exceptions: Exception[]): HttpError {
     return new this(
       exceptions.map((exception) => ({
         code: exception.code,

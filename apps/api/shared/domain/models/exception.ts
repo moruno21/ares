@@ -1,7 +1,7 @@
 import NameType from '~/shared/name-type'
 
 type Exception<
-  Name extends string,
+  Name extends string = string,
   Code extends number | string = number | string,
 > = NameType<
   Readonly<{
