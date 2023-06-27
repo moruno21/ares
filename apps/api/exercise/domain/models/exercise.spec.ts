@@ -1,4 +1,4 @@
-import { itIsAnEntity } from '~/test/shared/closures/domain/entity'
+import { itIsAnEntity } from '~/test/closures/shared/domain/entity'
 
 import Exercise from '../models/exercise'
 import ExerciseId from '../models/id'

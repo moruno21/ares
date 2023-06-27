@@ -1,4 +1,4 @@
-import { itIsAValueObject } from '~/test/shared/closures/domain/value-object'
+import { itIsAValueObject } from '~/test/closures/shared/domain/value-object'
 
 import ValueObject from './value-object'
 

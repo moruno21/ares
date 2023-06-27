@@ -1,4 +1,4 @@
-import { itIsAnException } from '~/test/shared/closures/domain/exception'
+import { itIsAnException } from '~/test/closures/shared/domain/exception'
 
 import Exception from './exception'
 

@@ -1,4 +1,4 @@
-import { itIsNamed } from '~/test/shared/closures/name-type'
+import { itIsNamed } from '~/test/closures/shared/name-type'
 
 import ExerciseCreated from './exercise-created'
 

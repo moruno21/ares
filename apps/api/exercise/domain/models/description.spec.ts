@@ -1,5 +1,5 @@
 import Either, { Left, Right } from '~/shared/either'
-import { itIsAValueObject } from '~/test/shared/closures/domain/value-object'
+import { itIsAValueObject } from '~/test/closures/shared/domain/value-object'
 
 import InvalidExerciseDescription from '../exceptions/invalid-description'
 import ExerciseDescription from './description'

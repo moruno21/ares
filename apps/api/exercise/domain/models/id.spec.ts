@@ -1,6 +1,6 @@
 import { InvalidUuid } from '~/shared/domain'
 import Either, { Left, Right } from '~/shared/either'
-import { itIsAValueObject } from '~/test/shared/closures/domain/value-object'
+import { itIsAValueObject } from '~/test/closures/shared/domain/value-object'
 
 import ExerciseId from './id'
 
