@@ -7,8 +7,13 @@ import ExerciseDescription from './description'
 import ExerciseId from './id'
 import ExerciseName from './name'
 
-class Exercise extends AggregateRoot implements Entity<'Exercise', ExerciseId> {
-  readonly __name__: 'Exercise'
+const __name__ = 'Exercise'
+
+class Exercise
+  extends AggregateRoot
+  implements Entity<typeof __name__, ExerciseId>
+{
+  readonly __name__ = __name__
 
   private constructor(
     readonly id: ExerciseId,
