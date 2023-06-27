@@ -18,8 +18,8 @@ import CreateExercise from '../create-exercise'
 @CommandHandler(CreateExercise)
 class CreateExerciseHandler implements ICommandHandler {
   constructor(
-    @Inject(Exercises) private readonly exercises: Exercises,
     private readonly publisher: EventPublisher,
+    @Inject(Exercises) private readonly exercises: Exercises,
     @Inject(ExerciseViews) private readonly views: ExerciseViews,
   ) {}
 
