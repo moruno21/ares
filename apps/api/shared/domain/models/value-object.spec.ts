@@ -1,13 +1,17 @@
+import { itIsAValueObject } from '~/test/shared/closures/domain/value-object'
+
 import ValueObject from './value-object'
 
 describe('ValueObject', () => {
-  it.concurrent('checks that it is created correctly', () => {
-    const value = 'value'
-    const __name__ = 'name'
-    const valueObject = ValueObject.with({ __name__, value })
+  const __name__ = 'ValueObject'
+  const value = 'value'
+  const valueObject = ValueObject.with({ __name__, value })
 
-    expect(valueObject.__name__ === __name__).toBe(true)
-    expect(valueObject.value === value).toBe(true)
+  itIsAValueObject(valueObject)
+
+  it.concurrent('can be created', () => {
+    expect(valueObject.__name__).toBe(__name__)
+    expect(valueObject.value).toBe(value)
   })
 
   it.concurrent(

@@ -1,19 +1,21 @@
+import { itIsAnEntity } from '~/test/shared/closures/domain/entity'
+
 import Entity from './entity'
 import ValueObject from './value-object'
 
 describe('Entity', () => {
-  it.concurrent('checks that it is created correctly', () => {
-    const idName = 'name'
-    const idValue = 'value'
-    const id = ValueObject.with({
-      __name__: idName,
-      value: idValue,
-    })
-    const __name__ = 'Entity'
-    const entity = Entity.with({ __name__, id })
+  const __name__ = 'Entity'
+  const id = ValueObject.with({
+    __name__: 'name',
+    value: 'value',
+  })
+  const entity = Entity.with({ __name__, id })
 
-    expect(entity.__name__ === __name__).toBe(true)
-    expect(entity.id === id).toBe(true)
+  itIsAnEntity(entity)
+
+  it.concurrent('can be created', () => {
+    expect(entity.__name__).toBe(__name__)
+    expect(entity.id).toBe(id)
   })
 
   it.concurrent(
