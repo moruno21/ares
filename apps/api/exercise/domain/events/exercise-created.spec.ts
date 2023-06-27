@@ -1,34 +1,32 @@
 import { itIsNamed } from '~/test/shared/closures/name-type'
 
-import CreatedExercise from './exercise-created'
+import ExerciseCreated from './exercise-created'
 
-describe('CreatedExercise', () => {
+describe('ExerciseCreated', () => {
   const __name__ = 'ExerciseCreated'
-
   const id = 'id'
   const name = 'name'
   const description = 'description'
+  const exerciseCreated = ExerciseCreated.with({ description, id, name })
 
-  const createdExercise = CreatedExercise.with({ description, id, name })
-
-  itIsNamed(createdExercise)
+  itIsNamed(exerciseCreated)
 
   it.concurrent('has an id', () => {
-    expect(createdExercise).toHaveProperty('id')
+    expect(exerciseCreated).toHaveProperty('id')
   })
 
   it.concurrent('has a name', () => {
-    expect(createdExercise).toHaveProperty('name')
+    expect(exerciseCreated).toHaveProperty('name')
   })
 
   it.concurrent('has a description', () => {
-    expect(createdExercise).toHaveProperty('description')
+    expect(exerciseCreated).toHaveProperty('description')
   })
 
   it.concurrent('can be created', () => {
-    expect(createdExercise.__name__).toBe(__name__)
-    expect(createdExercise.id).toBe(id)
-    expect(createdExercise.name).toBe(name)
-    expect(createdExercise.description).toBe(description)
+    expect(exerciseCreated.__name__).toBe(__name__)
+    expect(exerciseCreated.id).toBe(id)
+    expect(exerciseCreated.name).toBe(name)
+    expect(exerciseCreated.description).toBe(description)
   })
 })
