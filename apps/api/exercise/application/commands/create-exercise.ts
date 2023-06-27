@@ -1,6 +1,6 @@
 import NameType from '~/shared/name-type'
 
-const __name__ = 'ExerciseCreated'
+const __name__ = 'CreateExercise'
 
 type CreateExerciseType = NameType<
   Readonly<{
