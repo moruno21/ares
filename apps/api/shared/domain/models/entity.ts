@@ -3,7 +3,7 @@ import NameType from '~/shared/name-type'
 import ValueObject from './value-object'
 
 type Entity<
-  Name extends string,
+  Name extends string = string,
   Id extends ValueObject<string, number | string> = ValueObject<
     string,
     number | string
