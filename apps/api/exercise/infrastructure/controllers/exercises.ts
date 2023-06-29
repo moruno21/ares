@@ -65,7 +65,7 @@ class ExercisesController {
       await this.queryBus.execute(GetExercise.with({ id }))
 
     if (Either.isLeft(response))
-      return new BadRequestException(HttpError.fromExceptions([response.value]))
+      throw new BadRequestException(HttpError.fromExceptions([response.value]))
 
     return ExerciseDto.fromExerciseView(response.value)
   }
@@ -92,7 +92,7 @@ class ExercisesController {
       )
 
     if (Either.isLeft(response))
-      return new BadRequestException(HttpError.fromExceptions(response.value))
+      throw new BadRequestException(HttpError.fromExceptions(response.value))
 
     return ExerciseDto.fromExercise(response.value)
   }
