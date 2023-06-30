@@ -1,7 +1,6 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { GraphQLError } from 'graphql'
-import { v4 as uuid } from 'uuid'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
@@ -10,6 +9,7 @@ import GetExercises from '~/exercise/application/queries/get-exercises'
 import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exercise'
 import GetExercisesHandler from '~/exercise/application/queries/handlers/get-exercises'
 import Either from '~/shared/either'
+import Uuid from '~/shared/uuid'
 
 import { Exercise, ExerciseInput } from '../models/graphql/model'
 import ExerciseDto from '../models/http/dto'
@@ -48,7 +48,7 @@ class ExercisesResolver {
   async createExercise(
     @Args('exerciseInput') exerciseInput: ExerciseInput,
   ): Promise<ExerciseDto | GraphQLError> {
-    const id = uuid()
+    const id = Uuid.generate()
 
     const response: Awaited<ReturnType<CreateExerciseHandler['execute']>> =
       await this.commandBus.execute(

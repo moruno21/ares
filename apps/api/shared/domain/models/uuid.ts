@@ -1,7 +1,6 @@
-import { validate, version } from 'uuid'
-
 import Either from '~/shared/either'
 import NameType from '~/shared/name-type'
+import UuidLib from '~/shared/uuid'
 
 import InvalidUuid from '../exceptions/invalid-uuid'
 import Id from './id'
@@ -12,8 +11,7 @@ const Uuid = {
   fromString: (value: string): Either<InvalidUuid, Uuid> => {
     const id = Id.fromValue(value)
     const isInvalidId = Either.isLeft(id)
-    const isInvalidUuid =
-      isInvalidId || !validate(value) || version(value) !== 4
+    const isInvalidUuid = isInvalidId || !UuidLib.validate(value)
 
     if (isInvalidUuid)
       return Either.left(InvalidUuid.causeTheFormatIsNotValid(value))

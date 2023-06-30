@@ -14,7 +14,6 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger'
-import { v4 as uuid } from 'uuid'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
@@ -24,6 +23,7 @@ import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exer
 import GetExercisesHandler from '~/exercise/application/queries/handlers/get-exercises'
 import Either from '~/shared/either'
 import HttpError from '~/shared/http/error'
+import Uuid from '~/shared/uuid'
 
 import ExerciseDto from '../models/http/dto'
 import PostExerciseDto from '../models/http/post-dto'
@@ -80,7 +80,7 @@ class ExercisesController {
   async createExercise(
     @Body() dto: PostExerciseDto,
   ): Promise<ExerciseDto | BadRequestException> {
-    const id = uuid()
+    const id = Uuid.generate()
 
     const response: Awaited<ReturnType<CreateExerciseHandler['execute']>> =
       await this.commandBus.execute(
