@@ -9,6 +9,21 @@ class PostExerciseDto {
   @ApiProperty()
   @IsString()
   readonly name: string
+
+  private constructor(description: string, name: string) {
+    this.description = description
+    this.name = name
+  }
+
+  static with({
+    description,
+    name,
+  }: {
+    description: string
+    name: string
+  }): PostExerciseDto {
+    return new PostExerciseDto(description, name)
+  }
 }
 
 export default PostExerciseDto
