@@ -19,7 +19,7 @@ import { InvalidUuid } from '~/shared/domain'
 import HttpError from '~/shared/http/error'
 import Uuid from '~/shared/uuid'
 
-describe('Get Exercises', () => {
+describe('Get Exercise', () => {
   let app: INestApplication
   let server: HttpServer
 
