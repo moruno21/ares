@@ -39,7 +39,7 @@ describe('MongooseExerciseViews', () => {
     expect(response).toBe(view)
   })
 
-  it('returns an emtpy array when trying to get all the views and there are not', async () => {
+  it('returns an empty array when trying to get all the views and there are not', async () => {
     const viewsFind = jest.spyOn(views, 'find')
 
     viewsFind.mockReturnValue({
