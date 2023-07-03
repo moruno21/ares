@@ -8,10 +8,11 @@
     "prepare": "husky install",
     "serve": "npx nx run-many -t serve -p web api",
     "storybook": "npx nx storybook ui",
-    "test": "yarn test:unit && yarn test:e2e",
-    "test:unit": "nx test:unit api",
+    "test": "yarn test:unit && yarn test:e2e && yarn test:integration:application && yarn test:integration:infrastructure",
     "test:e2e": "nx test:e2e api --detectOpenHandles --force-exit",
-    "test:watch": "yarn test --watch"
+    "test:integration:application": "cd ./apps/api/ && cucumber-js --config ./test/cucumber.application.json",
+    "test:integration:infrastructure": "cd ./apps/api/ && cucumber-js --config ./test/cucumber.infrastructure.json",
+    "test:unit": "nx test:unit api"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +51,7 @@
     "@babel/preset-typescript": "7.12.13",
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
+    "@cucumber/cucumber": "9.1.2",
     "@nestjs/schematics": "9.0.0",
     "@nestjs/testing": "9.4.2",
     "@nrwl/cypress": "15.8.1",
@@ -113,6 +115,7 @@
     "supertest": "6.3.3",
     "ts-jest": "29.1.0",
     "ts-node": "10.9.1",
+    "tsconfig-paths": "4.2.0",
     "typescript": "4.9.5",
     "url-loader": "4.1.1",
     "vite": "4.0.1",

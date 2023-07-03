@@ -8,7 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "lib": ["es2017", "dom"],
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "rootDir": ".",
     "skipDefaultLibCheck": true,
