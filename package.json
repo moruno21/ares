@@ -10,6 +10,7 @@
     "storybook": "npx nx storybook ui",
     "test": "yarn test:unit && yarn test:e2e && yarn test:integration:application && yarn test:integration:infrastructure",
     "test:e2e": "nx test:e2e api --detectOpenHandles --force-exit",
+    "test:integration": "yarn test:integration:application && yarn test:integration:infrastructure",
     "test:integration:application": "cd ./apps/api/ && cucumber-js --config ./test/cucumber.application.json",
     "test:integration:infrastructure": "cd ./apps/api/ && cucumber-js --config ./test/cucumber.infrastructure.json",
     "test:unit": "nx test:unit api"
