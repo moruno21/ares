@@ -56,6 +56,13 @@ class Exercise
 
     return exercise
   }
+
+  private onExerciseCreated(event: ExerciseCreated) {
+    this._id = ExerciseId.fromString(event.id).value as ExerciseId
+    this._name = ExerciseName.fromString(event.name).value as ExerciseName
+    this._description = ExerciseDescription.fromString(event.description)
+      .value as ExerciseDescription
+  }
 }
 
 export default Exercise
