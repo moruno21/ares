@@ -14,7 +14,7 @@ describe('ExerciseCreatedHandler', () => {
     createdHandler = new ExerciseCreatedHandler(views)
   })
 
-  it('creates an exercise view with created exercise', async () => {
+  it('creates an exercise view with exercise created', async () => {
     const id = 'id'
     const name = 'name'
     const description = 'description'

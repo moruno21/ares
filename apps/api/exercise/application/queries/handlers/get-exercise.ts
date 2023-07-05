@@ -16,7 +16,7 @@ class GetExerciseHandler implements IQueryHandler {
 
   async execute(
     query: GetExercise,
-  ): Promise<Either<NotFoundExercise | InvalidUuid, ExerciseView>> {
+  ): Promise<Either<InvalidUuid | NotFoundExercise, ExerciseView>> {
     const id = ExerciseId.fromString(query.id)
 
     const isInvalidId = Either.isLeft(id)
