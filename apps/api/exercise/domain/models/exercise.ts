@@ -23,15 +23,15 @@ class Exercise
     super()
   }
 
-  get id() {
+  get id(): ExerciseId {
     return this._id
   }
 
-  get name() {
+  get name(): ExerciseName {
     return this._name
   }
 
-  get description() {
+  get description(): ExerciseDescription {
     return this._description
   }
 
