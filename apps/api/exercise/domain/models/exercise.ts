@@ -15,12 +15,24 @@ class Exercise
 {
   readonly __name__ = __name__
 
-  private constructor(
-    readonly id: ExerciseId,
-    readonly description: ExerciseDescription,
-    readonly name: ExerciseName,
-  ) {
+  private _id: ExerciseId
+  private _description: ExerciseDescription
+  private _name: ExerciseName
+
+  private constructor() {
     super()
+  }
+
+  get id() {
+    return this._id
+  }
+
+  get name() {
+    return this._name
+  }
+
+  get description() {
+    return this._description
   }
 
   static create({
@@ -32,7 +44,7 @@ class Exercise
     id: ExerciseId
     name: ExerciseName
   }): Exercise {
-    const exercise = new this(id, description, name)
+    const exercise = new this()
 
     exercise.apply(
       ExerciseCreated.with({
