@@ -16,7 +16,7 @@ describe('GetExercises', () => {
     getExercisesHandler = new GetExercisesHandler(views)
   })
 
-  it('can get all the exercises', async () => {
+  it('gets all the exercises', async () => {
     const viewsGetAll = jest.spyOn(views, 'getAll')
 
     const exerciseViewOne = ExerciseView.with({ description, id, name })
@@ -30,7 +30,7 @@ describe('GetExercises', () => {
     expect(response).toStrictEqual([exerciseViewOne, exerciseViewTwo])
   })
 
-  it('can return empty value when there are no exercises', async () => {
+  it('returns empty value when there are no exercises', async () => {
     const viewsGetAll = jest.spyOn(views, 'getAll')
 
     viewsGetAll.mockResolvedValue([])

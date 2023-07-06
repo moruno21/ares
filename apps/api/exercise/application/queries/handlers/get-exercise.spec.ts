@@ -20,7 +20,7 @@ describe('GetExercise', () => {
     getExerciseHandler = new GetExerciseHandler(views)
   })
 
-  it('can get an exercise from an id', async () => {
+  it('gets an exercise from an id', async () => {
     const viewsWithId = jest.spyOn(views, 'withId')
 
     const exerciseView = ExerciseView.with({ description, id, name })

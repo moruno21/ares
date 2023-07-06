@@ -43,7 +43,7 @@ describe('ExerciseController', () => {
       exerciseController = new ExerciseController(commandBus, queryBus)
     })
 
-    it('can get all the exercises', async () => {
+    it('gets all the exercises', async () => {
       const queryBusExecute = jest.spyOn(queryBus, 'execute')
       const exerciseViews = [exerciseViewOne, exerciseViewTwo]
 
@@ -59,7 +59,7 @@ describe('ExerciseController', () => {
       expect(response).toStrictEqual(exercises)
     })
 
-    it('can return empty value when there are no exercises', async () => {
+    it('returns an empty value when there are no exercises', async () => {
       const queryBusExecute = jest.spyOn(queryBus, 'execute')
 
       queryBusExecute.mockResolvedValue([])
@@ -83,7 +83,7 @@ describe('ExerciseController', () => {
       exerciseController = new ExerciseController(commandBus, queryBus)
     })
 
-    it('can get an exercise from an id', async () => {
+    it('gets an exercise from an id', async () => {
       const queryBusExecute = jest.spyOn(queryBus, 'execute')
 
       queryBusExecute.mockResolvedValue(Either.right(exerciseView))

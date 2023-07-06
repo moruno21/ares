@@ -81,7 +81,7 @@ describe('Get Exercise', () => {
     await mongoose.dropDatabase()
   })
 
-  it('can get an exercise from an id', async () => {
+  it('gets an exercise from an id', async () => {
     const mongooseViews = app.get<Model<MongooseExerciseView>>(
       getModelToken(MongooseExerciseView.name),
     )

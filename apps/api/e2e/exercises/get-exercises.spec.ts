@@ -78,7 +78,7 @@ describe('Get Exercises', () => {
     await mongoose.dropDatabase()
   })
 
-  it('can get all the exercises', async () => {
+  it('gets all the exercises', async () => {
     const mongooseViews = app.get<Model<MongooseExerciseView>>(
       getModelToken(MongooseExerciseView.name),
     )
@@ -104,7 +104,7 @@ describe('Get Exercises', () => {
     expect(response.body[0].description).toBe(description)
   })
 
-  it('can return empty value when there are no exercises', async () => {
+  it('returns an empty value when there are no exercises', async () => {
     const response = await request(server).get('/exercises').send()
 
     expect(response.status).toBe(200)
