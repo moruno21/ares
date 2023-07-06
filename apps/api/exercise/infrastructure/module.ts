@@ -12,6 +12,8 @@ import { MongooseModule, SchemaFactory } from '@nestjs/mongoose'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
 import ExerciseCreatedHandler from '~/exercise/application/event-handlers/exercise-created'
 
+import DeleteExerciseHandler from '../application/commands/handlers/delete-exercise'
+import ExerciseDeletedHandler from '../application/event-handlers/exercise-deleted'
 import GetExerciseHandler from '../application/queries/handlers/get-exercise'
 import GetExercisesHandler from '../application/queries/handlers/get-exercises'
 import ExercisesController from './controllers/exercises'
@@ -21,9 +23,9 @@ import ExercisesResolver from './resolvers/exercises'
 
 const resolvers = [ExercisesResolver]
 const controllers = [ExercisesController]
-const commandHandlers = [CreateExerciseHandler]
+const commandHandlers = [CreateExerciseHandler, DeleteExerciseHandler]
 const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
-const eventHandlers = [ExerciseCreatedHandler]
+const eventHandlers = [ExerciseCreatedHandler, ExerciseDeletedHandler]
 
 @Module({
   controllers,

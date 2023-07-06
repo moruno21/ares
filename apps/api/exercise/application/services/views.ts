@@ -5,6 +5,7 @@ import ExerciseView from '../models/view'
 
 type ExerciseViews = Readonly<{
   add: (view: ExerciseView) => Promise<ExerciseView>
+  delete: (view: ExerciseView) => Promise<ExerciseView>
   getAll: () => Promise<ExerciseView[]>
   withId: (id: string) => Promise<Either<NotFoundExercise, ExerciseView>>
   withName: (name: string) => Promise<Either<NotFoundExercise, ExerciseView>>

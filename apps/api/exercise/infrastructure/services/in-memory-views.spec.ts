@@ -19,6 +19,7 @@ describe('InMemoryExerciseViews', () => {
 
   it.concurrent('is an exercise views service', () => {
     expect(inMemoryViews).toHaveProperty('add')
+    expect(inMemoryViews).toHaveProperty('delete')
     expect(inMemoryViews).toHaveProperty('getAll')
     expect(inMemoryViews).toHaveProperty('withId')
     expect(inMemoryViews).toHaveProperty('withName')
@@ -98,5 +99,18 @@ describe('InMemoryExerciseViews', () => {
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
+  })
+
+  it('deletes an exercise', async () => {
+    const viewsIndexOf = jest.spyOn(views, 'indexOf')
+    const viewsSplice = jest.spyOn(views, 'splice')
+
+    const mockIndex = 5
+    viewsIndexOf.mockReturnValue(mockIndex)
+
+    const response = await inMemoryViews.delete(view)
+
+    expect(viewsSplice).toHaveBeenCalledWith(mockIndex, 1)
+    expect(response).toBe(view)
   })
 })

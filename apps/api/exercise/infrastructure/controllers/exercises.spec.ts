@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common'
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
+import DeleteExercise from '~/exercise/application/commands/delete-exercise'
 import ExerciseView from '~/exercise/application/models/view'
 import GetExercise from '~/exercise/application/queries/get-exercise'
 import GetExercises from '~/exercise/application/queries/get-exercises'
@@ -38,7 +39,6 @@ describe('ExerciseController', () => {
     const exerciseViewTwo = ExerciseView.with({ description, id, name })
 
     beforeEach(() => {
-      commandBus = CommandBusMock.mock()
       queryBus = QueryBusMock.mock()
       exerciseController = new ExerciseController(commandBus, queryBus)
     })
@@ -79,7 +79,6 @@ describe('ExerciseController', () => {
     const exerciseView = ExerciseView.with({ description, id, name })
 
     beforeEach(() => {
-      commandBus = CommandBusMock.mock()
       queryBus = QueryBusMock.mock()
       exerciseController = new ExerciseController(commandBus, queryBus)
     })
@@ -147,7 +146,6 @@ describe('ExerciseController', () => {
 
     beforeEach(() => {
       commandBus = CommandBusMock.mock()
-      queryBus = QueryBusMock.mock()
       exerciseController = new ExerciseController(commandBus, queryBus)
     })
 
@@ -256,6 +254,74 @@ describe('ExerciseController', () => {
       )
       await expect(response).rejects.toThrow(
         new BadRequestException(HttpError.fromExceptions(exceptions)),
+      )
+    })
+  })
+
+  describe('DeleteExercise', () => {
+    const idValue = 'e33db8e1-b845-4244-bbf1-af0c98b8bc3d'
+    const id = ExerciseId.fromString(idValue).value as ExerciseId
+    const nameValue = 'name'
+    const name = ExerciseName.fromString(nameValue).value as ExerciseName
+    const descriptionValue = 'description'
+    const description = ExerciseDescription.fromString(descriptionValue)
+      .value as ExerciseDescription
+    const exercise = Exercise.create({ description, id, name })
+    const dto = ExerciseDto.fromExercise(exercise)
+
+    beforeEach(() => {
+      commandBus = CommandBusMock.mock()
+      exerciseController = new ExerciseController(commandBus, queryBus)
+    })
+
+    it('deletes an exercise from an id', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+
+      commandBusExecute.mockResolvedValue(Either.right(exercise))
+
+      const response = (await exerciseController.deleteExercise(
+        id.value,
+      )) as ExerciseDto
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        DeleteExercise.with({
+          id: idValue,
+        }),
+      )
+      expect(response.id).toBe(dto.id)
+    })
+
+    it('cannot delete an exercise from an invalid id', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      const invalidUuid = 'invalidUuid'
+      const exception = InvalidUuid.causeTheFormatIsNotValid('invalidUuid')
+
+      commandBusExecute.mockResolvedValue(Either.left(exception))
+
+      const response = exerciseController.deleteExercise(invalidUuid)
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        DeleteExercise.with({ id: invalidUuid }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions([exception])),
+      )
+    })
+
+    it('cannot delete an exercise that does not exist', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      const nonExistentUuid = 'e1fb4167-dfae-40ac-8e5a-5037a4c2fe31'
+      const exception = NotFoundExercise.withId(nonExistentUuid)
+
+      commandBusExecute.mockResolvedValue(Either.left(exception))
+
+      const response = exerciseController.deleteExercise(nonExistentUuid)
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        DeleteExercise.with({ id: nonExistentUuid }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions([exception])),
       )
     })
   })

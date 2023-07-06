@@ -1,6 +1,12 @@
-import { EventStoreDBClient, jsonEvent, NO_STREAM } from '@eventstore/db-client'
+import {
+  EventStoreDBClient,
+  jsonEvent,
+  NO_STREAM,
+  STREAM_EXISTS,
+} from '@eventstore/db-client'
 
 import ExerciseCreated from '~/exercise/domain/events/exercise-created'
+import ExerciseDeleted from '~/exercise/domain/events/exercise-deleted'
 import ExerciseDescription from '~/exercise/domain/models/description'
 import Exercise from '~/exercise/domain/models/exercise'
 import ExerciseId from '~/exercise/domain/models/id'
@@ -29,6 +35,8 @@ describe('EventStoreExercises', () => {
 
   it('is an exercises service', () => {
     expect(exercises).toHaveProperty('add')
+    expect(exercises).toHaveProperty('delete')
+    expect(exercises).toHaveProperty('findWithId')
   })
 
   it('adds an exercise', async () => {
@@ -53,6 +61,30 @@ describe('EventStoreExercises', () => {
         type: ExerciseCreated.name,
       }),
       { expectedRevision: NO_STREAM },
+    )
+    expect(response).toBe(exercise)
+  })
+
+  it('deletes an exercise', async () => {
+    const clientAppendToStream = jest.spyOn(client, 'appendToStream')
+
+    clientAppendToStream.mockResolvedValue({
+      nextExpectedRevision: BigInt(1),
+      success: true,
+    })
+
+    const response = await exercises.delete(exercise)
+
+    expect(clientAppendToStream).toHaveBeenCalledWith(
+      `${Exercise.name}-${exercise.id.value}`,
+      jsonEvent({
+        data: {
+          id: exercise.id.value,
+        },
+        id: expect.anything(),
+        type: ExerciseDeleted.name,
+      }),
+      { expectedRevision: STREAM_EXISTS },
     )
     expect(response).toBe(exercise)
   })

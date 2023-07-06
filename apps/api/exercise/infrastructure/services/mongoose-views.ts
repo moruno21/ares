@@ -22,6 +22,12 @@ class MongooseExerciseViews implements ExerciseViews {
     return view
   }
 
+  async delete(view: ExerciseView): Promise<ExerciseView> {
+    await this.views.deleteOne({ _id: view.id }).lean().exec()
+
+    return view
+  }
+
   async getAll(): Promise<ExerciseView[]> {
     const mongooseViews = await this.views.find().lean().exec()
 

@@ -23,6 +23,7 @@ describe('MongooseExerciseViews', () => {
 
   it.concurrent('is an exercise views service', () => {
     expect(mongooseViews).toHaveProperty('add')
+    expect(mongooseViews).toHaveProperty('delete')
     expect(mongooseViews).toHaveProperty('getAll')
     expect(mongooseViews).toHaveProperty('withId')
     expect(mongooseViews).toHaveProperty('withName')
@@ -145,5 +146,14 @@ describe('MongooseExerciseViews', () => {
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
+  })
+
+  it('deletes a view', async () => {
+    const viewsDeleteOne = jest.spyOn(views, 'deleteOne')
+
+    const response = await mongooseViews.delete(view)
+
+    expect(viewsDeleteOne).toHaveBeenCalledWith({ _id: view.id })
+    expect(response).toBe(view)
   })
 })

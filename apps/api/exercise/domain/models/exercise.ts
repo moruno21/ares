@@ -1,8 +1,11 @@
 import { AggregateRoot } from '@nestjs/cqrs'
 
 import { Entity } from '~/shared/domain'
+import Either from '~/shared/either'
 
 import ExerciseCreated from '../events/exercise-created'
+import ExerciseDeleted from '../events/exercise-deleted'
+import NotFoundExercise from '../exceptions/not-found'
 import ExerciseDescription from './description'
 import ExerciseId from './id'
 import ExerciseName from './name'
@@ -18,10 +21,7 @@ class Exercise
   private _id: ExerciseId
   private _description: ExerciseDescription
   private _name: ExerciseName
-
-  private constructor() {
-    super()
-  }
+  private _isDeleted: boolean
 
   get id(): ExerciseId {
     return this._id
@@ -33,6 +33,10 @@ class Exercise
 
   get description(): ExerciseDescription {
     return this._description
+  }
+
+  get isDeleted(): boolean {
+    return this._isDeleted
   }
 
   static create({
@@ -57,11 +61,26 @@ class Exercise
     return exercise
   }
 
+  delete(): Either<NotFoundExercise, Exercise> {
+    if (this._isDeleted)
+      return Either.left(NotFoundExercise.withId(this.id.value))
+
+    this.apply(ExerciseDeleted.with({ id: this._id.value }))
+
+    return Either.right(this)
+  }
+
   private onExerciseCreated(event: ExerciseCreated) {
     this._id = ExerciseId.fromString(event.id).value as ExerciseId
     this._name = ExerciseName.fromString(event.name).value as ExerciseName
     this._description = ExerciseDescription.fromString(event.description)
       .value as ExerciseDescription
+    this._isDeleted = false
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private onExerciseDeleted(event: ExerciseDeleted) {
+    this._isDeleted = true
   }
 }
 

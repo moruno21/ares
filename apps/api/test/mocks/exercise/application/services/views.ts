@@ -4,6 +4,7 @@ const ExerciseViewsMock = {
   mock: () =>
     ({
       add: jest.fn(),
+      delete: jest.fn(),
       getAll: jest.fn(),
       withId: jest.fn(),
       withName: jest.fn(),

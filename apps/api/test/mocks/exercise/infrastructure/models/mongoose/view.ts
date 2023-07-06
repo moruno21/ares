@@ -6,6 +6,11 @@ const MongooseExerciseViewMock = {
   mock: () =>
     ({
       create: jest.fn(),
+      deleteOne: () => ({
+        lean: () => ({
+          exec: jest.fn(),
+        }),
+      }),
       find: () => ({
         lean: () => ({
           exec: jest.fn(),

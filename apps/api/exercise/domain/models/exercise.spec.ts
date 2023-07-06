@@ -1,5 +1,7 @@
+import Either, { Left } from '~/shared/either'
 import { itIsAnEntity } from '~/test/closures/shared/domain/entity'
 
+import NotFoundExercise from '../exceptions/not-found'
 import Exercise from '../models/exercise'
 import ExerciseId from '../models/id'
 import ExerciseName from '../models/name'
@@ -24,10 +26,32 @@ describe('Exercise', () => {
     expect(exercise).toHaveProperty('description')
   })
 
+  it.concurrent('has an isdeleted', () => {
+    expect(exercise).toHaveProperty('isDeleted')
+  })
+
   it.concurrent('can be created', () => {
     expect(exercise.__name__).toBe(__name__)
-    expect(exercise.id).toBe(id)
-    expect(exercise.name).toBe(name)
-    expect(exercise.description).toBe(description)
+    expect(exercise.id).toStrictEqual(id)
+    expect(exercise.name).toStrictEqual(name)
+    expect(exercise.description).toStrictEqual(description)
+    expect(exercise.isDeleted).toBe(false)
+  })
+
+  it.concurrent('can be deleted', () => {
+    const deletedExercise = exercise.delete()
+
+    expect(deletedExercise.value).toStrictEqual(exercise)
+    expect(exercise.isDeleted).toBe(true)
+  })
+
+  it.concurrent('cannot be deleted if it is already deleted', () => {
+    exercise.delete()
+    const deletedExerciseTwice = exercise.delete() as Left<NotFoundExercise>
+    const notFoundExercise = NotFoundExercise.withId(exercise.id.value)
+
+    expect(Either.isRight(deletedExerciseTwice)).toBe(false)
+    expect(deletedExerciseTwice.value.__name__).toBe(notFoundExercise.__name__)
+    expect(deletedExerciseTwice.value.code).toBe(notFoundExercise.code)
   })
 })

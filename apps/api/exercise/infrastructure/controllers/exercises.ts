@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -16,7 +17,9 @@ import {
 } from '@nestjs/swagger'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
+import DeleteExercise from '~/exercise/application/commands/delete-exercise'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
+import DeleteExerciseHandler from '~/exercise/application/commands/handlers/delete-exercise'
 import GetExercise from '~/exercise/application/queries/get-exercise'
 import GetExercises from '~/exercise/application/queries/get-exercises'
 import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exercise'
@@ -93,6 +96,25 @@ class ExercisesController {
 
     if (Either.isLeft(response))
       throw new BadRequestException(HttpError.fromExceptions(response.value))
+
+    return ExerciseDto.fromExercise(response.value)
+  }
+
+  @ApiOperation({ summary: 'Deletes an Exercise' })
+  @ApiCreatedResponse({
+    description: 'Exercise deleted',
+    type: ExerciseDto,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid input' })
+  @Delete(':id')
+  async deleteExercise(
+    @Param('id') id: string,
+  ): Promise<ExerciseDto | BadRequestException> {
+    const response: Awaited<ReturnType<DeleteExerciseHandler['execute']>> =
+      await this.commandBus.execute(DeleteExercise.with({ id }))
+
+    if (Either.isLeft(response))
+      throw new BadRequestException(HttpError.fromExceptions([response.value]))
 
     return ExerciseDto.fromExercise(response.value)
   }
