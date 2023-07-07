@@ -16,11 +16,8 @@ class ExerciseDeletedHandler implements IEventHandler<ExerciseDeleted> {
   ): Promise<Either<NotFoundExercise, void>> {
     const exerciseView = await this.views.withId(event.id)
 
-    if (Either.isLeft(exerciseView)) {
-      console.log('holaaa')
-
+    if (Either.isLeft(exerciseView))
       return Either.left(NotFoundExercise.withId(event.id))
-    }
 
     await this.views.delete(exerciseView.value)
   }
