@@ -101,7 +101,7 @@ class ExercisesController {
   }
 
   @ApiOperation({ summary: 'Deletes an Exercise' })
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: 'Exercise deleted',
     type: ExerciseDto,
   })
