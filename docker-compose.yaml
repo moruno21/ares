@@ -33,6 +33,16 @@ services:
       - 8081:8081
     restart: unless-stopped
 
+  testing-eventstore:
+    image: eventstore/eventstore:22.6.0-buster-slim
+    environment:
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_RUN_PROJECTIONS=All
+    ports:
+      - 11113:1113
+      - 12113:2113
+
 volumes:
   eventstore-volume-data:
   eventstore-volume-logs:
