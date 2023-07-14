@@ -15,7 +15,7 @@ import ExerciseId from '~/exercise/domain/models/id'
 import Exercises from '~/exercise/domain/services/exercises'
 import Either from '~/shared/either'
 
-const eventFactories = {
+const eventFactory = {
   ExerciseCreated: ({
     description,
     id,
@@ -80,7 +80,7 @@ class EventStoreExercises implements Exercises {
         const eventType = event.event.type
         const data = event.event.data
         events.push(
-          eventFactories[eventType]({ ...(data as Record<string, unknown>) }),
+          eventFactory[eventType]({ ...(data as Record<string, unknown>) }),
         )
       }
 
