@@ -34,6 +34,14 @@ class MongooseExerciseViews implements ExerciseViews {
     )
   }
 
+  async redescribe(id: string, description: string): Promise<void> {
+    await this.views.updateOne({ _id: id }, { description }).lean().exec()
+  }
+
+  async rename(id: string, name: string): Promise<void> {
+    await this.views.updateOne({ _id: id }, { name }).lean().exec()
+  }
+
   async withId(id: string): Promise<Either<NotFoundExercise, ExerciseView>> {
     const mongooseView = await this.views.findOne({ _id: id }).lean().exec()
 

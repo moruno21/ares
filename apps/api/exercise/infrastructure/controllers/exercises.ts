@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
 } from '@nestjs/common'
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import {
@@ -18,8 +19,10 @@ import {
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
 import DeleteExercise from '~/exercise/application/commands/delete-exercise'
+import EditExercise from '~/exercise/application/commands/edit-exercise'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
 import DeleteExerciseHandler from '~/exercise/application/commands/handlers/delete-exercise'
+import EditExerciseHandler from '~/exercise/application/commands/handlers/edit-exercise'
 import GetExercise from '~/exercise/application/queries/get-exercise'
 import GetExercises from '~/exercise/application/queries/get-exercises'
 import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exercise'
@@ -30,6 +33,7 @@ import Uuid from '~/shared/uuid'
 
 import ExerciseDto from '../models/http/dto'
 import PostExerciseDto from '../models/http/post-dto'
+import PutExerciseDto from '../models/http/put-dto'
 
 @ApiTags('Exercises')
 @Controller('exercises')
@@ -96,6 +100,32 @@ class ExercisesController {
 
     if (Either.isLeft(response))
       throw new BadRequestException(HttpError.fromExceptions(response.value))
+
+    return ExerciseDto.fromExercise(response.value)
+  }
+
+  @ApiOperation({ summary: 'Edits an Exercise' })
+  @ApiCreatedResponse({
+    description: 'Exercise edited',
+    type: ExerciseDto,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid input' })
+  @Put(':id')
+  async editExercise(
+    @Param('id') id: string,
+    @Body() dto: PutExerciseDto,
+  ): Promise<ExerciseDto | BadRequestException> {
+    const response: Awaited<ReturnType<EditExerciseHandler['execute']>> =
+      await this.commandBus.execute(
+        EditExercise.with({
+          description: dto.description,
+          id,
+          name: dto.name,
+        }),
+      )
+
+    if (Either.isLeft(response))
+      throw new BadRequestException(HttpError.fromExceptions([response.value]))
 
     return ExerciseDto.fromExercise(response.value)
   }

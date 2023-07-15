@@ -4,8 +4,10 @@ import { GraphQLError } from 'graphql'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
 import DeleteExercise from '~/exercise/application/commands/delete-exercise'
+import EditExercise from '~/exercise/application/commands/edit-exercise'
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
 import DeleteExerciseHandler from '~/exercise/application/commands/handlers/delete-exercise'
+import EditExerciseHandler from '~/exercise/application/commands/handlers/edit-exercise'
 import GetExercise from '~/exercise/application/queries/get-exercise'
 import GetExercises from '~/exercise/application/queries/get-exercises'
 import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exercise'
@@ -64,6 +66,28 @@ class ExercisesResolver {
     if (Either.isLeft(response))
       return new GraphQLError(response.value[0].message, {
         extensions: { code: response.value[0].code },
+      })
+
+    return ExerciseDto.fromExercise(response.value)
+  }
+
+  @Mutation(() => Exercise)
+  async editExercise(
+    @Args('id') id: string,
+    @Args('exerciseInput') exerciseInput: ExerciseInput,
+  ): Promise<ExerciseDto | GraphQLError> {
+    const response: Awaited<ReturnType<EditExerciseHandler['execute']>> =
+      await this.commandBus.execute(
+        EditExercise.with({
+          description: exerciseInput.description,
+          id,
+          name: exerciseInput.name,
+        }),
+      )
+
+    if (Either.isLeft(response))
+      return new GraphQLError(response.value.message, {
+        extensions: { code: response.value.code },
       })
 
     return ExerciseDto.fromExercise(response.value)

@@ -19,6 +19,11 @@ import ExerciseDeleted from '~/exercise/domain/events/exercise-deleted'
 import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 
+import EditExerciseHandler from '../application/commands/handlers/edit-exercise'
+import ExerciseRedescribedHandler from '../application/event-handlers/exercise-redescribed'
+import ExerciseRenamedHandler from '../application/event-handlers/exercise-renamed'
+import ExerciseRedescribed from '../domain/events/exercise-redescribed'
+import ExerciseRenamed from '../domain/events/exercise-renamed'
 import Exercise from '../domain/models/exercise'
 import ExercisesController from './controllers/exercises'
 import MongooseExerciseView from './models/mongoose/view'
@@ -27,9 +32,18 @@ import ExercisesResolver from './resolvers/exercises'
 
 const resolvers = [ExercisesResolver]
 const controllers = [ExercisesController]
-const commandHandlers = [CreateExerciseHandler, DeleteExerciseHandler]
+const commandHandlers = [
+  CreateExerciseHandler,
+  DeleteExerciseHandler,
+  EditExerciseHandler,
+]
 const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
-const eventHandlers = [ExerciseCreatedHandler, ExerciseDeletedHandler]
+const eventHandlers = [
+  ExerciseCreatedHandler,
+  ExerciseDeletedHandler,
+  ExerciseRedescribedHandler,
+  ExerciseRenamedHandler,
+]
 
 const eventFactories = {
   ExerciseCreated: ({
@@ -42,6 +56,15 @@ const eventFactories = {
     name: string
   }) => ExerciseCreated.with({ description, id, name }),
   ExerciseDeleted: ({ id }: { id: string }) => ExerciseDeleted.with({ id }),
+  ExerciseRedescribed: ({
+    description,
+    id,
+  }: {
+    description: string
+    id: string
+  }) => ExerciseRedescribed.with({ description, id }),
+  ExerciseRenamed: ({ id, name }: { id: string; name: string }) =>
+    ExerciseRenamed.with({ id, name }),
 }
 
 @Module({

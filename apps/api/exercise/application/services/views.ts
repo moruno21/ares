@@ -7,6 +7,8 @@ type ExerciseViews = Readonly<{
   add: (view: ExerciseView) => Promise<ExerciseView>
   delete: (id: string) => Promise<void>
   getAll: () => Promise<ExerciseView[]>
+  redescribe: (id: string, description: string) => Promise<void>
+  rename: (id: string, name: string) => Promise<void>
   withId: (id: string) => Promise<Either<NotFoundExercise, ExerciseView>>
   withName: (name: string) => Promise<Either<NotFoundExercise, ExerciseView>>
 }>

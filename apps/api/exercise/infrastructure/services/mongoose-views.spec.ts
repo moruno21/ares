@@ -25,6 +25,8 @@ describe('MongooseExerciseViews', () => {
     expect(mongooseViews).toHaveProperty('add')
     expect(mongooseViews).toHaveProperty('delete')
     expect(mongooseViews).toHaveProperty('getAll')
+    expect(mongooseViews).toHaveProperty('redescribe')
+    expect(mongooseViews).toHaveProperty('rename')
     expect(mongooseViews).toHaveProperty('withId')
     expect(mongooseViews).toHaveProperty('withName')
   })
@@ -146,6 +148,30 @@ describe('MongooseExerciseViews', () => {
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
+  })
+
+  it('renames a view', async () => {
+    const newName = 'newName'
+    const viewsUpdateOne = jest.spyOn(views, 'updateOne')
+
+    await mongooseViews.rename(view.id, newName)
+
+    expect(viewsUpdateOne).toHaveBeenCalledWith(
+      { _id: view.id },
+      { name: newName },
+    )
+  })
+
+  it('redescribes a view', async () => {
+    const newDescription = 'newDescription'
+    const viewsUpdateOne = jest.spyOn(views, 'updateOne')
+
+    await mongooseViews.redescribe(view.id, newDescription)
+
+    expect(viewsUpdateOne).toHaveBeenCalledWith(
+      { _id: view.id },
+      { description: newDescription },
+    )
   })
 
   it('deletes a view', async () => {

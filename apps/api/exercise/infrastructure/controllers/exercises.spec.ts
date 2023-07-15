@@ -3,12 +3,14 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
 import DeleteExercise from '~/exercise/application/commands/delete-exercise'
+import EditExercise from '~/exercise/application/commands/edit-exercise'
 import ExerciseView from '~/exercise/application/models/view'
 import GetExercise from '~/exercise/application/queries/get-exercise'
 import GetExercises from '~/exercise/application/queries/get-exercises'
 import InvalidExerciseDescription from '~/exercise/domain/exceptions/invalid-description'
 import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
 import NotCreatedExercise from '~/exercise/domain/exceptions/not-created'
+import NotEditedExercise from '~/exercise/domain/exceptions/not-edited'
 import NotFoundExercise from '~/exercise/domain/exceptions/not-found'
 import ExerciseDescription from '~/exercise/domain/models/description'
 import Exercise from '~/exercise/domain/models/exercise'
@@ -23,6 +25,7 @@ import Uuid from '~/shared/uuid'
 import CommandBusMock from '~/test/mocks/@nestjs/cqrs/command-bus'
 import QueryBusMock from '~/test/mocks/@nestjs/cqrs/query-bus'
 
+import PutExerciseDto from '../models/http/put-dto'
 import ExerciseController from './exercises'
 
 describe('ExerciseController', () => {
@@ -254,6 +257,102 @@ describe('ExerciseController', () => {
       )
       await expect(response).rejects.toThrow(
         new BadRequestException(HttpError.fromExceptions(exceptions)),
+      )
+    })
+  })
+
+  describe('PutExercise', () => {
+    const idValue = '7e7479b1-c788-45d2-b977-9ddeadaefb14'
+    const id = ExerciseId.fromString(idValue).value as ExerciseId
+    const nameValue = 'name'
+    const name = ExerciseName.fromString(nameValue).value as ExerciseName
+    const descriptionValue = 'description'
+    const description = ExerciseDescription.fromString(descriptionValue)
+      .value as ExerciseDescription
+    const exerciseEdited = Exercise.create({ description, id, name })
+    const dto = ExerciseDto.fromExercise(exerciseEdited)
+
+    beforeEach(() => {
+      commandBus = CommandBusMock.mock()
+      exerciseController = new ExerciseController(commandBus, queryBus)
+    })
+
+    it('edits an exercise', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      commandBusExecute.mockResolvedValue(Either.right(exerciseEdited))
+
+      const response = (await exerciseController.editExercise(
+        id.value,
+        PutExerciseDto.with({
+          description: descriptionValue,
+          name: nameValue,
+        }),
+      )) as ExerciseDto
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        EditExercise.with({
+          description: descriptionValue,
+          id: idValue,
+          name: nameValue,
+        }),
+      )
+
+      expect(response.id).toBe(dto.id)
+      expect(response.name).toBe(dto.name)
+      expect(response.description).toBe(dto.description)
+    })
+
+    it('cannot edit an exercise with a name that is already used by another exercise', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      const exception =
+        NotEditedExercise.causeAlreadyExistsOneWithName(nameValue)
+
+      commandBusExecute.mockResolvedValue(Either.left(exception))
+
+      const response = exerciseController.editExercise(
+        idValue,
+        PutExerciseDto.with({
+          description: descriptionValue,
+          name: nameValue,
+        }),
+      )
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        EditExercise.with({
+          description: descriptionValue,
+          id: idValue,
+          name: nameValue,
+        }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions([exception])),
+      )
+    })
+
+    it('cannot edit an exercise that does not exist', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      const nonExistentUuid = '9320f2e6-ec9d-46ee-bfd6-909fce789dbe'
+      const exception = NotFoundExercise.withId(nonExistentUuid)
+
+      commandBusExecute.mockResolvedValue(Either.left(exception))
+
+      const response = exerciseController.editExercise(
+        nonExistentUuid,
+        PutExerciseDto.with({
+          description: descriptionValue,
+          name: nameValue,
+        }),
+      )
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        EditExercise.with({
+          description: descriptionValue,
+          id: nonExistentUuid,
+          name: nameValue,
+        }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions([exception])),
       )
     })
   })

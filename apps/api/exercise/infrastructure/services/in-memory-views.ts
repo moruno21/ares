@@ -29,6 +29,24 @@ class InMemoryExerciseViews implements ExerciseViews {
     return this.views
   }
 
+  async redescribe(id: string, description: string): Promise<void> {
+    const index = this.views.findIndex((view) => view.id === id)
+
+    if (index !== -1) {
+      const redescribedExerciseView = { ...this.views[index], description }
+      this.views[index] = redescribedExerciseView
+    }
+  }
+
+  async rename(id: string, name: string): Promise<void> {
+    const index = this.views.findIndex((view) => view.id === id)
+
+    if (index !== -1) {
+      const renamedExerciseView = { ...this.views[index], name }
+      this.views[index] = renamedExerciseView
+    }
+  }
+
   async withId(id: string): Promise<Either<NotFoundExercise, ExerciseView>> {
     const foundView = this.views.find((view) => view.id === id)
 

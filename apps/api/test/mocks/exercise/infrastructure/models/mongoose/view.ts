@@ -21,6 +21,11 @@ const MongooseExerciseViewMock = {
           exec: jest.fn(),
         }),
       }),
+      updateOne: () => ({
+        lean: () => ({
+          exec: jest.fn(),
+        }),
+      }),
     } as unknown as Model<MongooseExerciseView>),
 } as const
 

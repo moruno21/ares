@@ -101,6 +101,26 @@ describe('InMemoryExerciseViews', () => {
     expect(response.value.code).toBe(notFound.code)
   })
 
+  it('renames an exercise', async () => {
+    await inMemoryViews.add(view)
+
+    const newName = 'newName'
+
+    await inMemoryViews.rename(view.id, newName)
+
+    expect(views[0].name).toBe(newName)
+  })
+
+  it('redescribes an exercise', async () => {
+    await inMemoryViews.add(view)
+
+    const newDescription = 'newDescription'
+
+    await inMemoryViews.redescribe(view.id, newDescription)
+
+    expect(views[0].description).toBe(newDescription)
+  })
+
   it('deletes an exercise', async () => {
     const viewsFindIndex = jest.spyOn(views, 'findIndex')
     const viewsSplice = jest.spyOn(views, 'splice')

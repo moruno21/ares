@@ -54,4 +54,19 @@ describe('Exercise', () => {
     expect(deletedExerciseTwice.value.__name__).toBe(notFoundExercise.__name__)
     expect(deletedExerciseTwice.value.code).toBe(notFoundExercise.code)
   })
+
+  it.concurrent('can be renamed', () => {
+    const newName = ExerciseName.fromString('bench press').value as ExerciseName
+    exercise.rename(newName)
+
+    expect(exercise.name).toStrictEqual(newName)
+  })
+
+  it.concurrent('can be redescribed', () => {
+    const newDescription = ExerciseDescription.fromString('new description')
+      .value as ExerciseDescription
+    exercise.redescribe(newDescription)
+
+    expect(exercise.description).toStrictEqual(newDescription)
+  })
 })
