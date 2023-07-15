@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common'
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 
 import NotFoundExercise from '~/exercise/domain/exceptions/not-found'
 import Exercise from '~/exercise/domain/models/exercise'
@@ -12,10 +12,7 @@ import DeleteExercise from '../delete-exercise'
 
 @CommandHandler(DeleteExercise)
 class DeleteExerciseHandler implements ICommandHandler {
-  constructor(
-    private readonly publisher: EventPublisher,
-    @Inject(Exercises) private readonly exercises: Exercises,
-  ) {}
+  constructor(@Inject(Exercises) private readonly exercises: Exercises) {}
 
   async execute(
     command: DeleteExercise,
@@ -31,8 +28,7 @@ class DeleteExerciseHandler implements ICommandHandler {
     const deleteExercise = exercise.value.delete()
     if (Either.isLeft(deleteExercise)) return Either.left(deleteExercise.value)
 
-    this.publisher.mergeObjectContext(exercise.value).commit()
-    await this.exercises.delete(exercise.value)
+    this.exercises.save(exercise.value)
 
     return Either.right(exercise.value)
   }

@@ -26,22 +26,21 @@ describe('EventStoreExercises', () => {
   })
 
   it('is an exercises service', () => {
-    expect(inMemoryExercises).toHaveProperty('add')
-    expect(inMemoryExercises).toHaveProperty('delete')
+    expect(inMemoryExercises).toHaveProperty('save')
     expect(inMemoryExercises).toHaveProperty('findWithId')
   })
 
-  it('adds an exercise', async () => {
+  it('saves an exercise', async () => {
     const exercisesPush = jest.spyOn(exercises, 'push')
 
-    const response = await inMemoryExercises.add(exercise)
+    const response = inMemoryExercises.save(exercise)
 
     expect(exercisesPush).toHaveBeenCalledWith(exercise)
     expect(response).toBe(exercise)
     expect(inMemoryExercises.exercises).toContain(exercise)
   })
 
-  it('finds an exercise', async () => {
+  it('finds an exercise by its id', async () => {
     const exercisesFind = jest.spyOn(exercises, 'find')
     exercisesFind.mockReturnValue(exercise)
 
@@ -63,18 +62,5 @@ describe('EventStoreExercises', () => {
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
-  })
-
-  it('deletes an exercise', async () => {
-    const exercisesIndexOf = jest.spyOn(exercises, 'indexOf')
-    const exercisesSplice = jest.spyOn(exercises, 'splice')
-
-    const mockIndex = 5
-    exercisesIndexOf.mockReturnValue(mockIndex)
-
-    const response = await inMemoryExercises.delete(exercise)
-
-    expect(exercisesSplice).toHaveBeenCalledWith(mockIndex, 1)
-    expect(response).toBe(exercise)
   })
 })

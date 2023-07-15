@@ -1,22 +1,20 @@
-import {
-  EventStoreDBClient,
-  jsonEvent,
-  NO_STREAM,
-  STREAM_EXISTS,
-} from '@eventstore/db-client'
+import { EventPublisher } from '@nestjs/cqrs'
 
-import ExerciseCreated from '~/exercise/domain/events/exercise-created'
-import ExerciseDeleted from '~/exercise/domain/events/exercise-deleted'
+import NotFoundExercise from '~/exercise/domain/exceptions/not-found'
 import ExerciseDescription from '~/exercise/domain/models/description'
 import Exercise from '~/exercise/domain/models/exercise'
 import ExerciseId from '~/exercise/domain/models/id'
 import ExerciseName from '~/exercise/domain/models/name'
-import EventStoreDBClientMock from '~/test/mocks/@eventstore/db-client'
+import Either, { Left } from '~/shared/either'
+import EventStorePublisher from '~/shared/eventstore/publisher'
+import EventPublisherMock from '~/test/mocks/@nestjs/cqrs/event-publisher'
+import EventStorePublisherMock from '~/test/mocks/shared/eventstore/publisher'
 
 import EventStoreExercises from './eventstore-exercises'
 
 describe('EventStoreExercises', () => {
-  let client: EventStoreDBClient
+  let eventStorePublisher: EventStorePublisher
+  let eventPublisher: EventPublisher
   let exercises: EventStoreExercises
 
   const idValue = '2b188398-7ac0-4afb-879e-b4028a7660b0'
@@ -29,63 +27,52 @@ describe('EventStoreExercises', () => {
   const exercise = Exercise.create({ description, id, name })
 
   beforeEach(() => {
-    client = EventStoreDBClientMock.mock()
-    exercises = new EventStoreExercises(client)
+    eventStorePublisher = EventStorePublisherMock.mock()
+    eventPublisher = EventPublisherMock.mock()
+    exercises = new EventStoreExercises(eventPublisher, eventStorePublisher)
   })
 
   it('is an exercises service', () => {
-    expect(exercises).toHaveProperty('add')
-    expect(exercises).toHaveProperty('delete')
+    expect(exercises).toHaveProperty('save')
     expect(exercises).toHaveProperty('findWithId')
   })
 
-  it('adds an exercise', async () => {
-    const clientAppendToStream = jest.spyOn(client, 'appendToStream')
-
-    clientAppendToStream.mockResolvedValue({
-      nextExpectedRevision: BigInt(1),
-      success: true,
-    })
-
-    const response = await exercises.add(exercise)
-
-    expect(clientAppendToStream).toHaveBeenCalledWith(
-      `${Exercise.name}-${exercise.id.value}`,
-      jsonEvent({
-        data: {
-          description: exercise.description.value,
-          id: exercise.id.value,
-          name: exercise.name.value,
-        },
-        id: expect.anything(),
-        type: ExerciseCreated.name,
-      }),
-      { expectedRevision: NO_STREAM },
+  it('saves an exercise', async () => {
+    const eventPublisherMergeObjectContext = jest.spyOn(
+      eventPublisher,
+      'mergeObjectContext',
     )
+
+    const response = exercises.save(exercise)
+
+    expect(eventPublisherMergeObjectContext).toHaveBeenCalled()
     expect(response).toBe(exercise)
   })
 
-  it('deletes an exercise', async () => {
-    const clientAppendToStream = jest.spyOn(client, 'appendToStream')
+  it('finds an exercise by its id', async () => {
+    const eventStorePublisherRead = jest.spyOn(eventStorePublisher, 'read')
 
-    clientAppendToStream.mockResolvedValue({
-      nextExpectedRevision: BigInt(1),
-      success: true,
-    })
+    eventStorePublisherRead.mockResolvedValue(exercise)
 
-    const response = await exercises.delete(exercise)
+    const response = await exercises.findWithId(exercise.id)
 
-    expect(clientAppendToStream).toHaveBeenCalledWith(
-      `${Exercise.name}-${exercise.id.value}`,
-      jsonEvent({
-        data: {
-          id: exercise.id.value,
-        },
-        id: expect.anything(),
-        type: ExerciseDeleted.name,
-      }),
-      { expectedRevision: STREAM_EXISTS },
-    )
-    expect(response).toBe(exercise)
+    expect(eventStorePublisherRead).toHaveBeenCalledWith(Exercise, idValue)
+    expect(response).toStrictEqual(Either.right(exercise))
+  })
+
+  it('cannot find an exercise that does not exist', async () => {
+    const eventStorePublisherRead = jest.spyOn(eventStorePublisher, 'read')
+    const notFound = NotFoundExercise.withId(exercise.id.value)
+
+    eventStorePublisherRead.mockResolvedValue(null)
+
+    const response = (await exercises.findWithId(
+      exercise.id,
+    )) as Left<NotFoundExercise>
+
+    expect(eventStorePublisherRead).toHaveBeenCalledWith(Exercise, idValue)
+    expect(Either.isRight(response)).toBe(false)
+    expect(response.value.__name__).toBe(notFound.__name__)
+    expect(response.value.code).toBe(notFound.code)
   })
 })

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common'
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 
 import InvalidExerciseDescription from '~/exercise/domain/exceptions/invalid-description'
 import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
@@ -18,7 +18,6 @@ import CreateExercise from '../create-exercise'
 @CommandHandler(CreateExercise)
 class CreateExerciseHandler implements ICommandHandler {
   constructor(
-    private readonly publisher: EventPublisher,
     @Inject(Exercises) private readonly exercises: Exercises,
     @Inject(ExerciseViews) private readonly views: ExerciseViews,
   ) {}
@@ -58,16 +57,13 @@ class CreateExerciseHandler implements ICommandHandler {
     if (isInvalidId || isInvalidDescription || isInvalidName || existsWithName)
       return Either.left(exceptions)
 
-    const exercise = this.publisher.mergeObjectContext(
-      Exercise.create({
-        description: description.value,
-        id: id.value,
-        name: name.value,
-      }),
-    )
-    exercise.commit()
+    const exercise = Exercise.create({
+      description: description.value,
+      id: id.value,
+      name: name.value,
+    })
 
-    await this.exercises.add(exercise)
+    this.exercises.save(exercise)
 
     return Either.right(exercise)
   }

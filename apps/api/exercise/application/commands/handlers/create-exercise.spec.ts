@@ -1,5 +1,3 @@
-import { EventPublisher } from '@nestjs/cqrs'
-
 import InvalidExerciseDescription from '~/exercise/domain/exceptions/invalid-description'
 import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
 import NotCreatedExercise from '~/exercise/domain/exceptions/not-created'
@@ -11,7 +9,6 @@ import ExerciseName from '~/exercise/domain/models/name'
 import Exercises from '~/exercise/domain/services/exercises'
 import { InvalidUuid } from '~/shared/domain'
 import Either, { Left } from '~/shared/either'
-import EventPublisherMock from '~/test/mocks/@nestjs/cqrs/event-publisher'
 import ExerciseViewsMock from '~/test/mocks/exercise/application/services/views'
 import ExercisesMock from '~/test/mocks/exercise/domain/services/exercises'
 
@@ -21,7 +18,6 @@ import CreateExercise from '../create-exercise'
 import CreateExerciseHandler from './create-exercise'
 
 describe('CreateExerciseHandler', () => {
-  let eventPublisher: EventPublisher
   let exercises: Exercises
   let views: ExerciseViews
   let createExerciseHandler: CreateExerciseHandler
@@ -36,29 +32,18 @@ describe('CreateExerciseHandler', () => {
   const exercise = Exercise.create({ description, id, name })
 
   beforeEach(() => {
-    eventPublisher = EventPublisherMock.mock()
     exercises = ExercisesMock.mock()
     views = ExerciseViewsMock.mock()
-    createExerciseHandler = new CreateExerciseHandler(
-      eventPublisher,
-      exercises,
-      views,
-    )
+    createExerciseHandler = new CreateExerciseHandler(exercises, views)
   })
 
   it('creates an exercise', async () => {
-    const eventPublisherMergeObjectContext = jest.spyOn(
-      eventPublisher,
-      'mergeObjectContext',
-    )
-    const exercisesAdd = jest.spyOn(exercises, 'add')
+    const exercisesSave = jest.spyOn(exercises, 'save')
     const viewsWithName = jest.spyOn(views, 'withName')
 
     viewsWithName.mockResolvedValue(
       Either.left(NotFoundExercise.withName(nameValue)),
     )
-
-    exercise.commit()
 
     const response = await createExerciseHandler.execute(
       CreateExercise.with({
@@ -69,8 +54,7 @@ describe('CreateExerciseHandler', () => {
     )
 
     expect(viewsWithName).toHaveBeenCalledWith(nameValue)
-    expect(eventPublisherMergeObjectContext).toHaveBeenCalledWith(exercise)
-    expect(exercisesAdd).toHaveBeenCalledWith(exercise)
+    expect(exercisesSave).toHaveBeenCalledWith(exercise)
     expect(Either.isRight(response)).toBe(true)
     expect(response).toStrictEqual(Either.right(exercise))
   })
@@ -105,11 +89,7 @@ describe('CreateExerciseHandler', () => {
   ])(
     'cannot create an exercise with invalid params',
     async ({ descriptionMock, idMock, nameMock }) => {
-      const eventPublisherMergeObjectContext = jest.spyOn(
-        eventPublisher,
-        'mergeObjectContext',
-      )
-      const exercisesAdd = jest.spyOn(exercises, 'add')
+      const exercisesSave = jest.spyOn(exercises, 'save')
       const viewsWithName = jest.spyOn(views, 'withName')
 
       viewsWithName.mockResolvedValue(
@@ -130,8 +110,7 @@ describe('CreateExerciseHandler', () => {
         expect(viewsWithName).not.toHaveBeenCalled()
       else expect(viewsWithName).toHaveBeenCalledWith(nameMock)
 
-      expect(exercisesAdd).not.toHaveBeenCalled()
-      expect(eventPublisherMergeObjectContext).not.toHaveBeenCalled()
+      expect(exercisesSave).not.toHaveBeenCalled()
       expect(Either.isRight(response)).toBe(false)
 
       if (Either.isLeft(ExerciseId.fromString(idMock))) {
@@ -178,11 +157,7 @@ describe('CreateExerciseHandler', () => {
   )
 
   it('cannot create an exercise whose name is already used by another exercise', async () => {
-    const eventPublisherMergeObjectContext = jest.spyOn(
-      eventPublisher,
-      'mergeObjectContext',
-    )
-    const exercisesAdd = jest.spyOn(exercises, 'add')
+    const exercisesSave = jest.spyOn(exercises, 'save')
     const viewsWithName = jest.spyOn(views, 'withName')
     const notCreated =
       NotCreatedExercise.causeAlreadyExistsOneWithName(nameValue)
@@ -206,8 +181,7 @@ describe('CreateExerciseHandler', () => {
     )) as Left<NotCreatedExercise[]>
 
     expect(viewsWithName).toHaveBeenCalledWith(nameValue)
-    expect(exercisesAdd).not.toHaveBeenCalled()
-    expect(eventPublisherMergeObjectContext).not.toHaveBeenCalled()
+    expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value[0].__name__).toBe(notCreated.__name__)
     expect(response.value[0].code).toBe(notCreated.code)

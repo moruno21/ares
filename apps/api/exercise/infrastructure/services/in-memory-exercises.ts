@@ -14,16 +14,8 @@ class InMemoryExercises implements Exercises {
     return new InMemoryExercises(exercises)
   }
 
-  async add(exercise: Exercise): Promise<Exercise> {
+  save(exercise: Exercise): Exercise {
     this.exercises.push(exercise)
-
-    return exercise
-  }
-
-  async delete(exercise: Exercise): Promise<Exercise> {
-    const index = this.exercises.indexOf(exercise)
-
-    if (index !== -1) this.exercises.splice(index, 1)
 
     return exercise
   }
