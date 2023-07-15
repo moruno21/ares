@@ -8,11 +8,11 @@ import ExerciseDeletedHandler from './exercise-deleted'
 
 describe('ExerciseDeletedHandler', () => {
   let views: ExerciseViews
-  let createdHandler: ExerciseDeletedHandler
+  let deletedHandler: ExerciseDeletedHandler
 
   beforeEach(() => {
     views = ExerciseViewsMock.mock()
-    createdHandler = new ExerciseDeletedHandler(views)
+    deletedHandler = new ExerciseDeletedHandler(views)
   })
 
   it('deletes an exercise view with exercise deleted', async () => {
@@ -26,7 +26,7 @@ describe('ExerciseDeletedHandler', () => {
 
     viewsWithId.mockResolvedValue(Either.right(view))
 
-    await createdHandler.handle(ExerciseDeleted.with({ id }))
+    await deletedHandler.handle(ExerciseDeleted.with({ id }))
     expect(viewsDelete).toHaveBeenCalledWith(view)
   })
 })
