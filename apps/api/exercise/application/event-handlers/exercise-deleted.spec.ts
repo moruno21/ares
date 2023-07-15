@@ -28,7 +28,7 @@ describe('ExerciseDeletedHandler', () => {
     viewsWithId.mockResolvedValue(Either.right(view))
 
     await deletedHandler.handle(ExerciseDeleted.with({ id }))
-    expect(viewsDelete).toHaveBeenCalledWith(view)
+    expect(viewsDelete).toHaveBeenCalledWith(view.id)
   })
 
   it('cannot delete an exercise view that does not exist', async () => {

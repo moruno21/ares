@@ -19,7 +19,7 @@ class ExerciseDeletedHandler implements IEventHandler<ExerciseDeleted> {
     if (Either.isLeft(exerciseView))
       return Either.left(NotFoundExercise.withId(event.id))
 
-    await this.views.delete(exerciseView.value)
+    await this.views.delete(exerciseView.value.id)
   }
 }
 

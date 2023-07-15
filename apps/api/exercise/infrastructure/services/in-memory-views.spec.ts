@@ -102,15 +102,14 @@ describe('InMemoryExerciseViews', () => {
   })
 
   it('deletes an exercise', async () => {
-    const viewsIndexOf = jest.spyOn(views, 'indexOf')
+    const viewsFindIndex = jest.spyOn(views, 'findIndex')
     const viewsSplice = jest.spyOn(views, 'splice')
 
     const mockIndex = 5
-    viewsIndexOf.mockReturnValue(mockIndex)
+    viewsFindIndex.mockReturnValue(mockIndex)
 
-    const response = await inMemoryViews.delete(view)
+    await inMemoryViews.delete(view.id)
 
     expect(viewsSplice).toHaveBeenCalledWith(mockIndex, 1)
-    expect(response).toBe(view)
   })
 })

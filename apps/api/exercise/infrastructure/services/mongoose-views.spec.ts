@@ -151,9 +151,8 @@ describe('MongooseExerciseViews', () => {
   it('deletes a view', async () => {
     const viewsDeleteOne = jest.spyOn(views, 'deleteOne')
 
-    const response = await mongooseViews.delete(view)
+    await mongooseViews.delete(view.id)
 
     expect(viewsDeleteOne).toHaveBeenCalledWith({ _id: view.id })
-    expect(response).toBe(view)
   })
 })

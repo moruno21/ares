@@ -19,12 +19,10 @@ class InMemoryExerciseViews implements ExerciseViews {
     return view
   }
 
-  async delete(view: ExerciseView): Promise<ExerciseView> {
-    const index = this.views.indexOf(view)
+  async delete(id: string): Promise<void> {
+    const index = this.views.findIndex((view) => view.id === id)
 
     if (index !== -1) this.views.splice(index, 1)
-
-    return view
   }
 
   async getAll(): Promise<ExerciseView[]> {
