@@ -5,7 +5,7 @@ import { CqrsModule, EventBus } from '@nestjs/cqrs'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConsoleModule } from 'nestjs-console'
 
-import { LoggerMiddleware } from '~/middleware/logger'
+import LoggerMiddleware from '~/middleware/logger'
 
 import ExerciseModule from './exercise/infrastructure/module'
 import EventPublishersHandler from './middleware/event-publishers-handler'
