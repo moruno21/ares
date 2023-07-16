@@ -72,6 +72,7 @@ const eventFactories = {
   controllers,
   imports: [
     CqrsModule,
+    EventStoreModule.forRoot(),
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       autoSchemaFile: { federation: 2 },
       driver: ApolloFederationDriver,
@@ -87,14 +88,13 @@ const eventFactories = {
         schema: SchemaFactory.createForClass(MongooseExerciseView),
       },
     ]),
-    EventStoreModule.forRoot(),
   ],
   providers: [
-    ...queryHandlers,
     ...commandHandlers,
     ...eventHandlers,
     ...exerciseProviders,
     ...resolvers,
+    ...queryHandlers,
   ],
 })
 class ExerciseModule {

@@ -25,11 +25,11 @@ import EventStorePublisher from './shared/eventstore/publisher'
       isGlobal: true,
     }),
     ConsoleModule,
+    EventStoreModule.forRoot(),
+    ExerciseModule,
     MongooseModule.forRootAsync({
       useFactory: () => ({ uri: process.env.MONGODB_URI }),
     }),
-    ExerciseModule,
-    EventStoreModule.forRoot(),
   ],
   providers: [
     {
