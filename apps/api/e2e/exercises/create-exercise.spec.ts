@@ -1,5 +1,6 @@
 import { EventStoreDBClient } from '@eventstore/db-client'
 import { HttpServer, INestApplication } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
 import { getModelToken } from '@nestjs/mongoose'
 import { Test } from '@nestjs/testing'
 import { Connection, Model } from 'mongoose'
@@ -19,7 +20,12 @@ describe('Create Exercise', () => {
 
   beforeAll(async () => {
     const module = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [
+        AppModule,
+        ConfigModule.forRoot({
+          envFilePath: ['env.test.local', '.env.test'],
+        }),
+      ],
     }).compile()
 
     app = module.createNestApplication()
