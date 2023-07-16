@@ -1,3 +1,4 @@
+import { ApolloServerPluginInlineTraceDisabled } from '@apollo/server/plugin/disabled'
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import {
   ApolloFederationDriver,
@@ -75,7 +76,10 @@ const eventFactories = {
       autoSchemaFile: { federation: 2 },
       driver: ApolloFederationDriver,
       playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      plugins: [
+        ApolloServerPluginInlineTraceDisabled(),
+        ApolloServerPluginLandingPageLocalDefault(),
+      ],
     }),
     MongooseModule.forFeature([
       {
