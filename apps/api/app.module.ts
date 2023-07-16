@@ -40,12 +40,17 @@ import EventStorePublisher from './shared/eventstore/publisher'
   ],
 })
 export class AppModule implements NestModule {
-  constructor(eventBus: EventBus, eventStorePublisher: EventStorePublisher) {
+  constructor(
+    private readonly eventBus: EventBus,
+    private readonly eventStorePublisher: EventStorePublisher,
+  ) {}
+
+  onModuleInit() {
     const eventPublishers = new EventPublishersHandler(
-      eventStorePublisher,
-      eventBus.publisher,
+      this.eventStorePublisher,
+      this.eventBus.publisher,
     )
-    eventBus.publisher = eventPublishers
+    this.eventBus.publisher = eventPublishers
   }
 
   configure(consumer: MiddlewareConsumer) {
