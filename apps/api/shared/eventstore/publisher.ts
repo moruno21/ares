@@ -39,9 +39,7 @@ class EventStorePublisher implements IEventPublisher<IEvent> {
           type,
         }),
       )
-    } catch (err) {
-      console.trace(err)
-    }
+    } catch (err) {}
   }
 
   setCategory(category: string) {
@@ -73,9 +71,7 @@ class EventStorePublisher implements IEventPublisher<IEvent> {
       const entity = Reflect.construct(aggregate, [])
       entity.loadFromHistory(events)
       return entity
-    } catch (error) {
-      console.trace(error)
-    }
+    } catch (error) {}
     return null
   }
 }
