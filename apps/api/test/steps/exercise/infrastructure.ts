@@ -4,7 +4,7 @@ import { CqrsModule } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
 
 import CreateExerciseHandler from '~/exercise/application/commands/handlers/create-exercise'
-import CreatedExerciseHandler from '~/exercise/application/event-handlers/exercise-created'
+import ExerciseCreatedHandler from '~/exercise/application/event-handlers/exercise-created'
 import ExerciseViews from '~/exercise/application/services/views'
 import Exercises from '~/exercise/domain/services/exercises'
 import ExerciseController from '~/exercise/infrastructure/controllers/exercises'
@@ -20,7 +20,7 @@ When(
       imports: [CqrsModule],
       providers: [
         CreateExerciseHandler,
-        CreatedExerciseHandler,
+        ExerciseCreatedHandler,
         {
           provide: Exercises,
           useValue: this.exercises,
