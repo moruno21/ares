@@ -2,7 +2,7 @@ import { Exception } from '~/shared/domain'
 
 const __name__ = 'InvalidExerciseDescription'
 
-const code = 'too_long_description'
+const code = 'too_long'
 
 type InvalidExerciseDescription = Exception<typeof __name__, typeof code>
 

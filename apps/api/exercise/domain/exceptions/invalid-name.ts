@@ -3,11 +3,11 @@ import { Exception } from '~/shared/domain'
 const __name__ = 'InvalidExerciseName'
 
 const blankCode = 'blank'
-const longCode = 'too_long_name'
+const tooLongCode = 'too_long'
 
 type InvalidExerciseName = Exception<
   typeof __name__,
-  typeof blankCode | typeof longCode
+  typeof blankCode | typeof tooLongCode
 >
 
 const InvalidExerciseName = {
@@ -21,7 +21,7 @@ const InvalidExerciseName = {
   causeIsTooLong: (): InvalidExerciseName => ({
     ...Exception.with({
       __name__,
-      code: longCode,
+      code: tooLongCode,
       message: 'Exercise name cannot be longer than 50 characters',
     }),
   }),
