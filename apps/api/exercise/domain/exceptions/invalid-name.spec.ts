@@ -24,7 +24,7 @@ describe('InvalidExerciseName', () => {
 
     it.concurrent('can be cause it is too long', () => {
       expect(invalidName.__name__).toBe(__name__)
-      expect(invalidName.code).toBe('too_long_name')
+      expect(invalidName.code).toBe('too_long')
       expect(invalidName.message).toBe(
         'Exercise name cannot be longer than 50 characters',
       )

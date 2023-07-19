@@ -12,7 +12,7 @@ describe('InvalidExerciseDescription', () => {
 
     it.concurrent('can be cause it is too long', () => {
       expect(invalidDescription.__name__).toBe(__name__)
-      expect(invalidDescription.code).toBe('too_long_description')
+      expect(invalidDescription.code).toBe('too_long')
       expect(invalidDescription.message).toBe(
         'Exercise description cannot be longer than 250 characters',
       )
