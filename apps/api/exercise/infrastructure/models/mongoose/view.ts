@@ -19,15 +19,15 @@ class MongooseExerciseView implements Omit<ExerciseView, '__name__' | 'id'> {
     this.name = name
   }
 
-  static fromExerciseView(view: ExerciseView) {
-    return new this(view.id, view.name, view.description)
+  static fromExerciseView({ description, id, name }: ExerciseView) {
+    return new this(id, name, description)
   }
 
-  static toExerciseView(view: MongooseExerciseView) {
+  static toExerciseView({ _id, description, name }: MongooseExerciseView) {
     return ExerciseView.with({
-      description: view.description,
-      id: view._id,
-      name: view.name,
+      description,
+      id: _id,
+      name,
     })
   }
 }

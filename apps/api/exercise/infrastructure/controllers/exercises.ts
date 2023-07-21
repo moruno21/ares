@@ -87,13 +87,11 @@ class ExercisesController {
   async createExercise(
     @Body() dto: PostExerciseDto,
   ): Promise<ExerciseDto | BadRequestException> {
-    const id = Uuid.generate()
-
     const response: Awaited<ReturnType<CreateExerciseHandler['execute']>> =
       await this.commandBus.execute(
         CreateExercise.with({
           description: dto.description,
-          id,
+          id: Uuid.generate(),
           name: dto.name,
         }),
       )

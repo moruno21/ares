@@ -26,12 +26,12 @@ import CommandBusMock from '~/test/mocks/@nestjs/cqrs/command-bus'
 import QueryBusMock from '~/test/mocks/@nestjs/cqrs/query-bus'
 
 import PutExerciseDto from '../models/http/put-dto'
-import ExerciseController from './exercises'
+import ExercisesController from './exercises'
 
-describe('ExerciseController', () => {
+describe('ExercisesController', () => {
   let commandBus: CommandBus
   let queryBus: QueryBus
-  let exerciseController: ExerciseController
+  let exercisesController: ExercisesController
 
   describe('GetExercises', () => {
     const id = 'dbeffe3c-a516-479c-8570-e802eda92243'
@@ -43,7 +43,7 @@ describe('ExerciseController', () => {
 
     beforeEach(() => {
       queryBus = QueryBusMock.mock()
-      exerciseController = new ExerciseController(commandBus, queryBus)
+      exercisesController = new ExercisesController(commandBus, queryBus)
     })
 
     it('gets all the exercises', async () => {
@@ -56,7 +56,7 @@ describe('ExerciseController', () => {
         ExerciseDto.fromExerciseView(exerciseView),
       )
 
-      const response = await exerciseController.getExercises()
+      const response = await exercisesController.getExercises()
 
       expect(queryBusExecute).toHaveBeenCalledWith(GetExercises.all())
       expect(response).toStrictEqual(exercises)
@@ -67,7 +67,7 @@ describe('ExerciseController', () => {
 
       queryBusExecute.mockResolvedValue([])
 
-      const response = await exerciseController.getExercises()
+      const response = await exercisesController.getExercises()
 
       expect(queryBusExecute).toHaveBeenCalledWith(GetExercises.all())
       expect(response).toStrictEqual([])
@@ -83,7 +83,7 @@ describe('ExerciseController', () => {
 
     beforeEach(() => {
       queryBus = QueryBusMock.mock()
-      exerciseController = new ExerciseController(commandBus, queryBus)
+      exercisesController = new ExercisesController(commandBus, queryBus)
     })
 
     it('gets an exercise from an id', async () => {
@@ -93,7 +93,9 @@ describe('ExerciseController', () => {
 
       const exercise = ExerciseDto.fromExerciseView(exerciseView)
 
-      const response = (await exerciseController.getExercise(id)) as ExerciseDto
+      const response = (await exercisesController.getExercise(
+        id,
+      )) as ExerciseDto
 
       expect(queryBusExecute).toHaveBeenCalledWith(GetExercise.with({ id }))
       expect(response.id).toStrictEqual(exercise.id)
@@ -108,7 +110,7 @@ describe('ExerciseController', () => {
 
       queryBusExecute.mockResolvedValue(Either.left(exception))
 
-      const response = exerciseController.getExercise(invalidUuid)
+      const response = exercisesController.getExercise(invalidUuid)
 
       expect(queryBusExecute).toHaveBeenCalledWith(
         GetExercise.with({ id: invalidUuid }),
@@ -125,7 +127,7 @@ describe('ExerciseController', () => {
 
       queryBusExecute.mockResolvedValue(Either.left(exception))
 
-      const response = exerciseController.getExercise(nonExistentUuid)
+      const response = exercisesController.getExercise(nonExistentUuid)
 
       expect(queryBusExecute).toHaveBeenCalledWith(
         GetExercise.with({ id: nonExistentUuid }),
@@ -149,7 +151,7 @@ describe('ExerciseController', () => {
 
     beforeEach(() => {
       commandBus = CommandBusMock.mock()
-      exerciseController = new ExerciseController(commandBus, queryBus)
+      exercisesController = new ExercisesController(commandBus, queryBus)
     })
 
     it('creates an exercise', async () => {
@@ -159,7 +161,7 @@ describe('ExerciseController', () => {
       uuidGenerate.mockReturnValue(idValue)
       commandBusExecute.mockResolvedValue(Either.right(exercise))
 
-      const response = (await exerciseController.createExercise(
+      const response = (await exercisesController.createExercise(
         PostExerciseDto.with({
           description: descriptionValue,
           name: nameValue,
@@ -209,7 +211,7 @@ describe('ExerciseController', () => {
         uuidGenerate.mockReturnValue(idValue)
         commandBusExecute.mockResolvedValue(Either.left(exceptions))
 
-        const response = exerciseController.createExercise(
+        const response = exercisesController.createExercise(
           PostExerciseDto.with({
             description: descriptionMock,
             name: nameMock,
@@ -240,7 +242,7 @@ describe('ExerciseController', () => {
       uuidGenerate.mockReturnValue(idValue)
       commandBusExecute.mockResolvedValue(Either.left(exceptions))
 
-      const response = exerciseController.createExercise(
+      const response = exercisesController.createExercise(
         PostExerciseDto.with({
           description: descriptionValue,
           name: nameValue,
@@ -274,14 +276,14 @@ describe('ExerciseController', () => {
 
     beforeEach(() => {
       commandBus = CommandBusMock.mock()
-      exerciseController = new ExerciseController(commandBus, queryBus)
+      exercisesController = new ExercisesController(commandBus, queryBus)
     })
 
     it('edits an exercise', async () => {
       const commandBusExecute = jest.spyOn(commandBus, 'execute')
       commandBusExecute.mockResolvedValue(Either.right(exerciseEdited))
 
-      const response = (await exerciseController.editExercise(
+      const response = (await exercisesController.editExercise(
         id.value,
         PutExerciseDto.with({
           description: descriptionValue,
@@ -309,7 +311,7 @@ describe('ExerciseController', () => {
 
       commandBusExecute.mockResolvedValue(Either.left(exception))
 
-      const response = exerciseController.editExercise(
+      const response = exercisesController.editExercise(
         idValue,
         PutExerciseDto.with({
           description: descriptionValue,
@@ -336,7 +338,7 @@ describe('ExerciseController', () => {
 
       commandBusExecute.mockResolvedValue(Either.left(exception))
 
-      const response = exerciseController.editExercise(
+      const response = exercisesController.editExercise(
         nonExistentUuid,
         PutExerciseDto.with({
           description: descriptionValue,
@@ -370,7 +372,7 @@ describe('ExerciseController', () => {
 
     beforeEach(() => {
       commandBus = CommandBusMock.mock()
-      exerciseController = new ExerciseController(commandBus, queryBus)
+      exercisesController = new ExercisesController(commandBus, queryBus)
     })
 
     it('deletes an exercise from an id', async () => {
@@ -378,7 +380,7 @@ describe('ExerciseController', () => {
 
       commandBusExecute.mockResolvedValue(Either.right(exercise))
 
-      const response = (await exerciseController.deleteExercise(
+      const response = (await exercisesController.deleteExercise(
         id.value,
       )) as ExerciseDto
 
@@ -397,7 +399,7 @@ describe('ExerciseController', () => {
 
       commandBusExecute.mockResolvedValue(Either.left(exception))
 
-      const response = exerciseController.deleteExercise(invalidUuid)
+      const response = exercisesController.deleteExercise(invalidUuid)
 
       expect(commandBusExecute).toHaveBeenCalledWith(
         DeleteExercise.with({ id: invalidUuid }),
@@ -414,7 +416,7 @@ describe('ExerciseController', () => {
 
       commandBusExecute.mockResolvedValue(Either.left(exception))
 
-      const response = exerciseController.deleteExercise(nonExistentUuid)
+      const response = exercisesController.deleteExercise(nonExistentUuid)
 
       expect(commandBusExecute).toHaveBeenCalledWith(
         DeleteExercise.with({ id: nonExistentUuid }),

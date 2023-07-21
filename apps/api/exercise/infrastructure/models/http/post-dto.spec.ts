@@ -1,9 +1,9 @@
-import ExercisePostDto from './post-dto'
+import PostExerciseDto from './post-dto'
 
-describe('ExerciseDto', () => {
+describe('PostExerciseDto', () => {
   const name = 'name'
   const description = 'description'
-  const postDto = ExercisePostDto.with({ description, name })
+  const postDto = PostExerciseDto.with({ description, name })
 
   it.concurrent('has a name', () => {
     expect(postDto).toHaveProperty('name')

@@ -2,10 +2,10 @@ import Either, { Left } from '~/shared/either'
 import { itIsAnEntity } from '~/test/closures/shared/domain/entity'
 
 import NotFoundExercise from '../exceptions/not-found'
-import Exercise from '../models/exercise'
-import ExerciseId from '../models/id'
-import ExerciseName from '../models/name'
 import ExerciseDescription from './description'
+import Exercise from './exercise'
+import ExerciseId from './id'
+import ExerciseName from './name'
 
 describe('Exercise', () => {
   const __name__ = 'Exercise'

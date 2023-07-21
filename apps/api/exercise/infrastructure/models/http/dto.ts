@@ -19,20 +19,16 @@ class ExerciseDto {
     this.description = description
   }
 
-  static fromExercise(exercise: Exercise): ExerciseDto {
-    return new this(
-      exercise.id.value,
-      exercise.description.value,
-      exercise.name.value,
-    )
+  static fromExercise({ description, id, name }: Exercise): ExerciseDto {
+    return new this(id.value, description.value, name.value)
   }
 
-  static fromExerciseView(exerciseView: ExerciseView): ExerciseDto {
-    return new this(
-      exerciseView.id,
-      exerciseView.description,
-      exerciseView.name,
-    )
+  static fromExerciseView({
+    description,
+    id,
+    name,
+  }: ExerciseView): ExerciseDto {
+    return new this(id, description, name)
   }
 }
 

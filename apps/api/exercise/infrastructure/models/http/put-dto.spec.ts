@@ -1,9 +1,9 @@
-import ExercisePutDto from './put-dto'
+import PutExerciseDto from './put-dto'
 
-describe('ExerciseDto', () => {
+describe('PutExerciseDto', () => {
   const name = 'name'
   const description = 'description'
-  const putDto = ExercisePutDto.with({ description, name })
+  const putDto = PutExerciseDto.with({ description, name })
 
   it.concurrent('has a name', () => {
     expect(putDto).toHaveProperty('name')

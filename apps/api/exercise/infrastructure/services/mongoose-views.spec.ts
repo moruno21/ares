@@ -1,27 +1,28 @@
-import { Query } from 'mongoose'
+import { Model, Query } from 'mongoose'
 
 import ExerciseView from '~/exercise/application/models/view'
 import NotFoundExercise from '~/exercise/domain/exceptions/not-found'
 import MongooseExerciseViews from '~/exercise/infrastructure/services/mongoose-views'
 import Either, { Left } from '~/shared/either'
-import MongooseExerciseViewMock from '~/test/mocks/exercise/infrastructure/models/mongoose/view'
+import MongooseExerciseViewModelMock from '~/test/mocks/exercise/infrastructure/models/mongoose/view'
 
 import MongooseExerciseView from '../models/mongoose/view'
 
 describe('MongooseExerciseViews', () => {
-  let views = MongooseExerciseViewMock.mock()
-  let mongooseViews = new MongooseExerciseViews(views)
+  let views: Model<MongooseExerciseView>
+  let mongooseViews: MongooseExerciseViews
+
   const id = 'f4581979-42df-4bc0-acd8-0d7d7f071072'
   const name = 'name'
   const description = 'description'
   const view = ExerciseView.with({ description, id, name })
 
   beforeEach(() => {
-    views = MongooseExerciseViewMock.mock()
+    views = MongooseExerciseViewModelMock.mock()
     mongooseViews = new MongooseExerciseViews(views)
   })
 
-  it.concurrent('is an exercise views service', () => {
+  it('is an exercise views service', () => {
     expect(mongooseViews).toHaveProperty('add')
     expect(mongooseViews).toHaveProperty('delete')
     expect(mongooseViews).toHaveProperty('getAll')

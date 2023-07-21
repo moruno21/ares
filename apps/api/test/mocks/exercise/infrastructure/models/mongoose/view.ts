@@ -2,7 +2,7 @@ import { Model } from 'mongoose'
 
 import MongooseExerciseView from '~/exercise/infrastructure/models/mongoose/view'
 
-const MongooseExerciseViewMock = {
+const MongooseExerciseViewModelMock = {
   mock: () =>
     ({
       create: jest.fn(),
@@ -29,4 +29,4 @@ const MongooseExerciseViewMock = {
     } as unknown as Model<MongooseExerciseView>),
 } as const
 
-export default MongooseExerciseViewMock
+export default MongooseExerciseViewModelMock
