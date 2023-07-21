@@ -1,6 +1,8 @@
 export { default as InvalidId } from './exceptions/invalid-id'
 export { default as InvalidUuid } from './exceptions/invalid-uuid'
+export { default as AggregateRoot } from './models/aggregate-root'
 export { default as Entity } from './models/entity'
+export { default as Event } from './models/event'
 export { default as Exception } from './models/exception'
 export { default as Id } from './models/id'
 export { default as Uuid } from './models/uuid'

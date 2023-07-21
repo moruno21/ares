@@ -1,3 +1,4 @@
+import { Event } from '~/shared/domain'
 import NameType from '~/shared/name-type'
 
 const __name__ = 'ExerciseRenamed'
@@ -10,10 +11,12 @@ type ExerciseRenamedType = NameType<
   'ExerciseRenamed'
 >
 
-class ExerciseRenamed implements ExerciseRenamedType {
+class ExerciseRenamed extends Event implements ExerciseRenamedType {
   readonly __name__ = __name__
 
-  private constructor(readonly id: string, readonly name: string) {}
+  private constructor(readonly id: string, readonly name: string) {
+    super()
+  }
 
   static with({
     id,

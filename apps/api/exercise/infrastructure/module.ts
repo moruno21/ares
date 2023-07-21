@@ -22,7 +22,6 @@ import ExerciseCreated from '~/exercise/domain/events/exercise-created'
 import ExerciseDeleted from '~/exercise/domain/events/exercise-deleted'
 import ExerciseRedescribed from '~/exercise/domain/events/exercise-redescribed'
 import ExerciseRenamed from '~/exercise/domain/events/exercise-renamed'
-import Exercise from '~/exercise/domain/models/exercise'
 import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 
@@ -102,7 +101,6 @@ class ExerciseModule {
 
   onModuleInit() {
     this.eventStorePublisher.addEventFactories(eventFactories)
-    this.eventStorePublisher.setCategory(Exercise.name)
   }
 }
 

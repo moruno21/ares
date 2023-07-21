@@ -1,6 +1,6 @@
-import { AggregateRoot } from '@nestjs/cqrs'
+// import { AggregateRoot } from '@nestjs/cqrs'
 
-import { Entity, ValueObject } from '~/shared/domain'
+import { AggregateRoot, ValueObject } from '~/shared/domain'
 import Either from '~/shared/either'
 
 import ExerciseCreated from '../events/exercise-created'
@@ -14,20 +14,12 @@ import ExerciseName from './name'
 
 const __name__ = 'Exercise'
 
-class Exercise
-  extends AggregateRoot
-  implements Entity<typeof __name__, ExerciseId>
-{
+class Exercise extends AggregateRoot<typeof __name__, ExerciseId> {
   readonly __name__ = __name__
 
-  private _id: ExerciseId
   private _description: ExerciseDescription
   private _name: ExerciseName
   private _isDeleted: boolean
-
-  get id(): ExerciseId {
-    return this._id
-  }
 
   get name(): ExerciseName {
     return this._name
@@ -65,7 +57,7 @@ class Exercise
 
   delete(): Either<NotFoundExercise, Exercise> {
     if (this._isDeleted)
-      return Either.left(NotFoundExercise.withId(this.id.value))
+      return Either.left(NotFoundExercise.withId(this._id.value))
 
     this.apply(ExerciseDeleted.with({ id: this._id.value }))
 
@@ -78,7 +70,7 @@ class Exercise
     this.apply(
       ExerciseRedescribed.with({
         description: description.value,
-        id: this.id.value,
+        id: this._id.value,
       }),
     )
   }
@@ -86,7 +78,7 @@ class Exercise
   rename(name: ExerciseName) {
     if (ValueObject.equals(this.name, name)) return
 
-    this.apply(ExerciseRenamed.with({ id: this.id.value, name: name.value }))
+    this.apply(ExerciseRenamed.with({ id: this._id.value, name: name.value }))
   }
 
   private onExerciseCreated(event: ExerciseCreated) {

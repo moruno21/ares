@@ -1,10 +1,11 @@
 import { EventStoreDBClient, jsonEvent } from '@eventstore/db-client'
 import { Inject, Injectable } from '@nestjs/common'
-import { IEvent, IEventPublisher } from '@nestjs/cqrs'
+import { IEventPublisher } from '@nestjs/cqrs'
+
+import Event from '../domain/models/event'
 
 @Injectable()
-class EventStorePublisher implements IEventPublisher<IEvent> {
-  private category: string
+class EventStorePublisher implements IEventPublisher<Event> {
   private eventFactories: object
 
   constructor(
@@ -18,17 +19,17 @@ class EventStorePublisher implements IEventPublisher<IEvent> {
     }
   }
 
-  async publish<T extends IEvent>(event: T) {
+  async publish<T extends Event>(event: T) {
     let eventData = {}
 
     for (const prop in event) {
-      if (prop === '__name__') continue
+      if (prop === '_metadata' || prop === '__name__') continue
       eventData = { ...eventData, [prop]: event[prop] }
     }
 
     const message = JSON.parse(JSON.stringify(event))
     const id = message.id
-    const streamName = `${this.category}-${id}`
+    const streamName = `${event.stream}-${id}`
     const type = event.constructor.name
 
     try {
@@ -42,21 +43,17 @@ class EventStorePublisher implements IEventPublisher<IEvent> {
     } catch (err) {}
   }
 
-  setCategory(category: string) {
-    this.category = category
-  }
-
   async read(
     // eslint-disable-next-line @typescript-eslint/ban-types
     aggregate: Function,
     id: string,
   ) {
-    const streamName = `${this.category}-${id}`
+    const streamName = `${aggregate.name}-${id}`
 
     try {
       const resolvedEvents = this.client.readStream(streamName)
 
-      const events = [] as IEvent[]
+      const events = [] as Event[]
 
       for await (const event of resolvedEvents) {
         const eventType = event.event.type
