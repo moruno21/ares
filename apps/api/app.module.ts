@@ -11,6 +11,7 @@ import ExerciseModule from './exercise/infrastructure/module'
 import EventPublishersHandler from './middleware/event-publishers-handler'
 import EventStoreModule from './shared/eventstore/module'
 import EventStorePublisher from './shared/eventstore/publisher'
+import WorkoutModule from './workout/infrastructure/module'
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import EventStorePublisher from './shared/eventstore/publisher'
     MongooseModule.forRootAsync({
       useFactory: () => ({ uri: process.env.MONGODB_URI }),
     }),
+    WorkoutModule,
   ],
   providers: [
     {
