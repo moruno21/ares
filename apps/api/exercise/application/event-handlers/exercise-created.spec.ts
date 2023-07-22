@@ -21,6 +21,7 @@ describe('ExerciseCreatedHandler', () => {
     const viewsAdd = jest.spyOn(views, 'add')
 
     await createdHandler.handle(ExerciseCreated.with({ description, id, name }))
+
     expect(viewsAdd).toHaveBeenCalledWith(
       ExerciseView.with({ description, id, name }),
     )

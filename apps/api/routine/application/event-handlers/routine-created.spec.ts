@@ -21,6 +21,7 @@ describe('RoutineCreatedHandler', () => {
     const viewsAdd = jest.spyOn(views, 'add')
 
     await createdHandler.handle(RoutineCreated.with({ description, id, name }))
+
     expect(viewsAdd).toHaveBeenCalledWith(
       RoutineView.with({ description, id, name }),
     )

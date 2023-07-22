@@ -24,6 +24,7 @@ describe('WorkoutCreatedHandler', () => {
     await createdHandler.handle(
       WorkoutCreated.with({ exerciseId, id, reps, sets }),
     )
+
     expect(viewsAdd).toHaveBeenCalledWith(
       WorkoutView.with({ exerciseId, id, reps, sets }),
     )

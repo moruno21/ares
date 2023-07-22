@@ -31,6 +31,7 @@ describe('ExerciseRedescribedHandler', () => {
     await redescribedHandler.handle(
       ExerciseRedescribed.with({ description: anotherDescription, id }),
     )
+
     expect(viewsRedescribe).toHaveBeenCalledWith(id, anotherDescription)
   })
 

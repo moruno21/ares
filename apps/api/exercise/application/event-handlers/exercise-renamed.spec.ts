@@ -29,6 +29,7 @@ describe('ExerciseRenamedHandler', () => {
 
     const anotherName = 'anotherName'
     await renamedHandler.handle(ExerciseRenamed.with({ id, name: anotherName }))
+
     expect(viewsRename).toHaveBeenCalledWith(id, anotherName)
   })
 

@@ -28,6 +28,7 @@ describe('ExerciseDeletedHandler', () => {
     viewsWithId.mockResolvedValue(Either.right(view))
 
     await deletedHandler.handle(ExerciseDeleted.with({ id }))
+
     expect(viewsDelete).toHaveBeenCalledWith(view.id)
   })
 
