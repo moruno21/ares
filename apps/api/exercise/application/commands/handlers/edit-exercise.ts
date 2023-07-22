@@ -27,9 +27,9 @@ class EditExerciseHandler implements ICommandHandler {
     command: EditExercise,
   ): Promise<
     Either<
+      | InvalidUuid
       | InvalidExerciseDescription
       | InvalidExerciseName
-      | InvalidUuid
       | NotEditedExercise
       | NotFoundExercise,
       Exercise

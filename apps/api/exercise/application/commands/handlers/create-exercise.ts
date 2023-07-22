@@ -28,9 +28,9 @@ class CreateExerciseHandler implements ICommandHandler {
     Either<
       (
         | InvalidUuid
+        | InvalidExerciseDescription
         | InvalidExerciseName
         | NotCreatedExercise
-        | InvalidExerciseDescription
       )[],
       Exercise
     >
