@@ -17,7 +17,12 @@ class EventStoreExercises implements Exercises {
     private readonly eventStorePublisher: EventStorePublisher,
   ) {}
 
-  async findWithId(
+  save(exercise: Exercise): Exercise {
+    this.publisher.mergeObjectContext(exercise).commit()
+    return exercise
+  }
+
+  async withId(
     exerciseId: ExerciseId,
   ): Promise<Either<NotFoundExercise, Exercise>> {
     const exercise = await this.eventStorePublisher.read(
@@ -28,11 +33,6 @@ class EventStoreExercises implements Exercises {
     if (!exercise) return Either.left(NotFoundExercise.withId(exerciseId.value))
 
     return Either.right(exercise)
-  }
-
-  save(exercise: Exercise): Exercise {
-    this.publisher.mergeObjectContext(exercise).commit()
-    return exercise
   }
 }
 

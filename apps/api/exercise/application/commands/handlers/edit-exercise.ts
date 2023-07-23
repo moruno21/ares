@@ -54,7 +54,7 @@ class EditExerciseHandler implements ICommandHandler {
       !isInvalidId &&
       exerciseWithName.value.id !== id.value.value
 
-    const exercise = !isInvalidId && (await this.exercises.findWithId(id.value))
+    const exercise = !isInvalidId && (await this.exercises.withId(id.value))
     const notFoundExercise = Either.isLeft(exercise)
 
     const exceptions = []

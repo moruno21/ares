@@ -5,10 +5,8 @@ import Exercise from '../models/exercise'
 import ExerciseId from '../models/id'
 
 type Exercises = Readonly<{
-  findWithId(
-    exerciseId: ExerciseId,
-  ): Promise<Either<NotFoundExercise, Exercise>>
   save(exercise: Exercise): Exercise
+  withId(exerciseId: ExerciseId): Promise<Either<NotFoundExercise, Exercise>>
 }>
 
 const Exercises = 'Exercises' as const

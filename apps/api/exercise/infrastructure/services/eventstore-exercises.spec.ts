@@ -34,7 +34,7 @@ describe('EventStoreExercises', () => {
 
   it('is an exercises service', () => {
     expect(exercises).toHaveProperty('save')
-    expect(exercises).toHaveProperty('findWithId')
+    expect(exercises).toHaveProperty('withId')
   })
 
   it('saves an exercise', async () => {
@@ -54,7 +54,7 @@ describe('EventStoreExercises', () => {
 
     eventStorePublisherRead.mockResolvedValue(exercise)
 
-    const response = await exercises.findWithId(exercise.id)
+    const response = await exercises.withId(exercise.id)
 
     expect(eventStorePublisherRead).toHaveBeenCalledWith(Exercise, idValue)
     expect(response).toStrictEqual(Either.right(exercise))
@@ -66,7 +66,7 @@ describe('EventStoreExercises', () => {
 
     eventStorePublisherRead.mockResolvedValue(null)
 
-    const response = (await exercises.findWithId(
+    const response = (await exercises.withId(
       exercise.id,
     )) as Left<NotFoundExercise>
 

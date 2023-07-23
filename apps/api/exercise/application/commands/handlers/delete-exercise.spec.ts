@@ -31,9 +31,9 @@ describe('DeleteExerciseHandler', () => {
 
   it('deletes an exercise from an id', async () => {
     const exercisesSave = jest.spyOn(exercises, 'save')
-    const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
+    const exercisesWithId = jest.spyOn(exercises, 'withId')
 
-    exercisesFindWithId.mockResolvedValue(Either.right(exercise))
+    exercisesWithId.mockResolvedValue(Either.right(exercise))
 
     const response = await deleteExerciseHandler.execute(
       DeleteExercise.with({
@@ -41,7 +41,7 @@ describe('DeleteExerciseHandler', () => {
       }),
     )
 
-    expect(exercisesFindWithId).toHaveBeenCalledWith(id)
+    expect(exercisesWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).toHaveBeenCalledWith(exercise)
     expect(Either.isRight(response)).toBe(true)
     expect(response).toStrictEqual(Either.right(exercise))
@@ -52,7 +52,7 @@ describe('DeleteExerciseHandler', () => {
     const invalidUuid = InvalidUuid.causeTheFormatIsNotValid(idMock)
 
     const exercisesSave = jest.spyOn(exercises, 'save')
-    const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
+    const exercisesWithId = jest.spyOn(exercises, 'withId')
 
     const response = (await deleteExerciseHandler.execute(
       DeleteExercise.with({
@@ -60,7 +60,7 @@ describe('DeleteExerciseHandler', () => {
       }),
     )) as Left<InvalidUuid[]>
 
-    expect(exercisesFindWithId).not.toHaveBeenCalled()
+    expect(exercisesWithId).not.toHaveBeenCalled()
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value[0].__name__).toBe(invalidUuid.__name__)
@@ -71,9 +71,9 @@ describe('DeleteExerciseHandler', () => {
     const notFound = NotFoundExercise.withId(idValue)
 
     const exercisesSave = jest.spyOn(exercises, 'save')
-    const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
+    const exercisesWithId = jest.spyOn(exercises, 'withId')
 
-    exercisesFindWithId.mockResolvedValue(Either.left(notFound))
+    exercisesWithId.mockResolvedValue(Either.left(notFound))
 
     const response = (await deleteExerciseHandler.execute(
       DeleteExercise.with({
@@ -81,7 +81,7 @@ describe('DeleteExerciseHandler', () => {
       }),
     )) as Left<NotFoundExercise[]>
 
-    expect(exercisesFindWithId).toHaveBeenCalledWith(id)
+    expect(exercisesWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value[0].__name__).toBe(notFound.__name__)

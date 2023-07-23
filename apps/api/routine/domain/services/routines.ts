@@ -5,8 +5,8 @@ import RoutineId from '../models/id'
 import Routine from '../models/routine'
 
 type Routines = Readonly<{
-  findWithId(routineId: RoutineId): Promise<Either<NotFoundRoutine, Routine>>
   save(routine: Routine): Routine
+  withId(routineId: RoutineId): Promise<Either<NotFoundRoutine, Routine>>
 }>
 
 const Routines = 'Routines' as const

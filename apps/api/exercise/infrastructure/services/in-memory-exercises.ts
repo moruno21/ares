@@ -20,7 +20,7 @@ class InMemoryExercises implements Exercises {
     return exercise
   }
 
-  async findWithId(
+  async withId(
     exerciseId: ExerciseId,
   ): Promise<Either<NotFoundExercise, Exercise>> {
     const exercise = this.exercises.find((value) => value.id === exerciseId)

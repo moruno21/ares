@@ -43,9 +43,9 @@ describe('DeleteRoutineHandler', () => {
 
   it('deletes a routine from an id', async () => {
     const routinesSave = jest.spyOn(routines, 'save')
-    const routinesFindWithId = jest.spyOn(routines, 'findWithId')
+    const routinesWithId = jest.spyOn(routines, 'withId')
 
-    routinesFindWithId.mockResolvedValue(Either.right(routine))
+    routinesWithId.mockResolvedValue(Either.right(routine))
 
     const response = await deleteRoutineHandler.execute(
       DeleteRoutine.with({
@@ -53,7 +53,7 @@ describe('DeleteRoutineHandler', () => {
       }),
     )
 
-    expect(routinesFindWithId).toHaveBeenCalledWith(id)
+    expect(routinesWithId).toHaveBeenCalledWith(id)
     expect(routinesSave).toHaveBeenCalledWith(routine)
     expect(Either.isRight(response)).toBe(true)
     expect(response).toStrictEqual(Either.right(routine))
@@ -64,7 +64,7 @@ describe('DeleteRoutineHandler', () => {
     const invalidUuid = InvalidUuid.causeTheFormatIsNotValid(idMock)
 
     const routinesSave = jest.spyOn(routines, 'save')
-    const routinesFindWithId = jest.spyOn(routines, 'findWithId')
+    const routinesWithId = jest.spyOn(routines, 'withId')
 
     const response = (await deleteRoutineHandler.execute(
       DeleteRoutine.with({
@@ -72,7 +72,7 @@ describe('DeleteRoutineHandler', () => {
       }),
     )) as Left<InvalidUuid[]>
 
-    expect(routinesFindWithId).not.toHaveBeenCalled()
+    expect(routinesWithId).not.toHaveBeenCalled()
     expect(routinesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value[0].__name__).toBe(invalidUuid.__name__)
@@ -83,9 +83,9 @@ describe('DeleteRoutineHandler', () => {
     const notFound = NotFoundRoutine.withId(idValue)
 
     const routinesSave = jest.spyOn(routines, 'save')
-    const routinesFindWithId = jest.spyOn(routines, 'findWithId')
+    const routinesWithId = jest.spyOn(routines, 'withId')
 
-    routinesFindWithId.mockResolvedValue(Either.left(notFound))
+    routinesWithId.mockResolvedValue(Either.left(notFound))
 
     const response = (await deleteRoutineHandler.execute(
       DeleteRoutine.with({
@@ -93,7 +93,7 @@ describe('DeleteRoutineHandler', () => {
       }),
     )) as Left<NotFoundRoutine[]>
 
-    expect(routinesFindWithId).toHaveBeenCalledWith(id)
+    expect(routinesWithId).toHaveBeenCalledWith(id)
     expect(routinesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value[0].__name__).toBe(notFound.__name__)

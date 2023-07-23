@@ -46,7 +46,7 @@ describe('EventStoreRoutines', () => {
 
   it('is a routines service', () => {
     expect(routines).toHaveProperty('save')
-    expect(routines).toHaveProperty('findWithId')
+    expect(routines).toHaveProperty('withId')
   })
 
   it('saves a routine', async () => {
@@ -66,7 +66,7 @@ describe('EventStoreRoutines', () => {
 
     eventStorePublisherRead.mockResolvedValue(routine)
 
-    const response = await routines.findWithId(routine.id)
+    const response = await routines.withId(routine.id)
 
     expect(eventStorePublisherRead).toHaveBeenCalledWith(Routine, idValue)
     expect(response).toStrictEqual(Either.right(routine))
@@ -78,7 +78,7 @@ describe('EventStoreRoutines', () => {
 
     eventStorePublisherRead.mockResolvedValue(null)
 
-    const response = (await routines.findWithId(
+    const response = (await routines.withId(
       routine.id,
     )) as Left<NotFoundRoutine>
 

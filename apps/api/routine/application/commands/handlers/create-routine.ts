@@ -65,7 +65,7 @@ class CreateRoutineHandler implements ICommandHandler {
       const exerciseId = ExerciseId.fromString(workout.value.value.exerciseId)
         .value as ExerciseId
 
-      const exercise = await this.exercises.findWithId(exerciseId)
+      const exercise = await this.exercises.withId(exerciseId)
 
       if (Either.isLeft(exercise)) exerciseIdExceptions.push(exercise)
     }

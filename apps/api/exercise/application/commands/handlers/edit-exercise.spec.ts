@@ -41,13 +41,13 @@ describe('EditExerciseHandler', () => {
     const anotherNameValue = 'editedName'
     const anotherDescriptionValue = 'editedDescription'
     const viewsWithName = jest.spyOn(views, 'withName')
-    const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
+    const exercisesWithId = jest.spyOn(exercises, 'withId')
     const exercisesSave = jest.spyOn(exercises, 'save')
 
     viewsWithName.mockResolvedValue(
       Either.left(NotFoundExercise.withName(nameValue)),
     )
-    exercisesFindWithId.mockResolvedValue(Either.right(exercise))
+    exercisesWithId.mockResolvedValue(Either.right(exercise))
 
     const response = await editExerciseHandler.execute(
       EditExercise.with({
@@ -58,7 +58,7 @@ describe('EditExerciseHandler', () => {
     )
 
     expect(viewsWithName).toHaveBeenCalledWith(anotherNameValue)
-    expect(exercisesFindWithId).toHaveBeenCalledWith(id)
+    expect(exercisesWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).toHaveBeenCalledWith(exercise)
     expect(Either.isRight(response)).toBe(true)
     expect(response).toStrictEqual(Either.right(exercise))
@@ -95,13 +95,13 @@ describe('EditExerciseHandler', () => {
     'cannot edit an exercise with invalid params',
     async ({ descriptionMock, idMock, nameMock }) => {
       const viewsWithName = jest.spyOn(views, 'withName')
-      const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
+      const exercisesWithId = jest.spyOn(exercises, 'withId')
       const exercisesSave = jest.spyOn(exercises, 'save')
 
       viewsWithName.mockResolvedValue(
         Either.left(NotFoundExercise.withName(nameValue)),
       )
-      exercisesFindWithId.mockResolvedValue(Either.right(exercise))
+      exercisesWithId.mockResolvedValue(Either.right(exercise))
 
       const response = (await editExerciseHandler.execute(
         EditExercise.with({
@@ -120,7 +120,7 @@ describe('EditExerciseHandler', () => {
         const responseResult = Either.left(response.value[0] as InvalidUuid)
         const invalidUuid = InvalidUuid.causeTheFormatIsNotValid(idMock)
 
-        expect(exercisesFindWithId).not.toHaveBeenCalled()
+        expect(exercisesWithId).not.toHaveBeenCalled()
         expect(Either.isRight(responseResult)).toBe(false)
         expect(responseResult.value.__name__).toBe(invalidUuid.__name__)
         expect(responseResult.value.code).toBe(invalidUuid.code)
@@ -164,7 +164,7 @@ describe('EditExerciseHandler', () => {
   it('cannot edit an exercise with a name that is already used by another exercise', async () => {
     const anotherIdValue = '43663f42-f467-4b4f-aef5-d114fd3ac50f'
     const viewsWithName = jest.spyOn(views, 'withName')
-    const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
+    const exercisesWithId = jest.spyOn(exercises, 'withId')
     const exercisesSave = jest.spyOn(exercises, 'save')
     const notEdited = NotEditedExercise.causeAlreadyExistsOneWithName(nameValue)
 
@@ -177,7 +177,7 @@ describe('EditExerciseHandler', () => {
         }),
       ),
     )
-    exercisesFindWithId.mockResolvedValue(Either.right(exercise))
+    exercisesWithId.mockResolvedValue(Either.right(exercise))
 
     const response = (await editExerciseHandler.execute(
       EditExercise.with({
@@ -188,7 +188,7 @@ describe('EditExerciseHandler', () => {
     )) as Left<NotEditedExercise[]>
 
     expect(viewsWithName).toHaveBeenCalledWith(nameValue)
-    expect(exercisesFindWithId).toHaveBeenCalledWith(id)
+    expect(exercisesWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value[0].__name__).toBe(notEdited.__name__)
@@ -197,14 +197,14 @@ describe('EditExerciseHandler', () => {
 
   it('cannot edit an exercise that does not exist', async () => {
     const viewsWithName = jest.spyOn(views, 'withName')
-    const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
+    const exercisesWithId = jest.spyOn(exercises, 'withId')
     const exercisesSave = jest.spyOn(exercises, 'save')
     const notFound = NotFoundExercise.withId(idValue)
 
     viewsWithName.mockResolvedValue(
       Either.left(NotFoundExercise.withName(nameValue)),
     )
-    exercisesFindWithId.mockResolvedValue(Either.left(notFound))
+    exercisesWithId.mockResolvedValue(Either.left(notFound))
 
     const response = (await editExerciseHandler.execute(
       EditExercise.with({
@@ -215,7 +215,7 @@ describe('EditExerciseHandler', () => {
     )) as Left<NotFoundExercise[]>
 
     expect(viewsWithName).toHaveBeenCalledWith(nameValue)
-    expect(exercisesFindWithId).toHaveBeenCalledWith(id)
+    expect(exercisesWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value[0].__name__).toBe(notFound.__name__)

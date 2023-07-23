@@ -20,7 +20,7 @@ class DeleteRoutineHandler implements ICommandHandler {
     const id = RoutineId.fromString(command.id)
     const isInvalidId = Either.isLeft(id)
 
-    const routine = !isInvalidId && (await this.routines.findWithId(id.value))
+    const routine = !isInvalidId && (await this.routines.withId(id.value))
     const notFoundRoutine = Either.isLeft(routine)
 
     const deletedRoutine =

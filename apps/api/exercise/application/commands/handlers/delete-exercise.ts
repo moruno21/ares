@@ -20,7 +20,7 @@ class DeleteExerciseHandler implements ICommandHandler {
     const id = ExerciseId.fromString(command.id)
     const isInvalidId = Either.isLeft(id)
 
-    const exercise = !isInvalidId && (await this.exercises.findWithId(id.value))
+    const exercise = !isInvalidId && (await this.exercises.withId(id.value))
     const notFoundExercise = Either.isLeft(exercise)
 
     const deletedExercise =

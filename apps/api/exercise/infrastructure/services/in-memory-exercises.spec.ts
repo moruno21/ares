@@ -27,7 +27,7 @@ describe('EventStoreExercises', () => {
 
   it('is an exercises service', () => {
     expect(inMemoryExercises).toHaveProperty('save')
-    expect(inMemoryExercises).toHaveProperty('findWithId')
+    expect(inMemoryExercises).toHaveProperty('withId')
   })
 
   it('saves an exercise', async () => {
@@ -44,7 +44,7 @@ describe('EventStoreExercises', () => {
     const exercisesFind = jest.spyOn(exercises, 'find')
     exercisesFind.mockReturnValue(exercise)
 
-    const response = await inMemoryExercises.findWithId(exercise.id)
+    const response = await inMemoryExercises.withId(exercise.id)
 
     expect(response.value).toBe(exercise)
   })
@@ -55,7 +55,7 @@ describe('EventStoreExercises', () => {
 
     exercisesFind.mockReturnValue(null)
 
-    const response = (await inMemoryExercises.findWithId(
+    const response = (await inMemoryExercises.withId(
       exercise.id,
     )) as Left<NotFoundExercise>
 

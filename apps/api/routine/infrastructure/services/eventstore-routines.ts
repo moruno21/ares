@@ -17,7 +17,12 @@ class EventStoreRoutines implements Routines {
     private readonly eventStorePublisher: EventStorePublisher,
   ) {}
 
-  async findWithId(
+  save(routine: Routine): Routine {
+    this.publisher.mergeObjectContext(routine).commit()
+    return routine
+  }
+
+  async withId(
     routineId: RoutineId,
   ): Promise<Either<NotFoundRoutine, Routine>> {
     const routine = await this.eventStorePublisher.read(
@@ -28,11 +33,6 @@ class EventStoreRoutines implements Routines {
     if (!routine) return Either.left(NotFoundRoutine.withId(routineId.value))
 
     return Either.right(routine)
-  }
-
-  save(routine: Routine): Routine {
-    this.publisher.mergeObjectContext(routine).commit()
-    return routine
   }
 }
 
