@@ -41,8 +41,8 @@ class ExercisesResolver {
       await this.queryBus.execute(GetExercise.with({ id }))
 
     if (Either.isLeft(response))
-      return new GraphQLError(response.value.message, {
-        extensions: { code: response.value.code },
+      return new GraphQLError(response.value[0].message, {
+        extensions: { code: response.value[0].code },
       })
 
     return ExerciseDto.fromExerciseView(response.value)
@@ -86,8 +86,8 @@ class ExercisesResolver {
       )
 
     if (Either.isLeft(response))
-      return new GraphQLError(response.value.message, {
-        extensions: { code: response.value.code },
+      return new GraphQLError(response.value[0].message, {
+        extensions: { code: response.value[0].code },
       })
 
     return ExerciseDto.fromExercise(response.value)
@@ -101,8 +101,8 @@ class ExercisesResolver {
       await this.commandBus.execute(DeleteExercise.with({ id }))
 
     if (Either.isLeft(response))
-      return new GraphQLError(response.value.message, {
-        extensions: { code: response.value.code },
+      return new GraphQLError(response.value[0].message, {
+        extensions: { code: response.value[0].code },
       })
 
     return ExerciseDto.fromExercise(response.value)
