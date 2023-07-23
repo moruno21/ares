@@ -19,6 +19,14 @@ class MongooseRoutineViews implements RoutineViews {
 
     return view
   }
+
+  async getAll(): Promise<RoutineView[]> {
+    const mongooseViews = await this.views.find().lean().exec()
+
+    return mongooseViews.map((mongooseView) =>
+      MongooseRoutineView.toRoutineView(mongooseView),
+    )
+  }
 }
 
 export default MongooseRoutineViews

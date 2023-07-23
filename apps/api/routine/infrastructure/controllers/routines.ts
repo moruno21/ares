@@ -1,14 +1,23 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
-import { CommandBus } from '@nestjs/cqrs'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+} from '@nestjs/common'
+import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
+import GetRoutines from '~/routine/application/queries/get-routines'
+import GetRoutinesHandler from '~/routine/application/queries/handlers/get-routines'
 import Either from '~/shared/either'
 import HttpError from '~/shared/http/error'
 import Uuid from '~/shared/uuid'
@@ -19,7 +28,25 @@ import PostRoutineDto from '../models/http/post-dto'
 @ApiTags('Routines')
 @Controller('routines')
 class RoutinesController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
+
+  @ApiOperation({ summary: 'Gets all Routines' })
+  @ApiOkResponse({
+    description: 'Routines',
+    type: [RoutineDto],
+  })
+  @Get()
+  async getRoutines(): Promise<RoutineDto[]> {
+    const response: Awaited<ReturnType<GetRoutinesHandler['execute']>> =
+      await this.queryBus.execute(GetRoutines.all())
+
+    return response.map((routineView) =>
+      RoutineDto.fromRoutineView(routineView),
+    )
+  }
 
   @ApiOperation({ summary: 'Creates a Routine' })
   @ApiCreatedResponse({

@@ -1,7 +1,9 @@
 import { BadRequestException } from '@nestjs/common'
-import { CommandBus } from '@nestjs/cqrs'
+import { CommandBus, QueryBus } from '@nestjs/cqrs'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
+import RoutineView from '~/routine/application/models/view'
+import GetRoutines from '~/routine/application/queries/get-routines'
 import InvalidRoutineDescription from '~/routine/domain/exceptions/invalid-description'
 import InvalidRoutineName from '~/routine/domain/exceptions/invalid-name'
 import RoutineDescription from '~/routine/domain/models/description'
@@ -15,12 +17,66 @@ import Either from '~/shared/either'
 import HttpError from '~/shared/http/error'
 import Uuid from '~/shared/uuid'
 import CommandBusMock from '~/test/mocks/@nestjs/cqrs/command-bus'
+import QueryBusMock from '~/test/mocks/@nestjs/cqrs/query-bus'
 
 import RoutinesController from './routines'
 
 describe('RoutinesController', () => {
   let commandBus: CommandBus
+  let queryBus: QueryBus
   let routinesController: RoutinesController
+
+  describe('GetRoutines', () => {
+    const id = '481e9d6d-86e4-47c0-ab96-9c02a8218618'
+    const name = 'name'
+    const description = 'description'
+    const workouts = [{ exerciseId: 'exerciseId', reps: 10, sets: 8 }]
+
+    const routineViewOne = RoutineView.with({
+      description,
+      id,
+      name,
+      workouts,
+    })
+    const routineViewTwo = RoutineView.with({
+      description,
+      id,
+      name,
+      workouts,
+    })
+
+    beforeEach(() => {
+      queryBus = QueryBusMock.mock()
+      routinesController = new RoutinesController(commandBus, queryBus)
+    })
+
+    it('gets all the routines', async () => {
+      const queryBusExecute = jest.spyOn(queryBus, 'execute')
+      const routineViews = [routineViewOne, routineViewTwo]
+
+      queryBusExecute.mockResolvedValue(routineViews)
+
+      const routines = routineViews.map((routineView) =>
+        RoutineDto.fromRoutineView(routineView),
+      )
+
+      const response = await routinesController.getRoutines()
+
+      expect(queryBusExecute).toHaveBeenCalledWith(GetRoutines.all())
+      expect(response).toStrictEqual(routines)
+    })
+
+    it('returns an empty value when there are no routines', async () => {
+      const queryBusExecute = jest.spyOn(queryBus, 'execute')
+
+      queryBusExecute.mockResolvedValue([])
+
+      const response = await routinesController.getRoutines()
+
+      expect(queryBusExecute).toHaveBeenCalledWith(GetRoutines.all())
+      expect(response).toStrictEqual([])
+    })
+  })
 
   describe('PostRoutine', () => {
     const idValue = 'd9783895-1fea-4a1c-8952-8ebf0aeb819e'
@@ -47,7 +103,7 @@ describe('RoutinesController', () => {
 
     beforeEach(() => {
       commandBus = CommandBusMock.mock()
-      routinesController = new RoutinesController(commandBus)
+      routinesController = new RoutinesController(commandBus, queryBus)
     })
 
     it('creates an routine', async () => {

@@ -4,6 +4,7 @@ const RoutineViewsMock = {
   mock: () =>
     ({
       add: jest.fn(),
+      getAll: jest.fn(),
     } as unknown as RoutineViews),
 } as const
 
