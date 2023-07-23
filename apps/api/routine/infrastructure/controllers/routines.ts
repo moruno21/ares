@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
 } from '@nestjs/common'
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
@@ -16,7 +17,9 @@ import {
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
+import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
+import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
 import GetRoutinesHandler from '~/routine/application/queries/handlers/get-routines'
 import Either from '~/shared/either'
 import HttpError from '~/shared/http/error'
@@ -46,6 +49,24 @@ class RoutinesController {
     return response.map((routineView) =>
       RoutineDto.fromRoutineView(routineView),
     )
+  }
+  @ApiOperation({ summary: 'Gets a Routine' })
+  @ApiOkResponse({
+    description: 'Routine',
+    type: RoutineDto,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid id' })
+  @Get(':id')
+  async getRoutine(
+    @Param('id') id: string,
+  ): Promise<RoutineDto | BadRequestException> {
+    const response: Awaited<ReturnType<GetRoutineHandler['execute']>> =
+      await this.queryBus.execute(GetRoutine.with({ id }))
+
+    if (Either.isLeft(response))
+      throw new BadRequestException(HttpError.fromExceptions(response.value))
+
+    return RoutineDto.fromRoutineView(response.value)
   }
 
   @ApiOperation({ summary: 'Creates a Routine' })

@@ -11,6 +11,7 @@ import { MongooseModule, SchemaFactory } from '@nestjs/mongoose'
 
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
 import RoutineCreatedHandler from '~/routine/application/event-handlers/routine-created'
+import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
 import GetRoutinesHandler from '~/routine/application/queries/handlers/get-routines'
 import RoutineCreated from '~/routine/domain/events/routine-created'
 import EventStoreModule from '~/shared/eventstore/module'
@@ -25,7 +26,7 @@ const controllers = [RoutinesController]
 
 const commandHandlers = [CreateRoutineHandler]
 const eventHandlers = [RoutineCreatedHandler]
-const queryHandlers = [GetRoutinesHandler]
+const queryHandlers = [GetRoutinesHandler, GetRoutineHandler]
 const resolvers = [RoutinesResolver]
 
 const eventFactories = {

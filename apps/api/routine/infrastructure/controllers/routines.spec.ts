@@ -3,9 +3,11 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
 import RoutineView from '~/routine/application/models/view'
+import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
 import InvalidRoutineDescription from '~/routine/domain/exceptions/invalid-description'
 import InvalidRoutineName from '~/routine/domain/exceptions/invalid-name'
+import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
 import RoutineDescription from '~/routine/domain/models/description'
 import RoutineId from '~/routine/domain/models/id'
 import RoutineName from '~/routine/domain/models/name'
@@ -13,6 +15,7 @@ import Routine from '~/routine/domain/models/routine'
 import RoutineWorkout from '~/routine/domain/models/workout'
 import RoutineDto from '~/routine/infrastructure/models/http/dto'
 import PostRoutineDto from '~/routine/infrastructure/models/http/post-dto'
+import { InvalidUuid } from '~/shared/domain'
 import Either from '~/shared/either'
 import HttpError from '~/shared/http/error'
 import Uuid from '~/shared/uuid'
@@ -78,6 +81,69 @@ describe('RoutinesController', () => {
     })
   })
 
+  describe('GetRoutine', () => {
+    const id = '0792bf7d-4104-4bee-82c3-39900969e869'
+    const name = 'name'
+    const description = 'description'
+    const workouts = [{ exerciseId: 'exerciseId', reps: 8, sets: 10 }]
+
+    const routineView = RoutineView.with({ description, id, name, workouts })
+
+    beforeEach(() => {
+      queryBus = QueryBusMock.mock()
+      routinesController = new RoutinesController(commandBus, queryBus)
+    })
+
+    it('gets a routine from an id', async () => {
+      const queryBusExecute = jest.spyOn(queryBus, 'execute')
+
+      queryBusExecute.mockResolvedValue(Either.right(routineView))
+
+      const routine = RoutineDto.fromRoutineView(routineView)
+
+      const response = (await routinesController.getRoutine(id)) as RoutineDto
+
+      expect(queryBusExecute).toHaveBeenCalledWith(GetRoutine.with({ id }))
+      expect(response.id).toStrictEqual(routine.id)
+      expect(response.name).toStrictEqual(routine.name)
+      expect(response.description).toStrictEqual(routine.description)
+    })
+
+    it('cannot get a routine from an invalid id', async () => {
+      const queryBusExecute = jest.spyOn(queryBus, 'execute')
+      const invalidUuid = 'invalidUuid'
+      const exceptions = [InvalidUuid.causeTheFormatIsNotValid('invalidUuid')]
+
+      queryBusExecute.mockResolvedValue(Either.left(exceptions))
+
+      const response = routinesController.getRoutine(invalidUuid)
+
+      expect(queryBusExecute).toHaveBeenCalledWith(
+        GetRoutine.with({ id: invalidUuid }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
+      )
+    })
+
+    it('cannot get a routine that does not exist', async () => {
+      const queryBusExecute = jest.spyOn(queryBus, 'execute')
+      const nonExistentUuid = 'ca99d6e7-6d2b-4070-8436-c009f48e9b64'
+      const exceptions = [NotFoundRoutine.withId(nonExistentUuid)]
+
+      queryBusExecute.mockResolvedValue(Either.left(exceptions))
+
+      const response = routinesController.getRoutine(nonExistentUuid)
+
+      expect(queryBusExecute).toHaveBeenCalledWith(
+        GetRoutine.with({ id: nonExistentUuid }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
+      )
+    })
+  })
+
   describe('PostRoutine', () => {
     const idValue = 'd9783895-1fea-4a1c-8952-8ebf0aeb819e'
     const id = RoutineId.fromString(idValue).value as RoutineId
@@ -106,7 +172,7 @@ describe('RoutinesController', () => {
       routinesController = new RoutinesController(commandBus, queryBus)
     })
 
-    it('creates an routine', async () => {
+    it('creates a routine', async () => {
       const uuidGenerate = jest.spyOn(Uuid, 'generate')
       const commandBusExecute = jest.spyOn(commandBus, 'execute')
 

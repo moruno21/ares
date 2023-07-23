@@ -4,6 +4,8 @@ import { Model } from 'mongoose'
 
 import RoutineView from '~/routine/application/models/view'
 import RoutineViews from '~/routine/application/services/views'
+import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
+import Either from '~/shared/either'
 
 import MongooseRoutineView from '../models/mongoose/view'
 
@@ -26,6 +28,14 @@ class MongooseRoutineViews implements RoutineViews {
     return mongooseViews.map((mongooseView) =>
       MongooseRoutineView.toRoutineView(mongooseView),
     )
+  }
+
+  async withId(id: string): Promise<Either<NotFoundRoutine, RoutineView>> {
+    const mongooseView = await this.views.findOne({ _id: id }).lean().exec()
+
+    if (!mongooseView) return Either.left(NotFoundRoutine.withId(id))
+
+    return Either.right(MongooseRoutineView.toRoutineView(mongooseView))
   }
 }
 

@@ -4,7 +4,9 @@ import { GraphQLError } from 'graphql'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
+import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
+import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
 import GetRoutinesHandler from '~/routine/application/queries/handlers/get-routines'
 import Either from '~/shared/either'
 import Uuid from '~/shared/uuid'
@@ -27,6 +29,19 @@ class RoutinesResolver {
     return response.map((routineView) =>
       RoutineDto.fromRoutineView(routineView),
     )
+  }
+
+  @Query(() => Routine)
+  async routine(@Args('id') id: string): Promise<RoutineDto | GraphQLError> {
+    const response: Awaited<ReturnType<GetRoutineHandler['execute']>> =
+      await this.queryBus.execute(GetRoutine.with({ id }))
+
+    if (Either.isLeft(response))
+      return new GraphQLError(response.value[0].message, {
+        extensions: { code: response.value[0].code },
+      })
+
+    return RoutineDto.fromRoutineView(response.value)
   }
 
   @Mutation(() => Routine)

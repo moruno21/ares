@@ -11,6 +11,11 @@ const MongooseRoutineViewModelMock = {
           exec: jest.fn(),
         }),
       }),
+      findOne: () => ({
+        lean: () => ({
+          exec: jest.fn(),
+        }),
+      }),
     } as unknown as Model<MongooseRoutineView>),
 } as const
 
