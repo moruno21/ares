@@ -1,16 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { IsString } from 'class-validator'
 
 import ExerciseView from '~/exercise/application/models/view'
 import Exercise from '~/exercise/domain/models/exercise'
 
 class ExerciseDto {
   @ApiProperty()
+  @IsString()
   readonly id: string
 
   @ApiProperty()
+  @IsString()
   readonly description: string
 
   @ApiProperty()
+  @IsString()
   readonly name: string
 
   private constructor(

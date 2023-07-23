@@ -1,32 +1,40 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsInt, IsString, ValidateNested } from 'class-validator'
 
 import RoutineView from '~/routine/application/models/view'
 import Routine from '~/routine/domain/models/routine'
 
 class RoutineWorkoutDto {
   @ApiProperty()
+  @IsString()
   readonly exerciseId: string
 
   @ApiProperty()
+  @IsInt()
   readonly reps: number
 
   @ApiProperty()
+  @IsInt()
   readonly sets: number
 }
 
 class RoutineDto {
   @ApiProperty()
+  @IsString()
   readonly id: string
 
   @ApiProperty()
+  @IsString()
   readonly description: string
 
   @ApiProperty()
+  @IsString()
   readonly name: string
 
-  @ApiProperty({
-    type: [RoutineWorkoutDto],
-  })
+  @ApiProperty({ type: [RoutineWorkoutDto] })
+  @Type(() => RoutineWorkoutDto)
+  @ValidateNested()
   readonly workouts: RoutineWorkoutDto[]
 
   private constructor(
