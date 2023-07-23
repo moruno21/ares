@@ -30,20 +30,21 @@ import MongooseExerciseView from './models/mongoose/view'
 import exerciseProviders from './providers'
 import ExercisesResolver from './resolvers/exercises'
 
-const resolvers = [ExercisesResolver]
 const controllers = [ExercisesController]
+
 const commandHandlers = [
   CreateExerciseHandler,
   DeleteExerciseHandler,
   EditExerciseHandler,
 ]
-const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
 const eventHandlers = [
   ExerciseCreatedHandler,
   ExerciseDeletedHandler,
   ExerciseRedescribedHandler,
   ExerciseRenamedHandler,
 ]
+const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
+const resolvers = [ExercisesResolver]
 
 const eventFactories = {
   ExerciseCreated: ({
@@ -92,8 +93,8 @@ const eventFactories = {
     ...commandHandlers,
     ...eventHandlers,
     ...exerciseProviders,
-    ...resolvers,
     ...queryHandlers,
+    ...resolvers,
   ],
 })
 class ExerciseModule {

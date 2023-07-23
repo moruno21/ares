@@ -43,21 +43,6 @@ describe('MongooseExerciseViews', () => {
     expect(response).toBe(view)
   })
 
-  it('returns an empty array when trying to get all the views and there are not', async () => {
-    const viewsFind = jest.spyOn(views, 'find')
-
-    viewsFind.mockReturnValue({
-      lean: () => ({
-        exec: async () => [],
-      }),
-    } as Query<unknown[], unknown>)
-
-    const response = await mongooseViews.getAll()
-
-    expect(viewsFind).toHaveBeenCalled()
-    expect(response).toStrictEqual([])
-  })
-
   it('gets all the views', async () => {
     const viewsFind = jest.spyOn(views, 'find')
     const mongooseView = MongooseExerciseView.fromExerciseView(view)
@@ -79,6 +64,21 @@ describe('MongooseExerciseViews', () => {
 
     expect(viewsFind).toHaveBeenCalled()
     expect(response).toStrictEqual([view, anotherView])
+  })
+
+  it('returns an empty array when trying to get all the views and there are not', async () => {
+    const viewsFind = jest.spyOn(views, 'find')
+
+    viewsFind.mockReturnValue({
+      lean: () => ({
+        exec: async () => [],
+      }),
+    } as Query<unknown[], unknown>)
+
+    const response = await mongooseViews.getAll()
+
+    expect(viewsFind).toHaveBeenCalled()
+    expect(response).toStrictEqual([])
   })
 
   it('finds a view if exists with id', async () => {

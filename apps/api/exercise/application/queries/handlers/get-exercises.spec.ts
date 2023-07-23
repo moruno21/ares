@@ -7,6 +7,7 @@ import GetExercisesHandler from './get-exercises'
 describe('GetExercises', () => {
   let views: ExerciseViews
   let getExercisesHandler: GetExercisesHandler
+
   const id = '2a116797-ec97-43f2-b818-e1f16723c898'
   const name = 'name'
   const description = 'description'
