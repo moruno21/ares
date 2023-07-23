@@ -16,6 +16,7 @@ class RoutineCreatedHandler implements IEventHandler<RoutineCreated> {
         description: event.description,
         id: event.id,
         name: event.name,
+        workouts: event.workouts,
       }),
     )
   }

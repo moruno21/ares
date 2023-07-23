@@ -7,6 +7,11 @@ type RoutineView = NameType<
     description: string
     id: string
     name: string
+    workouts: {
+      exerciseId: string
+      reps: number
+      sets: number
+    }[]
   }>,
   typeof __name__
 >

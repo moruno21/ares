@@ -6,6 +6,7 @@ import RoutineCreated from '../events/routine-created'
 import RoutineDescription from './description'
 import RoutineId from './id'
 import RoutineName from './name'
+import RoutineWorkout from './workout'
 
 const __name__ = 'Routine'
 
@@ -14,6 +15,7 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
 
   private _description: RoutineDescription
   private _name: RoutineName
+  private _workouts: RoutineWorkout[]
   private _isDeleted: boolean
 
   get name(): RoutineName {
@@ -24,6 +26,10 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
     return this._description
   }
 
+  get workouts(): RoutineWorkout[] {
+    return this._workouts
+  }
+
   get isDeleted(): boolean {
     return this._isDeleted
   }
@@ -32,10 +38,12 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
     description,
     id,
     name,
+    workouts,
   }: {
     description: RoutineDescription
     id: RoutineId
     name: RoutineName
+    workouts: RoutineWorkout[]
   }): Routine {
     const routine = new this()
 
@@ -44,6 +52,7 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
         description: description.value,
         id: id.value,
         name: name.value,
+        workouts: workouts.map((workout) => workout.value),
       }),
     )
 
@@ -55,6 +64,9 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
     this._name = RoutineName.fromString(event.name).value as RoutineName
     this._description = RoutineDescription.fromString(event.description)
       .value as RoutineDescription
+    this._workouts = event.workouts.map(
+      (workout) => RoutineWorkout.fromValue(workout).value as RoutineWorkout,
+    )
     this._isDeleted = false
   }
 }

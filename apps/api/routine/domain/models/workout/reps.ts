@@ -1,7 +1,7 @@
 import { ValueObject } from '~/shared/domain'
 import Either from '~/shared/either'
 
-import InvalidWorkoutReps from '../exceptions/invalid-reps'
+import InvalidWorkoutReps from '../../exceptions/invalid-reps'
 
 const __name__ = 'WorkoutReps'
 

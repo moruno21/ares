@@ -1,7 +1,7 @@
 import Either, { Left, Right } from '~/shared/either'
 import { itIsAValueObject } from '~/test/closures/shared/domain/value-object'
 
-import InvalidWorkoutSets from '../exceptions/invalid-sets'
+import InvalidWorkoutSets from '../../exceptions/invalid-sets'
 import WorkoutSets from './sets'
 
 describe('WorkoutSets', () => {
