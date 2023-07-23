@@ -11,7 +11,7 @@ describe('NotFoundExercise', () => {
 
     itIsAnException(notFound)
 
-    it.concurrent('can be cause exercise with this id do not exists', () => {
+    it.concurrent('can be cause exercise with this id does not exist', () => {
       expect(notFound.__name__).toBe(__name__)
       expect(notFound.code).toBe('not_found')
       expect(notFound.message).toBe(`Exercise with id '${id}' cannot be found`)
@@ -24,7 +24,7 @@ describe('NotFoundExercise', () => {
 
     itIsAnException(notFound)
 
-    it.concurrent('can be cause exercise with this name do not exists', () => {
+    it.concurrent('can be cause exercise with this name does not exist', () => {
       expect(notFound.__name__).toBe(__name__)
       expect(notFound.code).toBe('not_found')
       expect(notFound.message).toBe(
