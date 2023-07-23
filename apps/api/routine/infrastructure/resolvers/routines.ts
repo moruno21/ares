@@ -26,6 +26,7 @@ class RoutinesResolver {
           description: routineInput.description,
           id,
           name: routineInput.name,
+          workouts: routineInput.workouts,
         }),
       )
 

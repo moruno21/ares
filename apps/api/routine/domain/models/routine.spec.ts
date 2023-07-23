@@ -4,6 +4,7 @@ import RoutineDescription from './description'
 import RoutineId from './id'
 import RoutineName from './name'
 import Routine from './routine'
+import RoutineWorkout from './workout'
 
 describe('Routine', () => {
   const __name__ = 'Routine'
@@ -12,7 +13,18 @@ describe('Routine', () => {
   const name = RoutineName.fromString('squats').value as RoutineName
   const description = RoutineDescription.fromString('description')
     .value as RoutineDescription
-  const routine = Routine.create({ description, id, name })
+  const workoutsValue = [
+    {
+      exerciseId: 'ea29a364-177c-4751-bb3b-43bed8cb58e5',
+      reps: 4,
+      sets: 4,
+    },
+  ]
+  const workouts = workoutsValue.map(
+    (workoutValue) =>
+      RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
+  )
+  const routine = Routine.create({ description, id, name, workouts })
 
   itIsAnEntity(routine)
 
@@ -24,6 +36,10 @@ describe('Routine', () => {
     expect(routine).toHaveProperty('description')
   })
 
+  it.concurrent('has workouts', () => {
+    expect(routine).toHaveProperty('workouts')
+  })
+
   it.concurrent('has an isdeleted', () => {
     expect(routine).toHaveProperty('isDeleted')
   })
@@ -33,6 +49,7 @@ describe('Routine', () => {
     expect(routine.id).toStrictEqual(id)
     expect(routine.name).toStrictEqual(name)
     expect(routine.description).toStrictEqual(description)
+    expect(routine.workouts).toStrictEqual(workouts)
     expect(routine.isDeleted).toBe(false)
   })
 })

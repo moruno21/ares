@@ -37,6 +37,7 @@ class RoutinesController {
           description: dto.description,
           id: Uuid.generate(),
           name: dto.name,
+          workouts: dto.workouts,
         }),
       )
 

@@ -30,11 +30,13 @@ const eventFactories = {
     description,
     id,
     name,
+    workouts,
   }: {
     description: string
     id: string
     name: string
-  }) => RoutineCreated.with({ description, id, name }),
+    workouts: { exerciseId: string; reps: number; sets: number }[]
+  }) => RoutineCreated.with({ description, id, name, workouts }),
 }
 
 @Module({

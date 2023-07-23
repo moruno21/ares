@@ -6,7 +6,8 @@ describe('MongooseRoutineView', () => {
   const id = 'id'
   const name = 'name'
   const description = 'description'
-  const view = RoutineView.with({ description, id, name })
+  const workouts = [{ exerciseId: 'exerciseId', reps: 12, sets: 3 }]
+  const view = RoutineView.with({ description, id, name, workouts })
   const mongooseView = MongooseRoutineView.fromRoutineView(view)
 
   it.concurrent('has an id', () => {
@@ -21,10 +22,15 @@ describe('MongooseRoutineView', () => {
     expect(mongooseView).toHaveProperty('description')
   })
 
+  it.concurrent('has workouts', () => {
+    expect(mongooseView).toHaveProperty('workouts')
+  })
+
   it.concurrent('can be created from view', () => {
     expect(mongooseView._id).toBe(id)
     expect(mongooseView.name).toBe(name)
     expect(mongooseView.description).toBe(description)
+    expect(mongooseView.workouts).toBe(workouts)
   })
 
   it.concurrent('can be converted to view', () => {
@@ -32,6 +38,6 @@ describe('MongooseRoutineView', () => {
 
     expect(convertedView.id).toBe(id)
     expect(convertedView.name).toBe(name)
-    expect(convertedView.description).toBe(description)
+    expect(convertedView.workouts).toBe(workouts)
   })
 })

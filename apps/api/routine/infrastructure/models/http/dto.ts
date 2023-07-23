@@ -3,6 +3,17 @@ import { ApiProperty } from '@nestjs/swagger'
 import RoutineView from '~/routine/application/models/view'
 import Routine from '~/routine/domain/models/routine'
 
+class RoutineWorkoutDto {
+  @ApiProperty()
+  readonly exerciseId: string
+
+  @ApiProperty()
+  readonly reps: number
+
+  @ApiProperty()
+  readonly sets: number
+}
+
 class RoutineDto {
   @ApiProperty()
   readonly id: string
@@ -13,18 +24,39 @@ class RoutineDto {
   @ApiProperty()
   readonly name: string
 
-  private constructor(id: string, description: string, name: string) {
+  @ApiProperty({
+    type: [RoutineWorkoutDto],
+  })
+  readonly workouts: RoutineWorkoutDto[]
+
+  private constructor(
+    id: string,
+    description: string,
+    name: string,
+    workouts: RoutineWorkoutDto[],
+  ) {
     this.id = id
-    this.name = name
     this.description = description
+    this.name = name
+    this.workouts = workouts
   }
 
-  static fromRoutine({ description, id, name }: Routine): RoutineDto {
-    return new this(id.value, description.value, name.value)
+  static fromRoutine({ description, id, name, workouts }: Routine): RoutineDto {
+    return new this(
+      id.value,
+      description.value,
+      name.value,
+      workouts.map((workout) => workout.value),
+    )
   }
 
-  static fromRoutineView({ description, id, name }: RoutineView): RoutineDto {
-    return new this(id, description, name)
+  static fromRoutineView({
+    description,
+    id,
+    name,
+    workouts,
+  }: RoutineView): RoutineDto {
+    return new this(id, description, name, workouts)
   }
 }
 

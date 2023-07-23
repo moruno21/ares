@@ -4,6 +4,7 @@ import RoutineDescription from '~/routine/domain/models/description'
 import RoutineId from '~/routine/domain/models/id'
 import RoutineName from '~/routine/domain/models/name'
 import Routine from '~/routine/domain/models/routine'
+import RoutineWorkout from '~/routine/domain/models/workout'
 import EventPublisherMock from '~/test/mocks/@nestjs/cqrs/event-publisher'
 
 import EventStoreRoutines from './eventstore-routines'
@@ -19,7 +20,18 @@ describe('EventStoreRoutines', () => {
   const descriptionValue = 'description'
   const description = RoutineDescription.fromString(descriptionValue)
     .value as RoutineDescription
-  const routine = Routine.create({ description, id, name })
+  const workoutsValue = [
+    {
+      exerciseId: 'ea29a364-177c-4751-bb3b-43bed8cb58e5',
+      reps: 4,
+      sets: 4,
+    },
+  ]
+  const workouts = workoutsValue.map(
+    (workoutValue) =>
+      RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
+  )
+  const routine = Routine.create({ description, id, name, workouts })
 
   beforeEach(() => {
     eventPublisher = EventPublisherMock.mock()

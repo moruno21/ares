@@ -1,28 +1,45 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString } from 'class-validator'
 
+class PostRoutineWorkoutDto {
+  @ApiProperty()
+  readonly exerciseId: string
+
+  @ApiProperty()
+  readonly reps: number
+
+  @ApiProperty()
+  readonly sets: number
+}
 class PostRoutineDto {
   @ApiProperty()
-  @IsString()
   readonly description: string
 
   @ApiProperty()
-  @IsString()
   readonly name: string
 
-  private constructor(description: string, name: string) {
+  @ApiProperty({ type: [PostRoutineWorkoutDto] })
+  readonly workouts: PostRoutineWorkoutDto[]
+
+  private constructor(
+    description: string,
+    name: string,
+    workouts: PostRoutineWorkoutDto[],
+  ) {
     this.description = description
     this.name = name
+    this.workouts = workouts
   }
 
   static with({
     description,
     name,
+    workouts,
   }: {
     description: string
     name: string
+    workouts: PostRoutineDto['workouts']
   }): PostRoutineDto {
-    return new PostRoutineDto(description, name)
+    return new PostRoutineDto(description, name, workouts)
   }
 }
 

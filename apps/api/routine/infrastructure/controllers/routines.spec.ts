@@ -8,6 +8,7 @@ import RoutineDescription from '~/routine/domain/models/description'
 import RoutineId from '~/routine/domain/models/id'
 import RoutineName from '~/routine/domain/models/name'
 import Routine from '~/routine/domain/models/routine'
+import RoutineWorkout from '~/routine/domain/models/workout'
 import RoutineDto from '~/routine/infrastructure/models/http/dto'
 import PostRoutineDto from '~/routine/infrastructure/models/http/post-dto'
 import Either from '~/shared/either'
@@ -29,7 +30,19 @@ describe('RoutinesController', () => {
     const descriptionValue = 'description'
     const description = RoutineDescription.fromString(descriptionValue)
       .value as RoutineDescription
-    const routine = Routine.create({ description, id, name })
+    const workoutExerciseIdValue = 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba'
+    const workoutsValue = [
+      {
+        exerciseId: workoutExerciseIdValue,
+        reps: 10,
+        sets: 5,
+      },
+    ]
+    const workouts = workoutsValue.map(
+      (workoutValue) =>
+        RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
+    )
+    const routine = Routine.create({ description, id, name, workouts })
     const dto = RoutineDto.fromRoutine(routine)
 
     beforeEach(() => {
@@ -48,6 +61,7 @@ describe('RoutinesController', () => {
         PostRoutineDto.with({
           description: descriptionValue,
           name: nameValue,
+          workouts: workoutsValue,
         }),
       )) as RoutineDto
 
@@ -57,11 +71,13 @@ describe('RoutinesController', () => {
           description: descriptionValue,
           id: idValue,
           name: nameValue,
+          workouts: workoutsValue,
         }),
       )
       expect(response.id).toBe(dto.id)
       expect(response.name).toBe(dto.name)
       expect(response.description).toBe(dto.description)
+      expect(response.workouts).toStrictEqual(dto.workouts)
     })
 
     it.each([
@@ -98,6 +114,7 @@ describe('RoutinesController', () => {
           PostRoutineDto.with({
             description: descriptionMock,
             name: nameMock,
+            workouts: workoutsValue,
           }),
         )
 
@@ -107,6 +124,7 @@ describe('RoutinesController', () => {
             description: descriptionMock,
             id: idValue,
             name: nameMock,
+            workouts: workoutsValue,
           }),
         )
         await expect(response).rejects.toThrow(

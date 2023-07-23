@@ -18,12 +18,15 @@ describe('RoutineCreatedHandler', () => {
     const id = 'id'
     const name = 'name'
     const description = 'description'
+    const workouts = [{ exerciseId: 'exerciseId', reps: 12, sets: 3 }]
     const viewsAdd = jest.spyOn(views, 'add')
 
-    await createdHandler.handle(RoutineCreated.with({ description, id, name }))
+    await createdHandler.handle(
+      RoutineCreated.with({ description, id, name, workouts }),
+    )
 
     expect(viewsAdd).toHaveBeenCalledWith(
-      RoutineView.with({ description, id, name }),
+      RoutineView.with({ description, id, name, workouts }),
     )
   })
 })
