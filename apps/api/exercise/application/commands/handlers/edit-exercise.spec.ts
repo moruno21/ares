@@ -58,6 +58,7 @@ describe('EditExerciseHandler', () => {
     )
 
     expect(viewsWithName).toHaveBeenCalledWith(anotherNameValue)
+    expect(exercisesFindWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).toHaveBeenCalledWith(exercise)
     expect(Either.isRight(response)).toBe(true)
     expect(response).toStrictEqual(Either.right(exercise))
@@ -97,23 +98,29 @@ describe('EditExerciseHandler', () => {
       const exercisesFindWithId = jest.spyOn(exercises, 'findWithId')
       const exercisesSave = jest.spyOn(exercises, 'save')
 
+      viewsWithName.mockResolvedValue(
+        Either.left(NotFoundExercise.withName(nameValue)),
+      )
+      exercisesFindWithId.mockResolvedValue(Either.right(exercise))
+
       const response = (await editExerciseHandler.execute(
         EditExercise.with({
           description: descriptionMock,
           id: idMock,
           name: nameMock,
         }),
-      )) as Left<InvalidExerciseDescription | InvalidExerciseName | InvalidUuid>
+      )) as Left<
+        (InvalidExerciseDescription | InvalidExerciseName | InvalidUuid)[]
+      >
 
-      expect(viewsWithName).not.toHaveBeenCalled()
-      expect(exercisesFindWithId).not.toHaveBeenCalled()
       expect(exercisesSave).not.toHaveBeenCalled()
       expect(Either.isRight(response)).toBe(false)
 
       if (Either.isLeft(ExerciseId.fromString(idMock))) {
-        const responseResult = Either.left(response.value as InvalidUuid)
+        const responseResult = Either.left(response.value[0] as InvalidUuid)
         const invalidUuid = InvalidUuid.causeTheFormatIsNotValid(idMock)
 
+        expect(exercisesFindWithId).not.toHaveBeenCalled()
         expect(Either.isRight(responseResult)).toBe(false)
         expect(responseResult.value.__name__).toBe(invalidUuid.__name__)
         expect(responseResult.value.code).toBe(invalidUuid.code)
@@ -121,7 +128,7 @@ describe('EditExerciseHandler', () => {
 
       if (Either.isLeft(ExerciseDescription.fromString(descriptionMock))) {
         const responseResult = Either.left(
-          response.value as InvalidExerciseDescription,
+          response.value[0] as InvalidExerciseDescription,
         )
         const invalidDescription = InvalidExerciseDescription.causeIsTooLong()
 
@@ -132,11 +139,12 @@ describe('EditExerciseHandler', () => {
 
       if (Either.isLeft(ExerciseName.fromString(nameMock))) {
         const responseResult = Either.left(
-          response.value as InvalidExerciseName,
+          response.value[0] as InvalidExerciseName,
         )
         const invalidNameCauseIsBlank = InvalidExerciseName.causeIsBlank()
         const invalidNameCauseIsTooLong = InvalidExerciseName.causeIsTooLong()
 
+        expect(viewsWithName).not.toHaveBeenCalled()
         expect(Either.isRight(responseResult)).toBe(false)
         if (nameMock === ' ') {
           expect(responseResult.value.__name__).toBe(
@@ -169,6 +177,7 @@ describe('EditExerciseHandler', () => {
         }),
       ),
     )
+    exercisesFindWithId.mockResolvedValue(Either.right(exercise))
 
     const response = (await editExerciseHandler.execute(
       EditExercise.with({
@@ -176,14 +185,14 @@ describe('EditExerciseHandler', () => {
         id: idValue,
         name: nameValue,
       }),
-    )) as Left<NotEditedExercise>
+    )) as Left<NotEditedExercise[]>
 
     expect(viewsWithName).toHaveBeenCalledWith(nameValue)
-    expect(exercisesFindWithId).not.toHaveBeenCalled()
+    expect(exercisesFindWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
-    expect(response.value.__name__).toBe(notEdited.__name__)
-    expect(response.value.code).toBe(notEdited.code)
+    expect(response.value[0].__name__).toBe(notEdited.__name__)
+    expect(response.value[0].code).toBe(notEdited.code)
   })
 
   it('cannot edit an exercise that does not exist', async () => {
@@ -203,13 +212,13 @@ describe('EditExerciseHandler', () => {
         id: idValue,
         name: nameValue,
       }),
-    )) as Left<NotFoundExercise>
+    )) as Left<NotFoundExercise[]>
 
     expect(viewsWithName).toHaveBeenCalledWith(nameValue)
     expect(exercisesFindWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
-    expect(response.value.__name__).toBe(notFound.__name__)
-    expect(response.value.code).toBe(notFound.code)
+    expect(response.value[0].__name__).toBe(notFound.__name__)
+    expect(response.value[0].code).toBe(notFound.code)
   })
 })

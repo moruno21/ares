@@ -106,9 +106,9 @@ describe('ExercisesController', () => {
     it('cannot get an exercise from an invalid id', async () => {
       const queryBusExecute = jest.spyOn(queryBus, 'execute')
       const invalidUuid = 'invalidUuid'
-      const exception = InvalidUuid.causeTheFormatIsNotValid('invalidUuid')
+      const exceptions = [InvalidUuid.causeTheFormatIsNotValid('invalidUuid')]
 
-      queryBusExecute.mockResolvedValue(Either.left(exception))
+      queryBusExecute.mockResolvedValue(Either.left(exceptions))
 
       const response = exercisesController.getExercise(invalidUuid)
 
@@ -116,16 +116,16 @@ describe('ExercisesController', () => {
         GetExercise.with({ id: invalidUuid }),
       )
       await expect(response).rejects.toThrow(
-        new BadRequestException(HttpError.fromExceptions([exception])),
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
       )
     })
 
     it('cannot get an exercise that does not exist', async () => {
       const queryBusExecute = jest.spyOn(queryBus, 'execute')
       const nonExistentUuid = '29b3d5fa-c770-40a0-b1a0-5ff771f5b5f7'
-      const exception = NotFoundExercise.withId(nonExistentUuid)
+      const exceptions = [NotFoundExercise.withId(nonExistentUuid)]
 
-      queryBusExecute.mockResolvedValue(Either.left(exception))
+      queryBusExecute.mockResolvedValue(Either.left(exceptions))
 
       const response = exercisesController.getExercise(nonExistentUuid)
 
@@ -133,7 +133,7 @@ describe('ExercisesController', () => {
         GetExercise.with({ id: nonExistentUuid }),
       )
       await expect(response).rejects.toThrow(
-        new BadRequestException(HttpError.fromExceptions([exception])),
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
       )
     })
   })
@@ -306,10 +306,11 @@ describe('ExercisesController', () => {
 
     it('cannot edit an exercise with a name that is already used by another exercise', async () => {
       const commandBusExecute = jest.spyOn(commandBus, 'execute')
-      const exception =
-        NotEditedExercise.causeAlreadyExistsOneWithName(nameValue)
+      const exceptions = [
+        NotEditedExercise.causeAlreadyExistsOneWithName(nameValue),
+      ]
 
-      commandBusExecute.mockResolvedValue(Either.left(exception))
+      commandBusExecute.mockResolvedValue(Either.left(exceptions))
 
       const response = exercisesController.editExercise(
         idValue,
@@ -327,16 +328,16 @@ describe('ExercisesController', () => {
         }),
       )
       await expect(response).rejects.toThrow(
-        new BadRequestException(HttpError.fromExceptions([exception])),
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
       )
     })
 
     it('cannot edit an exercise that does not exist', async () => {
       const commandBusExecute = jest.spyOn(commandBus, 'execute')
       const nonExistentUuid = '9320f2e6-ec9d-46ee-bfd6-909fce789dbe'
-      const exception = NotFoundExercise.withId(nonExistentUuid)
+      const exceptions = [NotFoundExercise.withId(nonExistentUuid)]
 
-      commandBusExecute.mockResolvedValue(Either.left(exception))
+      commandBusExecute.mockResolvedValue(Either.left(exceptions))
 
       const response = exercisesController.editExercise(
         nonExistentUuid,
@@ -354,7 +355,7 @@ describe('ExercisesController', () => {
         }),
       )
       await expect(response).rejects.toThrow(
-        new BadRequestException(HttpError.fromExceptions([exception])),
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
       )
     })
   })
@@ -395,9 +396,9 @@ describe('ExercisesController', () => {
     it('cannot delete an exercise from an invalid id', async () => {
       const commandBusExecute = jest.spyOn(commandBus, 'execute')
       const invalidUuid = 'invalidUuid'
-      const exception = InvalidUuid.causeTheFormatIsNotValid('invalidUuid')
+      const exceptions = [InvalidUuid.causeTheFormatIsNotValid('invalidUuid')]
 
-      commandBusExecute.mockResolvedValue(Either.left(exception))
+      commandBusExecute.mockResolvedValue(Either.left(exceptions))
 
       const response = exercisesController.deleteExercise(invalidUuid)
 
@@ -405,16 +406,16 @@ describe('ExercisesController', () => {
         DeleteExercise.with({ id: invalidUuid }),
       )
       await expect(response).rejects.toThrow(
-        new BadRequestException(HttpError.fromExceptions([exception])),
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
       )
     })
 
     it('cannot delete an exercise that does not exist', async () => {
       const commandBusExecute = jest.spyOn(commandBus, 'execute')
       const nonExistentUuid = 'e1fb4167-dfae-40ac-8e5a-5037a4c2fe31'
-      const exception = NotFoundExercise.withId(nonExistentUuid)
+      const exceptions = [NotFoundExercise.withId(nonExistentUuid)]
 
-      commandBusExecute.mockResolvedValue(Either.left(exception))
+      commandBusExecute.mockResolvedValue(Either.left(exceptions))
 
       const response = exercisesController.deleteExercise(nonExistentUuid)
 
@@ -422,7 +423,7 @@ describe('ExercisesController', () => {
         DeleteExercise.with({ id: nonExistentUuid }),
       )
       await expect(response).rejects.toThrow(
-        new BadRequestException(HttpError.fromExceptions([exception])),
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
       )
     })
   })

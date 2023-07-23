@@ -21,22 +21,29 @@ const RoutineWorkout = {
   fromValue: (
     value: RoutineWorkout['value'],
   ): Either<
-    InvalidUuid | InvalidWorkoutReps | InvalidWorkoutSets,
+    (InvalidUuid | InvalidWorkoutReps | InvalidWorkoutSets)[],
     RoutineWorkout
   > => {
     const uuid = Uuid.fromString(value.exerciseId)
     const isInvalidUuid = Either.isLeft(uuid)
-    if (isInvalidUuid) return uuid
 
     const reps = WorkoutReps.fromNumber(value.reps)
     const isInvalidReps = Either.isLeft(reps)
-    if (isInvalidReps) return reps
 
     const sets = WorkoutSets.fromNumber(value.sets)
     const isInvalidSets = Either.isLeft(sets)
-    if (isInvalidSets) return sets
 
-    return Either.right({ __name__, value })
+    const exceptions = []
+    if (isInvalidUuid) exceptions.push(uuid.value)
+    if (isInvalidReps) exceptions.push(reps.value)
+    if (isInvalidSets) exceptions.push(sets.value)
+    if (isInvalidUuid || isInvalidReps || isInvalidSets)
+      return Either.left(exceptions)
+
+    return Either.right({
+      __name__,
+      value,
+    } as RoutineWorkout)
   },
 } as const
 

@@ -16,16 +16,18 @@ class GetExerciseHandler implements IQueryHandler {
 
   async execute(
     query: GetExercise,
-  ): Promise<Either<InvalidUuid | NotFoundExercise, ExerciseView>> {
+  ): Promise<Either<(InvalidUuid | NotFoundExercise)[], ExerciseView>> {
     const id = ExerciseId.fromString(query.id)
-
     const isInvalidId = Either.isLeft(id)
-    if (isInvalidId) return Either.left(id.value)
 
-    const exerciseView = await this.views.withId(id.value.value)
-
+    const exerciseView =
+      !isInvalidId && (await this.views.withId(id.value.value))
     const exerciseNotFound = Either.isLeft(exerciseView)
-    if (exerciseNotFound) return Either.left(exerciseView.value)
+
+    const exceptions = []
+    if (isInvalidId) exceptions.push(id.value)
+    if (exerciseNotFound) exceptions.push(exerciseView.value)
+    if (isInvalidId || exerciseNotFound) return Either.left(exceptions)
 
     return Either.right(exerciseView.value)
   }

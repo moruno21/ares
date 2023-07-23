@@ -41,12 +41,12 @@ describe('GetExercise', () => {
 
     const response = (await getExerciseHandler.execute(
       GetExercise.with({ id: notValidId }),
-    )) as Left<InvalidUuid>
+    )) as Left<InvalidUuid[]>
 
     expect(viewsWithId).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
-    expect(response.value.__name__).toBe(invalidUuid.__name__)
-    expect(response.value.code).toBe(invalidUuid.code)
+    expect(response.value[0].__name__).toBe(invalidUuid.__name__)
+    expect(response.value[0].code).toBe(invalidUuid.code)
   })
 
   it('cannot get an exercise that does not exist', async () => {
@@ -57,11 +57,11 @@ describe('GetExercise', () => {
 
     const response = (await getExerciseHandler.execute(
       GetExercise.with({ id }),
-    )) as Left<NotFoundExercise>
+    )) as Left<NotFoundExercise[]>
 
     expect(viewsWithId).toHaveBeenCalledWith(id)
     expect(Either.isRight(response)).toBe(false)
-    expect(response.value.__name__).toBe(notFoundExercise.__name__)
-    expect(response.value.code).toBe(notFoundExercise.code)
+    expect(response.value[0].__name__).toBe(notFoundExercise.__name__)
+    expect(response.value[0].code).toBe(notFoundExercise.code)
   })
 })

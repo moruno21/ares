@@ -58,13 +58,13 @@ describe('DeleteExerciseHandler', () => {
       DeleteExercise.with({
         id: idMock,
       }),
-    )) as Left<InvalidUuid>
+    )) as Left<InvalidUuid[]>
 
     expect(exercisesFindWithId).not.toHaveBeenCalled()
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
-    expect(response.value.__name__).toBe(invalidUuid.__name__)
-    expect(response.value.code).toBe(invalidUuid.code)
+    expect(response.value[0].__name__).toBe(invalidUuid.__name__)
+    expect(response.value[0].code).toBe(invalidUuid.code)
   })
 
   it('cannot delete an exercise that does not exist', async () => {
@@ -79,12 +79,12 @@ describe('DeleteExerciseHandler', () => {
       DeleteExercise.with({
         id: idValue,
       }),
-    )) as Left<NotFoundExercise>
+    )) as Left<NotFoundExercise[]>
 
     expect(exercisesFindWithId).toHaveBeenCalledWith(id)
     expect(exercisesSave).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
-    expect(response.value.__name__).toBe(notFound.__name__)
-    expect(response.value.code).toBe(notFound.code)
+    expect(response.value[0].__name__).toBe(notFound.__name__)
+    expect(response.value[0].code).toBe(notFound.code)
   })
 })

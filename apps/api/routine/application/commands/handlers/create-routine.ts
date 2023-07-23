@@ -42,21 +42,23 @@ class CreateRoutineHandler implements ICommandHandler {
     >
   > {
     const id = RoutineId.fromString(command.id)
+    const isInvalidId = Either.isLeft(id)
+
     const description = RoutineDescription.fromString(command.description)
+    const isInvalidDescription = Either.isLeft(description)
+
     const name = RoutineName.fromString(command.name)
+    const isInvalidName = Either.isLeft(name)
+
     const workouts = command.workouts.map((workout) =>
       RoutineWorkout.fromValue(workout),
     )
-
-    const isInvalidId = Either.isLeft(id)
-    const isInvalidDescription = Either.isLeft(description)
-    const isInvalidName = Either.isLeft(name)
     const workoutExceptions = workouts.filter((workout) =>
       Either.isLeft(workout),
     )
+    const isInvalidWorkouts = workoutExceptions.length > 0
 
     const exerciseIdExceptions = []
-
     for (const workout of workouts) {
       if (Either.isLeft(workout)) continue
 
@@ -67,17 +69,25 @@ class CreateRoutineHandler implements ICommandHandler {
 
       if (Either.isLeft(exercise)) exerciseIdExceptions.push(exercise)
     }
+    const isInvalidWorkoutsExercisesId = exerciseIdExceptions.length > 0
 
     const exceptions = []
     if (isInvalidId) exceptions.push(id.value)
     if (isInvalidDescription) exceptions.push(description.value)
     if (isInvalidName) exceptions.push(name.value)
-    if (workoutExceptions)
+    if (isInvalidWorkouts)
       exceptions.push(...workoutExceptions.map((workout) => workout.value))
-    if (exerciseIdExceptions)
+    if (isInvalidWorkoutsExercisesId)
       exceptions.push(...exerciseIdExceptions.map((workout) => workout.value))
 
-    if (exceptions.length > 0) return Either.left(exceptions)
+    if (
+      isInvalidId ||
+      isInvalidDescription ||
+      isInvalidName ||
+      isInvalidWorkouts ||
+      isInvalidWorkoutsExercisesId
+    )
+      return Either.left(exceptions)
 
     const routine = Routine.create({
       description: description.value as RoutineDescription,

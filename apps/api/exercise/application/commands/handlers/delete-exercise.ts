@@ -16,17 +16,23 @@ class DeleteExerciseHandler implements ICommandHandler {
 
   async execute(
     command: DeleteExercise,
-  ): Promise<Either<InvalidUuid | NotFoundExercise, Exercise>> {
+  ): Promise<Either<(InvalidUuid | NotFoundExercise)[], Exercise>> {
     const id = ExerciseId.fromString(command.id)
-
     const isInvalidId = Either.isLeft(id)
-    if (isInvalidId) return Either.left(id.value)
 
-    const exercise = await this.exercises.findWithId(id.value)
-    if (Either.isLeft(exercise)) return Either.left(exercise.value)
+    const exercise = !isInvalidId && (await this.exercises.findWithId(id.value))
+    const notFoundExercise = Either.isLeft(exercise)
 
-    const deleteExercise = exercise.value.delete()
-    if (Either.isLeft(deleteExercise)) return Either.left(deleteExercise.value)
+    const deletedExercise =
+      !isInvalidId && !notFoundExercise && exercise.value.delete()
+    const notDeletedExercise = Either.isLeft(deletedExercise)
+
+    const exceptions = []
+    if (isInvalidId) exceptions.push(id.value)
+    if (notFoundExercise) exceptions.push(exercise.value)
+    if (notDeletedExercise) exceptions.push(deletedExercise.value)
+    if (isInvalidId || notFoundExercise || notDeletedExercise)
+      return Either.left(exceptions)
 
     this.exercises.save(exercise.value)
 

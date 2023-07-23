@@ -36,16 +36,16 @@ describe('RoutineWorkout', () => {
         exerciseId: invalidExerciseIdValue,
         reps: repsValue,
         sets: setsValue,
-      }) as Left<InvalidUuid>
+      }) as Left<InvalidUuid[]>
       const invalidUuid = InvalidUuid.causeTheFormatIsNotValid(
         invalidExerciseIdValue,
       )
 
       expect(Either.isRight(workoutWithInvalidExerciseId)).toBe(false)
-      expect(workoutWithInvalidExerciseId.value.__name__).toBe(
+      expect(workoutWithInvalidExerciseId.value[0].__name__).toBe(
         invalidUuid.__name__,
       )
-      expect(workoutWithInvalidExerciseId.value.code).toBe(invalidUuid.code)
+      expect(workoutWithInvalidExerciseId.value[0].code).toBe(invalidUuid.code)
     },
   )
 
@@ -58,7 +58,7 @@ describe('RoutineWorkout', () => {
       exerciseId: exerciseIdValue,
       reps: invalidRepsValue,
       sets: setsValue,
-    }) as Left<InvalidWorkoutReps>
+    }) as Left<InvalidWorkoutReps[]>
 
     const nonPositiveReps = InvalidWorkoutReps.causeIsNonPositive()
     const tooHighReps = InvalidWorkoutReps.causeIsTooHigh()
@@ -66,13 +66,15 @@ describe('RoutineWorkout', () => {
     expect(Either.isRight(workoutWithInvalidReps)).toBe(false)
 
     if (invalidRepsValue < 1) {
-      expect(workoutWithInvalidReps.value.__name__).toBe(
+      expect(workoutWithInvalidReps.value[0].__name__).toBe(
         nonPositiveReps.__name__,
       )
-      expect(workoutWithInvalidReps.value.code).toBe(nonPositiveReps.code)
+      expect(workoutWithInvalidReps.value[0].code).toBe(nonPositiveReps.code)
     } else {
-      expect(workoutWithInvalidReps.value.__name__).toBe(tooHighReps.__name__)
-      expect(workoutWithInvalidReps.value.code).toBe(tooHighReps.code)
+      expect(workoutWithInvalidReps.value[0].__name__).toBe(
+        tooHighReps.__name__,
+      )
+      expect(workoutWithInvalidReps.value[0].code).toBe(tooHighReps.code)
     }
   })
 
@@ -85,7 +87,7 @@ describe('RoutineWorkout', () => {
       exerciseId: exerciseIdValue,
       reps: repsValue,
       sets: invalidSetsValue,
-    }) as Left<InvalidWorkoutSets>
+    }) as Left<InvalidWorkoutSets[]>
 
     const nonPositiveSets = InvalidWorkoutSets.causeIsNonPositive()
     const tooHighSets = InvalidWorkoutSets.causeIsTooHigh()
@@ -93,13 +95,15 @@ describe('RoutineWorkout', () => {
     expect(Either.isRight(workoutWithInvalidSets)).toBe(false)
 
     if (invalidSetsValue < 1) {
-      expect(workoutWithInvalidSets.value.__name__).toBe(
+      expect(workoutWithInvalidSets.value[0].__name__).toBe(
         nonPositiveSets.__name__,
       )
-      expect(workoutWithInvalidSets.value.code).toBe(nonPositiveSets.code)
+      expect(workoutWithInvalidSets.value[0].code).toBe(nonPositiveSets.code)
     } else {
-      expect(workoutWithInvalidSets.value.__name__).toBe(tooHighSets.__name__)
-      expect(workoutWithInvalidSets.value.code).toBe(tooHighSets.code)
+      expect(workoutWithInvalidSets.value[0].__name__).toBe(
+        tooHighSets.__name__,
+      )
+      expect(workoutWithInvalidSets.value[0].code).toBe(tooHighSets.code)
     }
   })
 })

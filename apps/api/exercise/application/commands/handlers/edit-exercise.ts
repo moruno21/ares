@@ -27,34 +27,53 @@ class EditExerciseHandler implements ICommandHandler {
     command: EditExercise,
   ): Promise<
     Either<
-      | InvalidUuid
-      | InvalidExerciseDescription
-      | InvalidExerciseName
-      | NotEditedExercise
-      | NotFoundExercise,
+      (
+        | InvalidUuid
+        | InvalidExerciseDescription
+        | InvalidExerciseName
+        | NotEditedExercise
+        | NotFoundExercise
+      )[],
       Exercise
     >
   > {
     const id = ExerciseId.fromString(command.id)
-    if (Either.isLeft(id)) return Either.left(id.value)
+    const isInvalidId = Either.isLeft(id)
 
     const description = ExerciseDescription.fromString(command.description)
-    if (Either.isLeft(description)) return Either.left(description.value)
+    const isInvalidDescription = Either.isLeft(description)
 
     const name = ExerciseName.fromString(command.name)
-    if (Either.isLeft(name)) return Either.left(name.value)
+    const isInvalidName = Either.isLeft(name)
 
-    const exerciseWithSameName = await this.views.withName(name.value.value)
-    if (
-      Either.isRight(exerciseWithSameName) &&
-      exerciseWithSameName.value.id !== id.value.value
-    )
-      return Either.left(
+    const exerciseWithName =
+      !isInvalidName && (await this.views.withName(name.value.value))
+    const existsWithName =
+      !isInvalidName &&
+      Either.isRight(exerciseWithName) &&
+      !isInvalidId &&
+      exerciseWithName.value.id !== id.value.value
+
+    const exercise = !isInvalidId && (await this.exercises.findWithId(id.value))
+    const notFoundExercise = Either.isLeft(exercise)
+
+    const exceptions = []
+    if (isInvalidId) exceptions.push(id.value)
+    if (isInvalidDescription) exceptions.push(description.value)
+    if (isInvalidName) exceptions.push(name.value)
+    if (existsWithName)
+      exceptions.push(
         NotEditedExercise.causeAlreadyExistsOneWithName(name.value.value),
       )
-
-    const exercise = await this.exercises.findWithId(id.value)
-    if (Either.isLeft(exercise)) return Either.left(exercise.value)
+    if (notFoundExercise) exceptions.push(exercise.value)
+    if (
+      isInvalidId ||
+      isInvalidDescription ||
+      isInvalidName ||
+      existsWithName ||
+      notFoundExercise
+    )
+      return Either.left(exceptions)
 
     exercise.value.rename(name.value)
     exercise.value.redescribe(description.value)

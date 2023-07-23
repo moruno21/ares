@@ -36,12 +36,14 @@ class CreateExerciseHandler implements ICommandHandler {
     >
   > {
     const id = ExerciseId.fromString(command.id)
-    const description = ExerciseDescription.fromString(command.description)
-    const name = ExerciseName.fromString(command.name)
-
     const isInvalidId = Either.isLeft(id)
+
+    const description = ExerciseDescription.fromString(command.description)
     const isInvalidDescription = Either.isLeft(description)
+
+    const name = ExerciseName.fromString(command.name)
     const isInvalidName = Either.isLeft(name)
+
     const existsWithName =
       !isInvalidName &&
       Either.isRight(await this.views.withName(name.value.value))
