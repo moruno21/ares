@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common'
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
+import DeleteRoutine from '~/routine/application/commands/delete-routine'
 import RoutineView from '~/routine/application/models/view'
 import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
@@ -152,10 +153,9 @@ describe('RoutinesController', () => {
     const descriptionValue = 'description'
     const description = RoutineDescription.fromString(descriptionValue)
       .value as RoutineDescription
-    const workoutExerciseIdValue = 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba'
     const workoutsValue = [
       {
-        exerciseId: workoutExerciseIdValue,
+        exerciseId: 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba',
         reps: 10,
         sets: 5,
       },
@@ -254,5 +254,84 @@ describe('RoutinesController', () => {
         )
       },
     )
+  })
+
+  describe('DeleteRoutine', () => {
+    const idValue = 'ffeb17c2-9728-4747-a760-025293e0af42'
+    const id = RoutineId.fromString(idValue).value as RoutineId
+    const nameValue = 'name'
+    const name = RoutineName.fromString(nameValue).value as RoutineName
+    const descriptionValue = 'description'
+    const description = RoutineDescription.fromString(descriptionValue)
+      .value as RoutineDescription
+    const workoutsValue = [
+      {
+        exerciseId: 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba',
+        reps: 10,
+        sets: 5,
+      },
+    ]
+    const workouts = workoutsValue.map(
+      (workoutValue) =>
+        RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
+    )
+    const routine = Routine.create({ description, id, name, workouts })
+    const dto = RoutineDto.fromRoutine(routine)
+
+    beforeEach(() => {
+      commandBus = CommandBusMock.mock()
+      routinesController = new RoutinesController(commandBus, queryBus)
+    })
+
+    it('deletes a routine from an id', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+
+      commandBusExecute.mockResolvedValue(Either.right(routine))
+
+      const response = (await routinesController.deleteRoutine(
+        id.value,
+      )) as RoutineDto
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        DeleteRoutine.with({
+          id: idValue,
+        }),
+      )
+      expect(response.id).toBe(dto.id)
+    })
+
+    it('cannot delete a routine from an invalid id', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      const invalidUuid = 'invalidUuid'
+      const exceptions = [InvalidUuid.causeTheFormatIsNotValid('invalidUuid')]
+
+      commandBusExecute.mockResolvedValue(Either.left(exceptions))
+
+      const response = routinesController.deleteRoutine(invalidUuid)
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        DeleteRoutine.with({ id: invalidUuid }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
+      )
+    })
+
+    it('cannot delete a routine that does not exist', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      const nonExistentUuid = '9db641ff-75d2-4a42-939d-e65629f03acb'
+      const exceptions = [NotFoundRoutine.withId(nonExistentUuid)]
+
+      commandBusExecute.mockResolvedValue(Either.left(exceptions))
+
+      const response = routinesController.deleteRoutine(nonExistentUuid)
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        DeleteRoutine.with({ id: nonExistentUuid }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
+      )
+    })
   })
 })

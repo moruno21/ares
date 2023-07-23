@@ -1,8 +1,11 @@
 // import { AggregateRoot } from '@nestjs/cqrs'
 
 import { AggregateRoot } from '~/shared/domain'
+import Either from '~/shared/either'
 
 import RoutineCreated from '../events/routine-created'
+import RoutineDeleted from '../events/routine-deleted'
+import NotFoundRoutine from '../exceptions/not-found'
 import RoutineDescription from './description'
 import RoutineId from './id'
 import RoutineName from './name'
@@ -59,6 +62,15 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
     return routine
   }
 
+  delete(): Either<NotFoundRoutine, Routine> {
+    if (this._isDeleted)
+      return Either.left(NotFoundRoutine.withId(this._id.value))
+
+    this.apply(RoutineDeleted.with({ id: this._id.value }))
+
+    return Either.right(this)
+  }
+
   private onRoutineCreated(event: RoutineCreated) {
     this._id = RoutineId.fromString(event.id).value as RoutineId
     this._name = RoutineName.fromString(event.name).value as RoutineName
@@ -68,6 +80,11 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
       (workout) => RoutineWorkout.fromValue(workout).value as RoutineWorkout,
     )
     this._isDeleted = false
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private onRoutineDeleted(event: RoutineDeleted) {
+    this._isDeleted = true
   }
 }
 

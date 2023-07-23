@@ -25,6 +25,7 @@ describe('MongooseRoutineViews', () => {
 
   it('is a routine views service', () => {
     expect(mongooseViews).toHaveProperty('add')
+    expect(mongooseViews).toHaveProperty('delete')
     expect(mongooseViews).toHaveProperty('getAll')
     expect(mongooseViews).toHaveProperty('withId')
   })
@@ -110,5 +111,13 @@ describe('MongooseRoutineViews', () => {
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
+  })
+
+  it('deletes a view', async () => {
+    const viewsDeleteOne = jest.spyOn(views, 'deleteOne')
+
+    await mongooseViews.delete(view.id)
+
+    expect(viewsDeleteOne).toHaveBeenCalledWith({ _id: view.id })
   })
 })

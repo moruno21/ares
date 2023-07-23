@@ -10,7 +10,9 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { MongooseModule, SchemaFactory } from '@nestjs/mongoose'
 
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
+import DeleteRoutineHandler from '~/routine/application/commands/handlers/delete-routine'
 import RoutineCreatedHandler from '~/routine/application/event-handlers/routine-created'
+import RoutineDeletedHandler from '~/routine/application/event-handlers/routine-deleted'
 import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
 import GetRoutinesHandler from '~/routine/application/queries/handlers/get-routines'
 import RoutineCreated from '~/routine/domain/events/routine-created'
@@ -24,8 +26,8 @@ import RoutinesResolver from './resolvers/routines'
 
 const controllers = [RoutinesController]
 
-const commandHandlers = [CreateRoutineHandler]
-const eventHandlers = [RoutineCreatedHandler]
+const commandHandlers = [CreateRoutineHandler, DeleteRoutineHandler]
+const eventHandlers = [RoutineCreatedHandler, RoutineDeletedHandler]
 const queryHandlers = [GetRoutinesHandler, GetRoutineHandler]
 const resolvers = [RoutinesResolver]
 

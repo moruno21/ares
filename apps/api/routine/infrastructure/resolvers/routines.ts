@@ -3,7 +3,9 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { GraphQLError } from 'graphql'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
+import DeleteRoutine from '~/routine/application/commands/delete-routine'
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
+import DeleteRoutineHandler from '~/routine/application/commands/handlers/delete-routine'
 import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
 import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
@@ -59,6 +61,21 @@ class RoutinesResolver {
           workouts: routineInput.workouts,
         }),
       )
+
+    if (Either.isLeft(response))
+      return new GraphQLError(response.value[0].message, {
+        extensions: { code: response.value[0].code },
+      })
+
+    return RoutineDto.fromRoutine(response.value)
+  }
+
+  @Mutation(() => Routine)
+  async deleteRoutine(
+    @Args('id') id: string,
+  ): Promise<RoutineDto | GraphQLError> {
+    const response: Awaited<ReturnType<DeleteRoutineHandler['execute']>> =
+      await this.commandBus.execute(DeleteRoutine.with({ id }))
 
     if (Either.isLeft(response))
       return new GraphQLError(response.value[0].message, {

@@ -5,6 +5,7 @@ import RoutineView from '../models/view'
 
 type RoutineViews = Readonly<{
   add: (view: RoutineView) => Promise<RoutineView>
+  delete: (id: string) => Promise<void>
   getAll: () => Promise<RoutineView[]>
   withId: (id: string) => Promise<Either<NotFoundRoutine, RoutineView>>
 }>

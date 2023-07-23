@@ -22,6 +22,10 @@ class MongooseRoutineViews implements RoutineViews {
     return view
   }
 
+  async delete(id: string): Promise<void> {
+    await this.views.deleteOne({ _id: id }).lean().exec()
+  }
+
   async getAll(): Promise<RoutineView[]> {
     const mongooseViews = await this.views.find().lean().exec()
 

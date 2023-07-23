@@ -1,15 +1,20 @@
 import { EventPublisher } from '@nestjs/cqrs'
 
+import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
 import RoutineDescription from '~/routine/domain/models/description'
 import RoutineId from '~/routine/domain/models/id'
 import RoutineName from '~/routine/domain/models/name'
 import Routine from '~/routine/domain/models/routine'
 import RoutineWorkout from '~/routine/domain/models/workout'
+import Either, { Left } from '~/shared/either'
+import EventStorePublisher from '~/shared/eventstore/publisher'
 import EventPublisherMock from '~/test/mocks/@nestjs/cqrs/event-publisher'
+import EventStorePublisherMock from '~/test/mocks/shared/eventstore/publisher'
 
 import EventStoreRoutines from './eventstore-routines'
 
 describe('EventStoreRoutines', () => {
+  let eventStorePublisher: EventStorePublisher
   let eventPublisher: EventPublisher
   let routines: EventStoreRoutines
 
@@ -34,12 +39,14 @@ describe('EventStoreRoutines', () => {
   const routine = Routine.create({ description, id, name, workouts })
 
   beforeEach(() => {
+    eventStorePublisher = EventStorePublisherMock.mock()
     eventPublisher = EventPublisherMock.mock()
-    routines = new EventStoreRoutines(eventPublisher)
+    routines = new EventStoreRoutines(eventPublisher, eventStorePublisher)
   })
 
   it('is a routines service', () => {
     expect(routines).toHaveProperty('save')
+    expect(routines).toHaveProperty('findWithId')
   })
 
   it('saves a routine', async () => {
@@ -52,5 +59,32 @@ describe('EventStoreRoutines', () => {
 
     expect(eventPublisherMergeObjectContext).toHaveBeenCalled()
     expect(response).toBe(routine)
+  })
+
+  it('finds a routine by its id', async () => {
+    const eventStorePublisherRead = jest.spyOn(eventStorePublisher, 'read')
+
+    eventStorePublisherRead.mockResolvedValue(routine)
+
+    const response = await routines.findWithId(routine.id)
+
+    expect(eventStorePublisherRead).toHaveBeenCalledWith(Routine, idValue)
+    expect(response).toStrictEqual(Either.right(routine))
+  })
+
+  it('cannot find a routine that does not exist', async () => {
+    const eventStorePublisherRead = jest.spyOn(eventStorePublisher, 'read')
+    const notFound = NotFoundRoutine.withId(routine.id.value)
+
+    eventStorePublisherRead.mockResolvedValue(null)
+
+    const response = (await routines.findWithId(
+      routine.id,
+    )) as Left<NotFoundRoutine>
+
+    expect(eventStorePublisherRead).toHaveBeenCalledWith(Routine, idValue)
+    expect(Either.isRight(response)).toBe(false)
+    expect(response.value.__name__).toBe(notFound.__name__)
+    expect(response.value.code).toBe(notFound.code)
   })
 })

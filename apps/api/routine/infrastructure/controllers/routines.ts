@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -16,7 +17,9 @@ import {
 } from '@nestjs/swagger'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
+import DeleteRoutine from '~/routine/application/commands/delete-routine'
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
+import DeleteRoutineHandler from '~/routine/application/commands/handlers/delete-routine'
 import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
 import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
@@ -88,6 +91,25 @@ class RoutinesController {
           workouts: dto.workouts,
         }),
       )
+
+    if (Either.isLeft(response))
+      throw new BadRequestException(HttpError.fromExceptions(response.value))
+
+    return RoutineDto.fromRoutine(response.value)
+  }
+
+  @ApiOperation({ summary: 'Deletes a Routine' })
+  @ApiOkResponse({
+    description: 'Routine deleted',
+    type: RoutineDto,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid input' })
+  @Delete(':id')
+  async deleteRoutine(
+    @Param('id') id: string,
+  ): Promise<RoutineDto | BadRequestException> {
+    const response: Awaited<ReturnType<DeleteRoutineHandler['execute']>> =
+      await this.commandBus.execute(DeleteRoutine.with({ id }))
 
     if (Either.isLeft(response))
       throw new BadRequestException(HttpError.fromExceptions(response.value))
