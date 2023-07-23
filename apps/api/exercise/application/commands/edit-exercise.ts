@@ -15,9 +15,9 @@ class EditExercise implements EditExerciseType {
   readonly __name__ = __name__
 
   private constructor(
-    readonly id: string,
-    readonly description: string,
-    readonly name: string,
+    readonly id: EditExerciseType['id'],
+    readonly description: EditExerciseType['description'],
+    readonly name: EditExerciseType['name'],
   ) {}
 
   static with({

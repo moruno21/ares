@@ -13,7 +13,11 @@ class MongooseExerciseView implements Omit<ExerciseView, '__name__' | 'id'> {
   @Prop()
   readonly name: string
 
-  constructor(_id: string, name: string, description: string) {
+  constructor(
+    _id: MongooseExerciseView['_id'],
+    name: MongooseExerciseView['name'],
+    description: MongooseExerciseView['description'],
+  ) {
     this._id = _id
     this.description = description
     this.name = name

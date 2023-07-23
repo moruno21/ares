@@ -7,7 +7,7 @@ const __name__ = 'RoutineId'
 type RoutineId = NameType<Uuid, typeof __name__>
 
 const RoutineId = {
-  fromString: (value: string): Either<InvalidUuid, RoutineId> => {
+  fromString: (value: RoutineId['value']): Either<InvalidUuid, RoutineId> => {
     const uuid = Uuid.fromString(value)
     const isInvalidUuid = Either.isLeft(uuid)
 

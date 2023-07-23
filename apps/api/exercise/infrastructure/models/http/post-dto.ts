@@ -10,7 +10,10 @@ class PostExerciseDto {
   @IsString()
   readonly name: string
 
-  private constructor(description: string, name: string) {
+  private constructor(
+    description: PostExerciseDto['description'],
+    name: PostExerciseDto['name'],
+  ) {
     this.description = description
     this.name = name
   }

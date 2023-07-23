@@ -10,7 +10,9 @@ const MAX_LENGHT = 50
 type ExerciseName = ValueObject<typeof __name__, string>
 
 const ExerciseName = {
-  fromString: (value: string): Either<InvalidExerciseName, ExerciseName> => {
+  fromString: (
+    value: ExerciseName['value'],
+  ): Either<InvalidExerciseName, ExerciseName> => {
     const isBlank = !value.trim()
 
     if (isBlank) return Either.left(InvalidExerciseName.causeIsBlank())

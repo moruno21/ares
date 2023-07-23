@@ -10,7 +10,9 @@ const MAX_LENGHT = 50
 type RoutineName = ValueObject<typeof __name__, string>
 
 const RoutineName = {
-  fromString: (value: string): Either<InvalidRoutineName, RoutineName> => {
+  fromString: (
+    value: RoutineName['value'],
+  ): Either<InvalidRoutineName, RoutineName> => {
     const isBlank = !value.trim()
 
     if (isBlank) return Either.left(InvalidRoutineName.causeIsBlank())

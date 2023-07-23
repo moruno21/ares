@@ -12,7 +12,7 @@ type DeleteExerciseType = NameType<
 class DeleteExercise implements DeleteExerciseType {
   readonly __name__ = __name__
 
-  private constructor(readonly id: string) {}
+  private constructor(readonly id: DeleteExerciseType['id']) {}
 
   static with({ id }: Omit<DeleteExerciseType, '__name__'>): DeleteExercise {
     return new this(id)

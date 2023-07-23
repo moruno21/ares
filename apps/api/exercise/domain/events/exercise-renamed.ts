@@ -14,7 +14,10 @@ type ExerciseRenamedType = NameType<
 class ExerciseRenamed extends Event implements ExerciseRenamedType {
   readonly __name__ = __name__
 
-  private constructor(readonly id: string, readonly name: string) {
+  private constructor(
+    readonly id: ExerciseRenamedType['id'],
+    readonly name: ExerciseRenamedType['name'],
+  ) {
     super()
   }
 

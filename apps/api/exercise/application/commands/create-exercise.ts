@@ -15,9 +15,9 @@ class CreateExercise implements CreateExerciseType {
   readonly __name__ = __name__
 
   private constructor(
-    readonly id: string,
-    readonly description: string,
-    readonly name: string,
+    readonly id: CreateExerciseType['id'],
+    readonly description: CreateExerciseType['description'],
+    readonly name: CreateExerciseType['name'],
   ) {}
 
   static with({

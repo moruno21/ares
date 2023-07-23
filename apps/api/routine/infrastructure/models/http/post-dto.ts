@@ -21,9 +21,9 @@ class PostRoutineDto {
   readonly workouts: PostRoutineWorkoutDto[]
 
   private constructor(
-    description: string,
-    name: string,
-    workouts: PostRoutineWorkoutDto[],
+    description: PostRoutineDto['description'],
+    name: PostRoutineDto['name'],
+    workouts: PostRoutineDto['workouts'],
   ) {
     this.description = description
     this.name = name

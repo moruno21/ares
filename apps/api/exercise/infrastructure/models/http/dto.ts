@@ -13,7 +13,11 @@ class ExerciseDto {
   @ApiProperty()
   readonly name: string
 
-  private constructor(id: string, description: string, name: string) {
+  private constructor(
+    id: ExerciseDto['id'],
+    description: ExerciseDto['description'],
+    name: ExerciseDto['name'],
+  ) {
     this.id = id
     this.name = name
     this.description = description

@@ -11,7 +11,7 @@ type RoutineDescription = ValueObject<typeof __name__, string>
 
 const RoutineDescription = {
   fromString: (
-    value: string,
+    value: RoutineDescription['value'],
   ): Either<InvalidRoutineDescription, RoutineDescription> => {
     if (value.length > MAX_LENGHT)
       return Either.left(InvalidRoutineDescription.causeIsTooLong())

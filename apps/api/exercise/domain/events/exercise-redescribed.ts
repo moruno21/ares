@@ -14,7 +14,10 @@ type ExerciseRedescribedType = NameType<
 class ExerciseRedescribed extends Event implements ExerciseRedescribedType {
   readonly __name__ = __name__
 
-  private constructor(readonly id: string, readonly description: string) {
+  private constructor(
+    readonly id: ExerciseRedescribedType['id'],
+    readonly description: ExerciseRedescribedType['description'],
+  ) {
     super()
   }
 

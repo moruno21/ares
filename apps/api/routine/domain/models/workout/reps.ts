@@ -8,7 +8,9 @@ const __name__ = 'WorkoutReps'
 type WorkoutReps = ValueObject<typeof __name__, number>
 
 const WorkoutReps = {
-  fromNumber: (value: number): Either<InvalidWorkoutReps, WorkoutReps> => {
+  fromNumber: (
+    value: WorkoutReps['value'],
+  ): Either<InvalidWorkoutReps, WorkoutReps> => {
     if (value < 1) return Either.left(InvalidWorkoutReps.causeIsNonPositive())
 
     if (value > 100) return Either.left(InvalidWorkoutReps.causeIsTooHigh())

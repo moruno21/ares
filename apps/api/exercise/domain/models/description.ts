@@ -11,7 +11,7 @@ type ExerciseDescription = ValueObject<typeof __name__, string>
 
 const ExerciseDescription = {
   fromString: (
-    value: string,
+    value: ExerciseDescription['value'],
   ): Either<InvalidExerciseDescription, ExerciseDescription> => {
     if (value.length > MAX_LENGHT)
       return Either.left(InvalidExerciseDescription.causeIsTooLong())

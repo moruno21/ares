@@ -30,10 +30,10 @@ class RoutineDto {
   readonly workouts: RoutineWorkoutDto[]
 
   private constructor(
-    id: string,
-    description: string,
-    name: string,
-    workouts: RoutineWorkoutDto[],
+    id: RoutineDto['id'],
+    description: RoutineDto['description'],
+    name: RoutineDto['name'],
+    workouts: RoutineDto['workouts'],
   ) {
     this.id = id
     this.description = description

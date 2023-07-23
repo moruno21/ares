@@ -16,9 +16,9 @@ class ExerciseCreated extends Event implements ExerciseCreatedType {
   readonly __name__ = __name__
 
   private constructor(
-    readonly id: string,
-    readonly description: string,
-    readonly name: string,
+    readonly id: ExerciseCreatedType['id'],
+    readonly description: ExerciseCreatedType['description'],
+    readonly name: ExerciseCreatedType['name'],
   ) {
     super()
   }
