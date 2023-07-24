@@ -37,6 +37,7 @@ const RoutineWorkout = {
     if (isInvalidUuid) exceptions.push(uuid.value)
     if (isInvalidReps) exceptions.push(reps.value)
     if (isInvalidSets) exceptions.push(sets.value)
+
     if (isInvalidUuid || isInvalidReps || isInvalidSets)
       return Either.left(exceptions)
 

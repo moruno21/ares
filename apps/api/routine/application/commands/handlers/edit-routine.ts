@@ -81,7 +81,9 @@ class EditRoutineHandler implements ICommandHandler {
     if (isInvalidDescription) exceptions.push(description.value)
     if (isInvalidName) exceptions.push(name.value)
     if (isInvalidWorkouts)
-      exceptions.push(...workoutExceptions.map((workout) => workout.value))
+      exceptions.push(
+        ...workoutExceptions.map((workout) => workout.value).flat(),
+      )
     if (isInvalidWorkoutsExercisesId)
       exceptions.push(...exerciseIdExceptions.map((workout) => workout.value))
     if (notFoundRoutine) exceptions.push(routine.value)
