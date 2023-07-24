@@ -22,6 +22,13 @@ class MongooseRoutineViews implements RoutineViews {
     return view
   }
 
+  async changeWorkouts(
+    id: string,
+    workouts: { exerciseId: string; reps: number; sets: number }[],
+  ): Promise<void> {
+    await this.views.updateOne({ _id: id }, { workouts }).lean().exec()
+  }
+
   async delete(id: string): Promise<void> {
     await this.views.deleteOne({ _id: id }).lean().exec()
   }
@@ -32,6 +39,14 @@ class MongooseRoutineViews implements RoutineViews {
     return mongooseViews.map((mongooseView) =>
       MongooseRoutineView.toRoutineView(mongooseView),
     )
+  }
+
+  async redescribe(id: string, description: string): Promise<void> {
+    await this.views.updateOne({ _id: id }, { description }).lean().exec()
+  }
+
+  async rename(id: string, name: string): Promise<void> {
+    await this.views.updateOne({ _id: id }, { name }).lean().exec()
   }
 
   async withId(id: string): Promise<Either<NotFoundRoutine, RoutineView>> {

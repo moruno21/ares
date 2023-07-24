@@ -25,8 +25,11 @@ describe('MongooseRoutineViews', () => {
 
   it('is a routine views service', () => {
     expect(mongooseViews).toHaveProperty('add')
+    expect(mongooseViews).toHaveProperty('changeWorkouts')
     expect(mongooseViews).toHaveProperty('delete')
     expect(mongooseViews).toHaveProperty('getAll')
+    expect(mongooseViews).toHaveProperty('redescribe')
+    expect(mongooseViews).toHaveProperty('rename')
     expect(mongooseViews).toHaveProperty('withId')
   })
 
@@ -111,6 +114,44 @@ describe('MongooseRoutineViews', () => {
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
+  })
+
+  it('renames a view', async () => {
+    const newName = 'newName'
+    const viewsUpdateOne = jest.spyOn(views, 'updateOne')
+
+    await mongooseViews.rename(view.id, newName)
+
+    expect(viewsUpdateOne).toHaveBeenCalledWith(
+      { _id: view.id },
+      { name: newName },
+    )
+  })
+
+  it('redescribes a view', async () => {
+    const newDescription = 'newDescription'
+    const viewsUpdateOne = jest.spyOn(views, 'updateOne')
+
+    await mongooseViews.redescribe(view.id, newDescription)
+
+    expect(viewsUpdateOne).toHaveBeenCalledWith(
+      { _id: view.id },
+      { description: newDescription },
+    )
+  })
+
+  it('changes workouts of a view', async () => {
+    const anotherWorkouts = [
+      { exerciseId: 'ab41543a-9879-4f9b-a23c-aeffa2725feb', reps: 4, sets: 4 },
+    ]
+    const viewsUpdateOne = jest.spyOn(views, 'updateOne')
+
+    await mongooseViews.changeWorkouts(view.id, anotherWorkouts)
+
+    expect(viewsUpdateOne).toHaveBeenCalledWith(
+      { _id: view.id },
+      { workouts: anotherWorkouts },
+    )
   })
 
   it('deletes a view', async () => {

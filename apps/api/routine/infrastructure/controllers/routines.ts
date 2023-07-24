@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
 } from '@nestjs/common'
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import {
@@ -18,8 +19,10 @@ import {
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
 import DeleteRoutine from '~/routine/application/commands/delete-routine'
+import EditRoutine from '~/routine/application/commands/edit-routine'
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
 import DeleteRoutineHandler from '~/routine/application/commands/handlers/delete-routine'
+import EditRoutineHandler from '~/routine/application/commands/handlers/edit-routine'
 import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
 import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
@@ -30,6 +33,7 @@ import Uuid from '~/shared/uuid'
 
 import RoutineDto from '../models/http/dto'
 import PostRoutineDto from '../models/http/post-dto'
+import PutRoutineDto from '../models/http/put-dto'
 
 @ApiTags('Routines')
 @Controller('routines')
@@ -87,6 +91,33 @@ class RoutinesController {
         CreateRoutine.with({
           description: dto.description,
           id: Uuid.generate(),
+          name: dto.name,
+          workouts: dto.workouts,
+        }),
+      )
+
+    if (Either.isLeft(response))
+      throw new BadRequestException(HttpError.fromExceptions(response.value))
+
+    return RoutineDto.fromRoutine(response.value)
+  }
+
+  @ApiOperation({ summary: 'Edits a Routine' })
+  @ApiCreatedResponse({
+    description: 'Routine edited',
+    type: RoutineDto,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid input' })
+  @Put(':id')
+  async editRoutine(
+    @Param('id') id: string,
+    @Body() dto: PutRoutineDto,
+  ): Promise<RoutineDto | BadRequestException> {
+    const response: Awaited<ReturnType<EditRoutineHandler['execute']>> =
+      await this.commandBus.execute(
+        EditRoutine.with({
+          description: dto.description,
+          id,
           name: dto.name,
           workouts: dto.workouts,
         }),

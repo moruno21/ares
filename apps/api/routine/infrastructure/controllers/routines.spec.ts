@@ -3,6 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs'
 
 import CreateRoutine from '~/routine/application/commands/create-routine'
 import DeleteRoutine from '~/routine/application/commands/delete-routine'
+import EditRoutine from '~/routine/application/commands/edit-routine'
 import RoutineView from '~/routine/application/models/view'
 import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
@@ -23,6 +24,7 @@ import Uuid from '~/shared/uuid'
 import CommandBusMock from '~/test/mocks/@nestjs/cqrs/command-bus'
 import QueryBusMock from '~/test/mocks/@nestjs/cqrs/query-bus'
 
+import PutRoutineDto from '../models/http/put-dto'
 import RoutinesController from './routines'
 
 describe('RoutinesController', () => {
@@ -254,6 +256,90 @@ describe('RoutinesController', () => {
         )
       },
     )
+  })
+
+  describe('PutRoutine', () => {
+    const idValue = '4e0bd42f-7c1e-48a2-91cd-35a741212fbd'
+    const id = RoutineId.fromString(idValue).value as RoutineId
+    const nameValue = 'name'
+    const name = RoutineName.fromString(nameValue).value as RoutineName
+    const descriptionValue = 'description'
+    const description = RoutineDescription.fromString(descriptionValue)
+      .value as RoutineDescription
+    const workoutsValue = [
+      {
+        exerciseId: '46a14b1c-14c0-4e7d-be7f-56de38d95984',
+        reps: 10,
+        sets: 5,
+      },
+    ]
+    const workouts = workoutsValue.map(
+      (workoutValue) =>
+        RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
+    )
+    const routineEdited = Routine.create({ description, id, name, workouts })
+    const dto = RoutineDto.fromRoutine(routineEdited)
+
+    beforeEach(() => {
+      commandBus = CommandBusMock.mock()
+      routinesController = new RoutinesController(commandBus, queryBus)
+    })
+
+    it('edits a routine', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      commandBusExecute.mockResolvedValue(Either.right(routineEdited))
+
+      const response = (await routinesController.editRoutine(
+        id.value,
+        PutRoutineDto.with({
+          description: descriptionValue,
+          name: nameValue,
+          workouts: workoutsValue,
+        }),
+      )) as RoutineDto
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        EditRoutine.with({
+          description: descriptionValue,
+          id: idValue,
+          name: nameValue,
+          workouts: workoutsValue,
+        }),
+      )
+
+      expect(response.id).toBe(dto.id)
+      expect(response.name).toBe(dto.name)
+      expect(response.description).toBe(dto.description)
+    })
+
+    it('cannot edit a routine that does not exist', async () => {
+      const commandBusExecute = jest.spyOn(commandBus, 'execute')
+      const nonExistentUuid = 'c53a8440-bc4b-4096-8d97-11c6ddc643d8'
+      const exceptions = [NotFoundRoutine.withId(nonExistentUuid)]
+
+      commandBusExecute.mockResolvedValue(Either.left(exceptions))
+
+      const response = routinesController.editRoutine(
+        nonExistentUuid,
+        PutRoutineDto.with({
+          description: descriptionValue,
+          name: nameValue,
+          workouts: workoutsValue,
+        }),
+      )
+
+      expect(commandBusExecute).toHaveBeenCalledWith(
+        EditRoutine.with({
+          description: descriptionValue,
+          id: nonExistentUuid,
+          name: nameValue,
+          workouts: workoutsValue,
+        }),
+      )
+      await expect(response).rejects.toThrow(
+        new BadRequestException(HttpError.fromExceptions(exceptions)),
+      )
+    })
   })
 
   describe('DeleteRoutine', () => {

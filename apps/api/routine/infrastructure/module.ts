@@ -20,6 +20,13 @@ import RoutineDeleted from '~/routine/domain/events/routine-deleted'
 import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 
+import EditRoutineHandler from '../application/commands/handlers/edit-routine'
+import RoutineRedescribedHandler from '../application/event-handlers/routine-redescribed'
+import RoutineRenamedHandler from '../application/event-handlers/routine-renamed'
+import RoutineWorkoutsChangedHandler from '../application/event-handlers/routine-workouts-changed'
+import RoutineRedescribed from '../domain/events/routine-redescribed'
+import RoutineRenamed from '../domain/events/routine-renamed'
+import RoutineWorkoutsChanged from '../domain/events/routine-workouts-changed'
 import RoutinesController from './controllers/routines'
 import MongooseRoutineView from './models/mongoose/view'
 import routineProviders from './providers'
@@ -27,8 +34,18 @@ import RoutinesResolver from './resolvers/routines'
 
 const controllers = [RoutinesController]
 
-const commandHandlers = [CreateRoutineHandler, DeleteRoutineHandler]
-const eventHandlers = [RoutineCreatedHandler, RoutineDeletedHandler]
+const commandHandlers = [
+  CreateRoutineHandler,
+  DeleteRoutineHandler,
+  EditRoutineHandler,
+]
+const eventHandlers = [
+  RoutineCreatedHandler,
+  RoutineDeletedHandler,
+  RoutineRenamedHandler,
+  RoutineRedescribedHandler,
+  RoutineWorkoutsChangedHandler,
+]
 const queryHandlers = [GetRoutinesHandler, GetRoutineHandler]
 const resolvers = [RoutinesResolver]
 
@@ -45,6 +62,22 @@ const eventFactories = {
     workouts: { exerciseId: string; reps: number; sets: number }[]
   }) => RoutineCreated.with({ description, id, name, workouts }),
   RoutineDeleted: ({ id }: { id: string }) => RoutineDeleted.with({ id }),
+  RoutineRedescribed: ({
+    description,
+    id,
+  }: {
+    description: string
+    id: string
+  }) => RoutineRedescribed.with({ description, id }),
+  RoutineRenamed: ({ id, name }: { id: string; name: string }) =>
+    RoutineRenamed.with({ id, name }),
+  RoutineWorkoutsChanged: ({
+    id,
+    workouts,
+  }: {
+    id: string
+    workouts: { exerciseId: string; reps: number; sets: number }[]
+  }) => RoutineWorkoutsChanged.with({ id, workouts }),
 }
 
 @Module({
