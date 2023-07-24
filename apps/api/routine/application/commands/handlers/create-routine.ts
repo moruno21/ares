@@ -32,10 +32,10 @@ class CreateRoutineHandler implements ICommandHandler {
     Either<
       (
         | InvalidUuid
-        | InvalidWorkoutReps
-        | InvalidWorkoutSets
         | InvalidRoutineDescription
         | InvalidRoutineName
+        | InvalidWorkoutReps
+        | InvalidWorkoutSets
         | NotFoundExercise
       )[],
       Routine

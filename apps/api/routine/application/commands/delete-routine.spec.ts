@@ -13,7 +13,7 @@ describe('DeleteRoutine', () => {
     expect(deleteRoutine).toHaveProperty('id')
   })
 
-  it.concurrent('can be created', () => {
+  it.concurrent('can be deleted', () => {
     expect(deleteRoutine.__name__).toBe(__name__)
     expect(deleteRoutine.id).toBe(id)
   })

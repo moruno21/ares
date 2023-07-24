@@ -53,8 +53,8 @@ describe('CreateRoutineHandler', () => {
   })
 
   it('creates a routine', async () => {
-    const routinesSave = jest.spyOn(routines, 'save')
     const exercisesWithId = jest.spyOn(exercises, 'withId')
+    const routinesSave = jest.spyOn(routines, 'save')
 
     exercisesWithId.mockResolvedValue(
       Either.right(
@@ -111,8 +111,8 @@ describe('CreateRoutineHandler', () => {
   ])(
     'cannot create a routine with invalid params',
     async ({ descriptionMock, idMock, nameMock }) => {
-      const routinesSave = jest.spyOn(routines, 'save')
       const exercisesWithId = jest.spyOn(exercises, 'withId')
+      const routinesSave = jest.spyOn(routines, 'save')
 
       exercisesWithId.mockResolvedValue(
         Either.right(
@@ -184,9 +184,9 @@ describe('CreateRoutineHandler', () => {
   )
 
   it('cannot create a routine if one of its workout is using a non existent exercise id', async () => {
-    const routinesSave = jest.spyOn(routines, 'save')
     const exercisesWithId = jest.spyOn(exercises, 'withId')
     const notFound = NotFoundExercise.withId(workoutExerciseIdValue)
+    const routinesSave = jest.spyOn(routines, 'save')
 
     exercisesWithId.mockResolvedValue(Either.left(notFound))
 

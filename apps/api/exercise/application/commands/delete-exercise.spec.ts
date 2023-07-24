@@ -13,7 +13,7 @@ describe('DeleteExercise', () => {
     expect(deleteExercise).toHaveProperty('id')
   })
 
-  it.concurrent('can be created', () => {
+  it.concurrent('can be deleted', () => {
     expect(deleteExercise.__name__).toBe(__name__)
     expect(deleteExercise.id).toBe(id)
   })

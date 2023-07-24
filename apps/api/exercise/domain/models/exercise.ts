@@ -1,5 +1,3 @@
-// import { AggregateRoot } from '@nestjs/cqrs'
-
 import { AggregateRoot, ValueObject } from '~/shared/domain'
 import Either from '~/shared/either'
 

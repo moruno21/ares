@@ -6,21 +6,21 @@ describe('ExerciseRedescribed', () => {
   const __name__ = 'ExerciseRedescribed'
   const id = 'id'
   const description = 'description'
-  const exerciseRenamed = ExerciseRedescribed.with({ description, id })
+  const exerciseRedescribed = ExerciseRedescribed.with({ description, id })
 
-  itIsNamed(exerciseRenamed)
+  itIsNamed(exerciseRedescribed)
 
   it.concurrent('has an id', () => {
-    expect(exerciseRenamed).toHaveProperty('id')
+    expect(exerciseRedescribed).toHaveProperty('id')
   })
 
   it.concurrent('has a description', () => {
-    expect(exerciseRenamed).toHaveProperty('description')
+    expect(exerciseRedescribed).toHaveProperty('description')
   })
 
   it.concurrent('can be created', () => {
-    expect(exerciseRenamed.__name__).toBe(__name__)
-    expect(exerciseRenamed.id).toBe(id)
-    expect(exerciseRenamed.description).toBe(description)
+    expect(exerciseRedescribed.__name__).toBe(__name__)
+    expect(exerciseRedescribed.id).toBe(id)
+    expect(exerciseRedescribed.description).toBe(description)
   })
 })

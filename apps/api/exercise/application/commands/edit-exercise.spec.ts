@@ -23,7 +23,7 @@ describe('EditExercise', () => {
     expect(editExercise).toHaveProperty('description')
   })
 
-  it.concurrent('can be created', () => {
+  it.concurrent('can be edited', () => {
     expect(editExercise.__name__).toBe(__name__)
     expect(editExercise.id).toBe(id)
     expect(editExercise.name).toBe(name)
