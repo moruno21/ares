@@ -90,9 +90,9 @@ class CreateRoutineHandler implements ICommandHandler {
       return Either.left(exceptions)
 
     const routine = Routine.create({
-      description: description.value as RoutineDescription,
-      id: id.value as RoutineId,
-      name: name.value as RoutineName,
+      description: description.value,
+      id: id.value,
+      name: name.value,
       workouts: workouts.map((workout) => workout.value) as RoutineWorkout[],
     })
 
