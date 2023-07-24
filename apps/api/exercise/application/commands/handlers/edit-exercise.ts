@@ -66,6 +66,7 @@ class EditExerciseHandler implements ICommandHandler {
         NotEditedExercise.causeAlreadyExistsOneWithName(name.value.value),
       )
     if (notFoundExercise) exceptions.push(exercise.value)
+
     if (
       isInvalidId ||
       isInvalidDescription ||

@@ -31,6 +31,7 @@ class DeleteRoutineHandler implements ICommandHandler {
     if (isInvalidId) exceptions.push(id.value)
     if (notFoundRoutine) exceptions.push(routine.value)
     if (notDeletedRoutine) exceptions.push(deletedRoutine.value)
+
     if (isInvalidId || notFoundRoutine || notDeletedRoutine)
       return Either.left(exceptions)
 

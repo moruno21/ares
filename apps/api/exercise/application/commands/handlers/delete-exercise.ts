@@ -31,6 +31,7 @@ class DeleteExerciseHandler implements ICommandHandler {
     if (isInvalidId) exceptions.push(id.value)
     if (notFoundExercise) exceptions.push(exercise.value)
     if (notDeletedExercise) exceptions.push(deletedExercise.value)
+
     if (isInvalidId || notFoundExercise || notDeletedExercise)
       return Either.left(exceptions)
 

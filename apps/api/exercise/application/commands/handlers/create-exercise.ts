@@ -56,6 +56,7 @@ class CreateExerciseHandler implements ICommandHandler {
       exceptions.push(
         NotCreatedExercise.causeAlreadyExistsOneWithName(name.value.value),
       )
+
     if (isInvalidId || isInvalidDescription || isInvalidName || existsWithName)
       return Either.left(exceptions)
 
