@@ -16,6 +16,7 @@ import RoutineDeletedHandler from '~/routine/application/event-handlers/routine-
 import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
 import GetRoutinesHandler from '~/routine/application/queries/handlers/get-routines'
 import RoutineCreated from '~/routine/domain/events/routine-created'
+import RoutineDeleted from '~/routine/domain/events/routine-deleted'
 import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 
@@ -43,6 +44,7 @@ const eventFactories = {
     name: string
     workouts: { exerciseId: string; reps: number; sets: number }[]
   }) => RoutineCreated.with({ description, id, name, workouts }),
+  RoutineDeleted: ({ id }: { id: string }) => RoutineDeleted.with({ id }),
 }
 
 @Module({
