@@ -53,6 +53,7 @@ describe('Create Exercise', () => {
   it('creates an exercise', async () => {
     const name = 'name'
     const description = 'description'
+
     const response = await request(server)
       .post('/exercises')
       .send({ description, name })
@@ -96,6 +97,7 @@ describe('Create Exercise', () => {
     const name = 'name'
     const description =
       'InvalidDescription: In the vast expanse of the cosmos, countless stars twinkle in the darkness, each one a beacon of light amidst the void. Galaxies spiral and collide, giving birth to new worlds and cosmic wonders. On our tiny planet Earth, life flourishes in all its forms.'
+
     const response = await request(server)
       .post('/exercises')
       .send({ description, name })
@@ -108,12 +110,12 @@ describe('Create Exercise', () => {
   })
 
   it('cannot create an exercise whose name is already used by another exercise', async () => {
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
     const name = 'existentName'
     const description = 'description'
 
+    const mongooseViews = app.get<Model<MongooseExerciseView>>(
+      getModelToken(MongooseExerciseView.name),
+    )
     await mongooseViews.insertMany([
       {
         _id: Uuid.generate(),

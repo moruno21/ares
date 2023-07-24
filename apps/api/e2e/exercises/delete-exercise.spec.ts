@@ -61,7 +61,6 @@ describe('Delete Exercise', () => {
     const mongooseViews = app.get<Model<MongooseExerciseView>>(
       getModelToken(MongooseExerciseView.name),
     )
-
     await mongooseViews.insertMany([
       {
         _id: id,
@@ -70,17 +69,17 @@ describe('Delete Exercise', () => {
       },
     ])
 
-    const deleteExerciseresponse = await request(server)
+    const deleteExerciseResponse = await request(server)
       .delete(`/exercises/${id}`)
       .send()
 
-    expect(deleteExerciseresponse.status).toBe(200)
-    expect(deleteExerciseresponse.body).toHaveProperty('id')
-    expect(deleteExerciseresponse.body).toHaveProperty('name')
-    expect(deleteExerciseresponse.body).toHaveProperty('description')
-    expect(deleteExerciseresponse.body.id).toBe(id)
-    expect(deleteExerciseresponse.body.name).toBe(name)
-    expect(deleteExerciseresponse.body.description).toBe(description)
+    expect(deleteExerciseResponse.status).toBe(200)
+    expect(deleteExerciseResponse.body).toHaveProperty('id')
+    expect(deleteExerciseResponse.body).toHaveProperty('name')
+    expect(deleteExerciseResponse.body).toHaveProperty('description')
+    expect(deleteExerciseResponse.body.id).toBe(id)
+    expect(deleteExerciseResponse.body.name).toBe(name)
+    expect(deleteExerciseResponse.body.description).toBe(description)
   })
 
   it('cannot delete an exercise from an invalid id', async () => {

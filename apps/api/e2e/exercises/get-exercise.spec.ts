@@ -50,13 +50,13 @@ describe('Get Exercise', () => {
   })
 
   it('gets an exercise from an id', async () => {
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
     const id = Uuid.generate()
     const name = 'name'
     const description = 'description'
 
+    const mongooseViews = app.get<Model<MongooseExerciseView>>(
+      getModelToken(MongooseExerciseView.name),
+    )
     await mongooseViews.insertMany([
       {
         _id: id,
@@ -89,13 +89,13 @@ describe('Get Exercise', () => {
   })
 
   it('cannot get an exercise that does not exist', async () => {
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
     const id = Uuid.generate()
     const name = 'name'
     const description = 'description'
 
+    const mongooseViews = app.get<Model<MongooseExerciseView>>(
+      getModelToken(MongooseExerciseView.name),
+    )
     await mongooseViews.insertMany([
       {
         _id: id,

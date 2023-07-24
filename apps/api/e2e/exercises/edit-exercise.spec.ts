@@ -64,7 +64,6 @@ describe('Edit Exercise', () => {
     const mongooseViews = app.get<Model<MongooseExerciseView>>(
       getModelToken(MongooseExerciseView.name),
     )
-
     await mongooseViews.insertMany([
       {
         _id: id,
@@ -112,7 +111,6 @@ describe('Edit Exercise', () => {
       const mongooseViews = app.get<Model<MongooseExerciseView>>(
         getModelToken(MongooseExerciseView.name),
       )
-
       await mongooseViews.insertMany([
         {
           _id: id,
@@ -136,7 +134,7 @@ describe('Edit Exercise', () => {
     },
   )
 
-  it('cannot create an exercise with invalid description', async () => {
+  it('cannot edit an exercise with invalid description', async () => {
     const id = Uuid.generate()
     const name = 'name'
     const description = 'description'
@@ -147,7 +145,6 @@ describe('Edit Exercise', () => {
     const mongooseViews = app.get<Model<MongooseExerciseView>>(
       getModelToken(MongooseExerciseView.name),
     )
-
     await mongooseViews.insertMany([
       {
         _id: id,
@@ -155,6 +152,7 @@ describe('Edit Exercise', () => {
         name,
       },
     ])
+
     const newName = 'newName'
     const newDescription =
       'InvalidDescription: In the vast expanse of the cosmos, countless stars twinkle in the darkness, each one a beacon of light amidst the void. Galaxies spiral and collide, giving birth to new worlds and cosmic wonders. On our tiny planet Earth, life flourishes in all its forms.'
@@ -197,7 +195,6 @@ describe('Edit Exercise', () => {
     const mongooseViews = app.get<Model<MongooseExerciseView>>(
       getModelToken(MongooseExerciseView.name),
     )
-
     await mongooseViews.insertMany([
       {
         _id: idOne,
@@ -234,7 +231,6 @@ describe('Edit Exercise', () => {
     const mongooseViews = app.get<Model<MongooseExerciseView>>(
       getModelToken(MongooseExerciseView.name),
     )
-
     await mongooseViews.insertMany([
       {
         _id: id,

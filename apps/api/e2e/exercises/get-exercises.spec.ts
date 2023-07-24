@@ -47,12 +47,12 @@ describe('Get Exercises', () => {
   })
 
   it('gets all the exercises', async () => {
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
     const name = 'name'
     const description = 'description'
 
+    const mongooseViews = app.get<Model<MongooseExerciseView>>(
+      getModelToken(MongooseExerciseView.name),
+    )
     await mongooseViews.insertMany([
       {
         _id: Uuid.generate(),
