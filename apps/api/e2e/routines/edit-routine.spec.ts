@@ -6,14 +6,13 @@ import { Connection } from 'mongoose'
 import request from 'supertest'
 
 import { AppModule } from '~/app.module'
-import InvalidExerciseDescription from '~/exercise/domain/exceptions/invalid-description'
-import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
-import NotEditedExercise from '~/exercise/domain/exceptions/not-edited'
-import NotFoundExercise from '~/exercise/domain/exceptions/not-found'
+import InvalidRoutineDescription from '~/routine/domain/exceptions/invalid-description'
+import InvalidRoutineName from '~/routine/domain/exceptions/invalid-name'
+import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
 import HttpError from '~/shared/http/error'
 import Uuid from '~/shared/uuid'
 
-describe('Edit Exercise', () => {
+describe('Edit Routine', () => {
   let app: INestApplication
   let server: HttpServer
 
@@ -49,30 +48,32 @@ describe('Edit Exercise', () => {
     await mongoose.dropDatabase()
   })
 
-  it('edits an exercise', async () => {
+  it('edits a routine', async () => {
     const name = 'name'
     const description = 'description'
+    const workouts = []
 
-    const createExerciseResponse = await request(server)
-      .post(`/exercises`)
-      .send({ description, name })
+    const createRoutineResponse = await request(server)
+      .post(`/routines`)
+      .send({ description, name, workouts })
 
-    await request(server).get('/exercises')
+    await request(server).get('/routines')
 
     const newName = 'newName'
     const newDescription = 'newDescription'
 
     const response = await request(server)
-      .put(`/exercises/${createExerciseResponse.body.id}`)
-      .send({ description: newDescription, name: newName })
+      .put(`/routines/${createRoutineResponse.body.id}`)
+      .send({ description: newDescription, name: newName, workouts })
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('id')
     expect(response.body).toHaveProperty('name')
     expect(response.body).toHaveProperty('description')
-    expect(response.body.id).toBe(createExerciseResponse.body.id)
+    expect(response.body).toHaveProperty('workouts')
     expect(response.body.name).toBe(newName)
     expect(response.body.description).toBe(newDescription)
+    expect(response.body.workouts).toStrictEqual(workouts)
   })
 
   it.each([
@@ -85,97 +86,76 @@ describe('Edit Exercise', () => {
       newName: 'InvalidName because it is longer than fifty characters',
     },
   ])(
-    'cannot edit an exercise with invalid name',
+    'cannot edit a routine with invalid name',
     async ({ newDescription, newName }) => {
       const name = 'name'
       const description = 'description'
+      const workouts = []
 
-      const createExerciseResponse = await request(server)
-        .post(`/exercises`)
-        .send({ description, name })
+      const createRoutineResponse = await request(server)
+        .post(`/routines`)
+        .send({ description, name, workouts })
 
-      await request(server).get('/exercises')
+      await request(server).get('/routines')
 
       const response = await request(server)
-        .put(`/exercises/${createExerciseResponse.body.id}`)
-        .send({ description: newDescription, name: newName })
+        .put(`/routines/${createRoutineResponse.body.id}`)
+        .send({ description: newDescription, name: newName, workouts })
 
       expect(response.status).toBe(400)
       expect(response.body.errors).toStrictEqual(
         HttpError.fromExceptions([
           newName === ' '
-            ? InvalidExerciseName.causeIsBlank()
-            : InvalidExerciseName.causeIsTooLong(),
+            ? InvalidRoutineName.causeIsBlank()
+            : InvalidRoutineName.causeIsTooLong(),
         ]).errors,
       )
     },
   )
 
-  it('cannot edit an exercise with invalid description', async () => {
+  it('cannot edit a routine with invalid description', async () => {
     const name = 'name'
     const description = 'description'
+    const workouts = []
 
-    const createExerciseResponse = await request(server)
-      .post(`/exercises`)
-      .send({ description, name })
+    const createRoutineResponse = await request(server)
+      .post(`/routines`)
+      .send({ description, name, workouts })
 
-    await request(server).get('/exercises')
+    await request(server).get('/routines')
 
     const newName = 'newName'
     const newDescription =
       'InvalidDescription: In the vast expanse of the cosmos, countless stars twinkle in the darkness, each one a beacon of light amidst the void. Galaxies spiral and collide, giving birth to new worlds and cosmic wonders. On our tiny planet Earth, life flourishes in all its forms.'
 
     const response = await request(server)
-      .put(`/exercises/${createExerciseResponse.body.id}`)
-      .send({ description: newDescription, name: newName })
+      .put(`/routines/${createRoutineResponse.body.id}`)
+      .send({ description: newDescription, name: newName, workouts })
 
     expect(response.status).toBe(400)
     expect(response.body.errors).toStrictEqual(
-      HttpError.fromExceptions([InvalidExerciseDescription.causeIsTooLong()])
+      HttpError.fromExceptions([InvalidRoutineDescription.causeIsTooLong()])
         .errors,
     )
   })
 
-  it('cannot edit an exercise with a name that is already used by another exercise', async () => {
-    const nameOne = 'nameOne'
-    const descriptionOne = 'descriptionOne'
-    const nameTwo = 'nameTwo'
-    const descriptionTwo = 'descriptionTwo'
-
-    const createExerciseOneResponse = await request(server)
-      .post(`/exercises`)
-      .send({ description: descriptionOne, name: nameOne })
-
-    await request(server)
-      .post(`/exercises`)
-      .send({ description: descriptionTwo, name: nameTwo })
-
-    await request(server).get('/exercises')
-
-    const response = await request(server)
-      .put(`/exercises/${createExerciseOneResponse.body.id}`)
-      .send({ description: descriptionTwo, name: nameTwo })
-
-    expect(response.status).toBe(400)
-    expect(response.body.errors).toStrictEqual(
-      HttpError.fromExceptions([
-        NotEditedExercise.causeAlreadyExistsOneWithName(nameTwo),
-      ]).errors,
-    )
-  })
-
-  it('cannot edit an exercise that does not exist', async () => {
+  it('cannot edit a routine that does not exist', async () => {
     const nonExistentId = Uuid.generate()
     const newName = 'newName'
     const newDescription = 'newDescription'
+    const newWorkouts = []
 
     const response = await request(server)
-      .put(`/exercises/${nonExistentId}`)
-      .send({ description: newDescription, name: newName })
+      .put(`/routines/${nonExistentId}`)
+      .send({
+        description: newDescription,
+        name: newName,
+        workouts: newWorkouts,
+      })
 
     expect(response.status).toBe(400)
     expect(response.body.errors).toStrictEqual(
-      HttpError.fromExceptions([NotFoundExercise.withId(nonExistentId)]).errors,
+      HttpError.fromExceptions([NotFoundRoutine.withId(nonExistentId)]).errors,
     )
   })
 

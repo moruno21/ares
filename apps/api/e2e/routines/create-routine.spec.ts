@@ -1,17 +1,13 @@
 import { EventStoreDBClient } from '@eventstore/db-client'
 import { HttpServer, INestApplication } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { getModelToken } from '@nestjs/mongoose'
 import { Test } from '@nestjs/testing'
-import { Connection, Model } from 'mongoose'
+import { Connection } from 'mongoose'
 import request from 'supertest'
 
 import { AppModule } from '~/app.module'
-import ExerciseCreated from '~/exercise/domain/events/exercise-created'
-import MongooseExerciseView from '~/exercise/infrastructure/models/mongoose/view'
 import InvalidRoutineDescription from '~/routine/domain/exceptions/invalid-description'
 import InvalidRoutineName from '~/routine/domain/exceptions/invalid-name'
-import EventStorePublisher from '~/shared/eventstore/publisher'
 import HttpError from '~/shared/http/error'
 
 describe('Create Routine', () => {
@@ -43,7 +39,7 @@ describe('Create Routine', () => {
         continue
 
       try {
-        await eventStore.tombstoneStream(resolvedEvent.event.streamId)
+        await eventStore.deleteStream(resolvedEvent.event.streamId)
       } catch {}
     }
 
@@ -53,24 +49,7 @@ describe('Create Routine', () => {
   it('creates a routine', async () => {
     const name = 'name'
     const description = 'description'
-    const workoutExerciseId = '46d1fc9b-0135-40ba-88fb-305037eb202c'
-    const workouts = [{ exerciseId: workoutExerciseId, reps: 8, sets: 5 }]
-
-    const eventStorePublisher = app.get(EventStorePublisher)
-    eventStorePublisher.publish(
-      ExerciseCreated.with({ description, id: workoutExerciseId, name }),
-    )
-
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
-    await mongooseViews.insertMany([
-      {
-        _id: workoutExerciseId,
-        description,
-        name,
-      },
-    ])
+    const workouts = []
 
     const response = await request(server)
       .post('/routines')
@@ -80,6 +59,7 @@ describe('Create Routine', () => {
     expect(response.body).toHaveProperty('id')
     expect(response.body).toHaveProperty('name')
     expect(response.body).toHaveProperty('description')
+    expect(response.body).toHaveProperty('workouts')
     expect(response.body.name).toBe(name)
     expect(response.body.description).toBe(description)
     expect(response.body.workouts).toStrictEqual(workouts)
@@ -97,23 +77,7 @@ describe('Create Routine', () => {
   ])(
     'cannot create a routine with invalid name',
     async ({ description, name }) => {
-      const workoutExerciseId = 'b77a4c59-d7e7-4a09-98c7-f0e8a17258b0'
-      const workouts = [{ exerciseId: workoutExerciseId, reps: 8, sets: 5 }]
-
-      const eventStorePublisher = app.get(EventStorePublisher)
-      eventStorePublisher.publish(
-        ExerciseCreated.with({ description, id: workoutExerciseId, name }),
-      )
-      const mongooseViews = app.get<Model<MongooseExerciseView>>(
-        getModelToken(MongooseExerciseView.name),
-      )
-      await mongooseViews.insertMany([
-        {
-          _id: workoutExerciseId,
-          description,
-          name,
-        },
-      ])
+      const workouts = []
 
       const response = await request(server)
         .post('/routines')
@@ -134,24 +98,7 @@ describe('Create Routine', () => {
     const name = 'name'
     const description =
       'InvalidDescription: In the vast expanse of the cosmos, countless stars twinkle in the darkness, each one a beacon of light amidst the void. Galaxies spiral and collide, giving birth to new worlds and cosmic wonders. On our tiny planet Earth, life flourishes in all its forms.'
-    const workoutExerciseId = 'fbe8195d-7f45-44d3-9012-7487fae9a9a4'
-    const workouts = [{ exerciseId: workoutExerciseId, reps: 8, sets: 5 }]
-
-    const eventStorePublisher = app.get(EventStorePublisher)
-    eventStorePublisher.publish(
-      ExerciseCreated.with({ description, id: workoutExerciseId, name }),
-    )
-
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
-    await mongooseViews.insertMany([
-      {
-        _id: workoutExerciseId,
-        description,
-        name,
-      },
-    ])
+    const workouts = []
 
     const response = await request(server)
       .post('/routines')

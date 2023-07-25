@@ -1,18 +1,15 @@
 import { EventStoreDBClient } from '@eventstore/db-client'
 import { HttpServer, INestApplication } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { getModelToken } from '@nestjs/mongoose'
 import { Test } from '@nestjs/testing'
-import { Connection, Model } from 'mongoose'
+import { Connection } from 'mongoose'
 import request from 'supertest'
 
 import { AppModule } from '~/app.module'
 import InvalidExerciseDescription from '~/exercise/domain/exceptions/invalid-description'
 import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
 import NotCreatedExercise from '~/exercise/domain/exceptions/not-created'
-import MongooseExerciseView from '~/exercise/infrastructure/models/mongoose/view'
 import HttpError from '~/shared/http/error'
-import Uuid from '~/shared/uuid'
 
 describe('Create Exercise', () => {
   let app: INestApplication
@@ -113,16 +110,7 @@ describe('Create Exercise', () => {
     const name = 'existentName'
     const description = 'description'
 
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
-    await mongooseViews.insertMany([
-      {
-        _id: Uuid.generate(),
-        description,
-        name,
-      },
-    ])
+    await request(server).post('/exercises').send({ description, name })
 
     const response = await request(server)
       .post('/exercises')

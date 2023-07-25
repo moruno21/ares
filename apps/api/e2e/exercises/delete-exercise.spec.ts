@@ -1,19 +1,14 @@
 import { EventStoreDBClient } from '@eventstore/db-client'
 import { HttpServer, INestApplication } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { getModelToken } from '@nestjs/mongoose'
 import { Test } from '@nestjs/testing'
-import { Connection, Model } from 'mongoose'
+import { Connection } from 'mongoose'
 import request from 'supertest'
 
 import { AppModule } from '~/app.module'
-import ExerciseCreated from '~/exercise/domain/events/exercise-created'
 import NotFoundExercise from '~/exercise/domain/exceptions/not-found'
-import MongooseExerciseView from '~/exercise/infrastructure/models/mongoose/view'
 import { InvalidUuid } from '~/shared/domain'
-import EventStorePublisher from '~/shared/eventstore/publisher'
 import HttpError from '~/shared/http/error'
-import Uuid from '~/shared/uuid'
 
 describe('Delete Exercise', () => {
   let app: INestApplication
@@ -51,35 +46,26 @@ describe('Delete Exercise', () => {
   })
 
   it('deletes an exercise from an id', async () => {
-    const id = Uuid.generate()
     const name = 'name'
     const description = 'description'
 
-    const eventStorePublisher = app.get(EventStorePublisher)
-    eventStorePublisher.publish(ExerciseCreated.with({ description, id, name }))
+    const createExerciseResponse = await request(server)
+      .post(`/exercises`)
+      .send({ description, name })
 
-    const mongooseViews = app.get<Model<MongooseExerciseView>>(
-      getModelToken(MongooseExerciseView.name),
-    )
-    await mongooseViews.insertMany([
-      {
-        _id: id,
-        description,
-        name,
-      },
-    ])
+    await request(server).get('/exercises')
 
-    const deleteExerciseResponse = await request(server)
-      .delete(`/exercises/${id}`)
+    const response = await request(server)
+      .delete(`/exercises/${createExerciseResponse.body.id}`)
       .send()
 
-    expect(deleteExerciseResponse.status).toBe(200)
-    expect(deleteExerciseResponse.body).toHaveProperty('id')
-    expect(deleteExerciseResponse.body).toHaveProperty('name')
-    expect(deleteExerciseResponse.body).toHaveProperty('description')
-    expect(deleteExerciseResponse.body.id).toBe(id)
-    expect(deleteExerciseResponse.body.name).toBe(name)
-    expect(deleteExerciseResponse.body.description).toBe(description)
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty('id')
+    expect(response.body).toHaveProperty('name')
+    expect(response.body).toHaveProperty('description')
+    expect(response.body.id).toBe(createExerciseResponse.body.id)
+    expect(response.body.name).toBe(name)
+    expect(response.body.description).toBe(description)
   })
 
   it('cannot delete an exercise from an invalid id', async () => {

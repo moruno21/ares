@@ -73,6 +73,7 @@ describe('Get Routines', () => {
     expect(response.body[0]).toHaveProperty('id')
     expect(response.body[0]).toHaveProperty('name')
     expect(response.body[0]).toHaveProperty('description')
+    expect(response.body[0]).toHaveProperty('workouts')
     expect(response.body[0].name).toBe(name)
     expect(response.body[0].description).toBe(description)
     expect(response.body[0].workouts).toStrictEqual(workouts)
