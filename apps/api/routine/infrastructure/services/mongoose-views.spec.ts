@@ -30,6 +30,7 @@ describe('MongooseRoutineViews', () => {
     expect(mongooseViews).toHaveProperty('getAll')
     expect(mongooseViews).toHaveProperty('redescribe')
     expect(mongooseViews).toHaveProperty('rename')
+    expect(mongooseViews).toHaveProperty('withExercise')
     expect(mongooseViews).toHaveProperty('withId')
   })
 
@@ -114,6 +115,27 @@ describe('MongooseRoutineViews', () => {
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
+  })
+
+  it('finds a view that has certain exercise', async () => {
+    const exerciseId = 'exerciseId'
+    const viewsFind = jest.spyOn(views, 'find')
+    const mongooseView = MongooseRoutineView.fromRoutineView(view)
+
+    viewsFind.mockReturnValue({
+      lean: () => ({
+        exec: async () => [mongooseView],
+      }),
+    } as Query<unknown[], unknown>)
+
+    const response = await mongooseViews.withExercise(exerciseId)
+
+    expect(viewsFind).toHaveBeenCalledWith({
+      workouts: { $elemMatch: { exerciseId } },
+    })
+    expect(response[0]).toStrictEqual(
+      MongooseRoutineView.toRoutineView(mongooseView),
+    )
   })
 
   it('renames a view', async () => {

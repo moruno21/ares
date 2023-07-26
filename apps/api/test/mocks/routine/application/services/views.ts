@@ -9,6 +9,7 @@ const RoutineViewsMock = {
       getAll: jest.fn(),
       redescribe: jest.fn(),
       rename: jest.fn(),
+      withExercise: jest.fn(),
       withId: jest.fn(),
     } as unknown as RoutineViews),
 } as const
