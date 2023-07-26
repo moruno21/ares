@@ -16,6 +16,7 @@ import ExerciseCreatedHandler from '~/exercise/application/event-handlers/exerci
 import ExerciseDeletedHandler from '~/exercise/application/event-handlers/exercise-deleted'
 import ExerciseRedescribedHandler from '~/exercise/application/event-handlers/exercise-redescribed'
 import ExerciseRenamedHandler from '~/exercise/application/event-handlers/exercise-renamed'
+import ExerciseDeletedProcessManager from '~/exercise/application/process-manager/exercise-deleted'
 import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exercise'
 import GetExercisesHandler from '~/exercise/application/queries/handlers/get-exercises'
 import ExerciseCreated from '~/exercise/domain/events/exercise-created'
@@ -28,7 +29,6 @@ import EventStorePublisher from '~/shared/eventstore/publisher'
 
 import ExercisesController from './controllers/exercises'
 import MongooseExerciseView from './models/mongoose/view'
-import ExerciseDeletedProcessManager from './process-manager/exercise-deleted'
 import exerciseProviders from './providers'
 import ExercisesResolver from './resolvers/exercises'
 
