@@ -22,11 +22,13 @@ import ExerciseCreated from '~/exercise/domain/events/exercise-created'
 import ExerciseDeleted from '~/exercise/domain/events/exercise-deleted'
 import ExerciseRedescribed from '~/exercise/domain/events/exercise-redescribed'
 import ExerciseRenamed from '~/exercise/domain/events/exercise-renamed'
+import MongooseRoutineView from '~/routine/infrastructure/models/mongoose/view'
 import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 
 import ExercisesController from './controllers/exercises'
 import MongooseExerciseView from './models/mongoose/view'
+import ExerciseDeletedProcessManager from './process-manager/exercise-deleted'
 import exerciseProviders from './providers'
 import ExercisesResolver from './resolvers/exercises'
 
@@ -43,6 +45,7 @@ const eventHandlers = [
   ExerciseRedescribedHandler,
   ExerciseRenamedHandler,
 ]
+const processManagers = [ExerciseDeletedProcessManager]
 const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
 const resolvers = [ExercisesResolver]
 
@@ -88,11 +91,18 @@ const eventFactories = {
         schema: SchemaFactory.createForClass(MongooseExerciseView),
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: MongooseRoutineView.name,
+        schema: SchemaFactory.createForClass(MongooseRoutineView),
+      },
+    ]),
   ],
   providers: [
     ...commandHandlers,
     ...eventHandlers,
     ...exerciseProviders,
+    ...processManagers,
     ...queryHandlers,
     ...resolvers,
   ],

@@ -13,6 +13,7 @@ type RoutineViews = Readonly<{
   getAll: () => Promise<RoutineView[]>
   redescribe: (id: string, description: string) => Promise<void>
   rename: (id: string, name: string) => Promise<void>
+  withExercise: (id: string) => Promise<RoutineView[]>
   withId: (id: string) => Promise<Either<NotFoundRoutine, RoutineView>>
 }>
 

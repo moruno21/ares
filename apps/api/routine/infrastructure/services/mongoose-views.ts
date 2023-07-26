@@ -49,6 +49,17 @@ class MongooseRoutineViews implements RoutineViews {
     await this.views.updateOne({ _id: id }, { name }).lean().exec()
   }
 
+  async withExercise(id: string): Promise<RoutineView[]> {
+    const mongooseViews = await this.views
+      .find({ workouts: { $elemMatch: { exerciseId: id } } })
+      .lean()
+      .exec()
+
+    return mongooseViews.map((mongooseView) =>
+      MongooseRoutineView.toRoutineView(mongooseView),
+    )
+  }
+
   async withId(id: string): Promise<Either<NotFoundRoutine, RoutineView>> {
     const mongooseView = await this.views.findOne({ _id: id }).lean().exec()
 
