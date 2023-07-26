@@ -1,5 +1,5 @@
 import { DataTable, When } from '@cucumber/cucumber'
-import { CommandBus, CqrsModule } from '@nestjs/cqrs'
+import { CommandBus, CqrsModule, EventPublisher } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
 
 import CreateExercise from '~/exercise/application/commands/create-exercise'
@@ -10,6 +10,7 @@ import InvalidExerciseName from '~/exercise/domain/exceptions/invalid-name'
 import NotCreatedExercise from '~/exercise/domain/exceptions/not-created'
 import Exercise from '~/exercise/domain/models/exercise'
 import Exercises from '~/exercise/domain/services/exercises'
+import { Event } from '~/shared/domain'
 import Either from '~/shared/either'
 import Uuid from '~/shared/uuid'
 
@@ -33,17 +34,24 @@ When(
         },
       ],
     }).compile()
+
     const commandBus = module.get(CommandBus)
+
+    const eventPublisher = module.get(EventPublisher) as EventPublisher<Event>
 
     await module.createNestApplication().init()
 
     for (const { description, name } of dataTable.hashes()) {
+      const id = Uuid.generate()
       const response = await commandBus.execute<
         CreateExercise,
         Either<(InvalidExerciseName | NotCreatedExercise)[], Exercise>
-      >(CreateExercise.with({ description, id: Uuid.generate(), name }))
+      >(CreateExercise.with({ description, id, name }))
 
-      if (Either.isRight(response)) return
+      if (Either.isRight(response)) {
+        eventPublisher.mergeObjectContext(response.value).commit()
+        return
+      }
 
       this.errors.push(
         ...response.value.map((value) => ({
