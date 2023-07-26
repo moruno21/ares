@@ -1,6 +1,5 @@
 @exercises
 @application
-@infrastructure
 Feature: Create exercise
 
 Scenario: Creating an exercise
