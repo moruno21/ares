@@ -36,7 +36,14 @@ describe('RoutinesController', () => {
     const id = '481e9d6d-86e4-47c0-ab96-9c02a8218618'
     const name = 'name'
     const description = 'description'
-    const workouts = [{ exerciseId: 'exerciseId', reps: 10, sets: 8 }]
+    const workouts = [
+      {
+        exerciseId: 'exerciseId',
+        exerciseName: 'exerciseName',
+        reps: 10,
+        sets: 8,
+      },
+    ]
 
     const routineViewOne = RoutineView.with({
       description,
@@ -88,7 +95,14 @@ describe('RoutinesController', () => {
     const id = '0792bf7d-4104-4bee-82c3-39900969e869'
     const name = 'name'
     const description = 'description'
-    const workouts = [{ exerciseId: 'exerciseId', reps: 8, sets: 10 }]
+    const workouts = [
+      {
+        exerciseId: 'exerciseId',
+        exerciseName: 'exerciseName',
+        reps: 8,
+        sets: 10,
+      },
+    ]
 
     const routineView = RoutineView.with({ description, id, name, workouts })
 

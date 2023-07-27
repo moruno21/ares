@@ -24,7 +24,12 @@ class MongooseRoutineViews implements RoutineViews {
 
   async changeWorkouts(
     id: string,
-    workouts: { exerciseId: string; reps: number; sets: number }[],
+    workouts: {
+      exerciseId: string
+      exerciseName: string
+      reps: number
+      sets: number
+    }[],
   ): Promise<void> {
     await this.views.updateOne({ _id: id }, { workouts }).lean().exec()
   }

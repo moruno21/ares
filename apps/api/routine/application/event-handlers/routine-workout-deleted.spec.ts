@@ -21,8 +21,18 @@ describe('RoutineWorkoutDeletedHandler', () => {
     const routineId = 'a75a3307-2942-458a-8dbb-f31c0dbab297'
     const routineName = 'name'
     const routineDescription = 'description'
-    const workoutOne = { exerciseId, reps: 10, sets: 4 }
-    const workoutTwo = { exerciseId: 'exerciseId', reps: 10, sets: 4 }
+    const workoutOne = {
+      exerciseId,
+      exerciseName: 'exerciseName',
+      reps: 10,
+      sets: 4,
+    }
+    const workoutTwo = {
+      exerciseId: 'exerciseId',
+      exerciseName: 'exerciseName',
+      reps: 10,
+      sets: 4,
+    }
     const routineWorkouts = [workoutOne, workoutTwo]
     const routineView = RoutineView.with({
       description: routineDescription,

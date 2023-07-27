@@ -21,7 +21,12 @@ describe('RoutineWorkoutsChangedHandler', () => {
     const name = 'name'
     const description = 'description'
     const workouts = [
-      { exerciseId: '98747d8b-3f2a-4548-b029-ff163b1e8941', reps: 8, sets: 6 },
+      {
+        exerciseId: '98747d8b-3f2a-4548-b029-ff163b1e8941',
+        exerciseName: 'exerciseName',
+        reps: 8,
+        sets: 6,
+      },
     ]
     const view = RoutineView.with({ description, id, name, workouts })
 

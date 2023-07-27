@@ -11,7 +11,14 @@ describe('GetRoutines', () => {
   const id = '97c0e83d-81bf-481e-9e4e-ba7451947f9d'
   const name = 'name'
   const description = 'description'
-  const workouts = [{ exerciseId: 'exerciseId', reps: 6, sets: 4 }]
+  const workouts = [
+    {
+      exerciseId: 'exerciseId',
+      exerciseName: 'exerciseName',
+      reps: 6,
+      sets: 4,
+    },
+  ]
 
   beforeEach(() => {
     views = RoutineViewsMock.mock()

@@ -11,6 +11,10 @@ class RoutineWorkoutDto {
   readonly exerciseId: string
 
   @ApiProperty()
+  @IsString()
+  readonly exerciseName?: string
+
+  @ApiProperty()
   @IsInt()
   readonly reps: number
 

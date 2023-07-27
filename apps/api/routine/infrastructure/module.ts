@@ -9,6 +9,7 @@ import { CqrsModule } from '@nestjs/cqrs'
 import { GraphQLModule } from '@nestjs/graphql'
 import { MongooseModule, SchemaFactory } from '@nestjs/mongoose'
 
+import MongooseExerciseView from '~/exercise/infrastructure/models/mongoose/view'
 import CreateRoutineHandler from '~/routine/application/commands/handlers/create-routine'
 import DeleteRoutineHandler from '~/routine/application/commands/handlers/delete-routine'
 import RoutineCreatedHandler from '~/routine/application/event-handlers/routine-created'
@@ -104,6 +105,12 @@ const eventFactories = {
         ApolloServerPluginLandingPageLocalDefault(),
       ],
     }),
+    MongooseModule.forFeature([
+      {
+        name: MongooseExerciseView.name,
+        schema: SchemaFactory.createForClass(MongooseExerciseView),
+      },
+    ]),
     MongooseModule.forFeature([
       {
         name: MongooseRoutineView.name,

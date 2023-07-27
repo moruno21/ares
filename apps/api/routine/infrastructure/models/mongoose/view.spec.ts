@@ -6,7 +6,14 @@ describe('MongooseRoutineView', () => {
   const id = 'id'
   const name = 'name'
   const description = 'description'
-  const workouts = [{ exerciseId: 'exerciseId', reps: 12, sets: 3 }]
+  const workouts = [
+    {
+      exerciseId: 'exerciseId',
+      exerciseName: 'exerciseName',
+      reps: 12,
+      sets: 3,
+    },
+  ]
   const view = RoutineView.with({ description, id, name, workouts })
   const mongooseView = MongooseRoutineView.fromRoutineView(view)
 

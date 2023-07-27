@@ -15,7 +15,14 @@ describe('MongooseRoutineViews', () => {
   const id = '628c7043-617a-411a-ad1f-3da814e9e34b'
   const name = 'name'
   const description = 'description'
-  const workouts = [{ exerciseId: 'exerciseId', reps: 10, sets: 4 }]
+  const workouts = [
+    {
+      exerciseId: 'exerciseId',
+      exerciseName: 'exerciseName',
+      reps: 10,
+      sets: 4,
+    },
+  ]
   const view = RoutineView.with({ description, id, name, workouts })
 
   beforeEach(() => {
@@ -164,7 +171,12 @@ describe('MongooseRoutineViews', () => {
 
   it('changes workouts of a view', async () => {
     const anotherWorkouts = [
-      { exerciseId: 'ab41543a-9879-4f9b-a23c-aeffa2725feb', reps: 4, sets: 4 },
+      {
+        exerciseId: 'ab41543a-9879-4f9b-a23c-aeffa2725feb',
+        exerciseName: 'exerciseName',
+        reps: 4,
+        sets: 4,
+      },
     ]
     const viewsUpdateOne = jest.spyOn(views, 'updateOne')
 
