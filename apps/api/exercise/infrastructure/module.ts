@@ -27,6 +27,7 @@ import MongooseRoutineView from '~/routine/infrastructure/models/mongoose/view'
 import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 
+import ExerciseRenamedProcessManager from '../application/process-manager/exercise-renamed'
 import ExercisesController from './controllers/exercises'
 import MongooseExerciseView from './models/mongoose/view'
 import exerciseProviders from './providers'
@@ -45,7 +46,10 @@ const eventHandlers = [
   ExerciseRedescribedHandler,
   ExerciseRenamedHandler,
 ]
-const processManagers = [ExerciseDeletedProcessManager]
+const processManagers = [
+  ExerciseDeletedProcessManager,
+  ExerciseRenamedProcessManager,
+]
 const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
 const resolvers = [ExercisesResolver]
 
