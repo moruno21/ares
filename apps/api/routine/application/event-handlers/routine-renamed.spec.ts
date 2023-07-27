@@ -46,6 +46,7 @@ describe('RoutineRenamedHandler', () => {
     viewsWithId.mockResolvedValue(Either.left(notFound))
 
     const anotherName = 'anotherName'
+
     const response = (await renamedHandler.handle(
       RoutineRenamed.with({ id, name: anotherName }),
     )) as Left<NotFoundRoutine>

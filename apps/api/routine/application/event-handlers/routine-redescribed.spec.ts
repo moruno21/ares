@@ -48,6 +48,7 @@ describe('RoutineRedescribedHandler', () => {
     viewsWithId.mockResolvedValue(Either.left(notFound))
 
     const anotherDescription = 'anotherDescription'
+
     const response = (await redescribedHandler.handle(
       RoutineRedescribed.with({ description: anotherDescription, id }),
     )) as Left<NotFoundRoutine>

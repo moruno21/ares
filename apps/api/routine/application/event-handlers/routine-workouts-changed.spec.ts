@@ -52,6 +52,7 @@ describe('RoutineWorkoutsChangedHandler', () => {
     const anotherWorkouts = [
       { exerciseId: 'ab41543a-9879-4f9b-a23c-aeffa2725feb', reps: 4, sets: 4 },
     ]
+
     const response = (await workoutsChangedHandler.handle(
       RoutineWorkoutsChanged.with({ id, workouts: anotherWorkouts }),
     )) as Left<NotFoundRoutine>
