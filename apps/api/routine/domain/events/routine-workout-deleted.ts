@@ -6,11 +6,7 @@ const __name__ = 'RoutineWorkoutDeleted'
 type RoutineWorkoutDeletedType = NameType<
   Readonly<{
     id: string
-    workout: {
-      exerciseId: string
-      reps: number
-      sets: number
-    }
+    workout: { exerciseId: string }
   }>,
   'RoutineWorkoutDeleted'
 >

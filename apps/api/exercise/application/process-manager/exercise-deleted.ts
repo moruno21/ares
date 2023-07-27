@@ -23,7 +23,7 @@ class ExerciseDeletedProcessManager implements IEventHandler<ExerciseDeleted> {
           return this.eventBus.publish(
             RoutineWorkoutDeleted.with({
               id: routineView.id,
-              workout,
+              workout: { exerciseId: workout.exerciseId },
             }).withStream('Routine'),
           )
       }),

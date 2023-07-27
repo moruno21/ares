@@ -47,7 +47,10 @@ describe('RoutineWorkoutDeletedHandler', () => {
     viewsWithId.mockResolvedValue(Either.right(routineView))
 
     await workoutDeletedHandler.handle(
-      RoutineWorkoutDeleted.with({ id: routineId, workout: workoutOne }),
+      RoutineWorkoutDeleted.with({
+        id: routineId,
+        workout: { exerciseId: workoutOne.exerciseId },
+      }),
     )
 
     expect(viewsChangeWorkouts).toHaveBeenCalledWith(routineId, [workoutTwo])
@@ -64,7 +67,10 @@ describe('RoutineWorkoutDeletedHandler', () => {
     viewsWithId.mockResolvedValue(Either.left(notFound))
 
     const response = (await workoutDeletedHandler.handle(
-      RoutineWorkoutDeleted.with({ id, workout }),
+      RoutineWorkoutDeleted.with({
+        id,
+        workout: { exerciseId: workout.exerciseId },
+      }),
     )) as Left<NotFoundRoutine>
 
     expect(viewsChangeWorkouts).not.toHaveBeenCalled()

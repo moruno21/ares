@@ -5,7 +5,7 @@ import RoutineWorkoutDeleted from './routine-workout-deleted'
 describe('RoutineWorkoutDeleted', () => {
   const __name__ = 'RoutineWorkoutDeleted'
   const id = 'id'
-  const workout = { exerciseId: 'exerciseId', reps: 4, sets: 4 }
+  const workout = { exerciseId: 'exerciseId' }
   const routineWorkoutDeleted = RoutineWorkoutDeleted.with({ id, workout })
 
   itIsNamed(routineWorkoutDeleted)
