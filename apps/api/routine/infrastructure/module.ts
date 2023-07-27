@@ -23,9 +23,11 @@ import EventStorePublisher from '~/shared/eventstore/publisher'
 import EditRoutineHandler from '../application/commands/handlers/edit-routine'
 import RoutineRedescribedHandler from '../application/event-handlers/routine-redescribed'
 import RoutineRenamedHandler from '../application/event-handlers/routine-renamed'
+import RoutineWorkoutDeletedHandler from '../application/event-handlers/routine-workout-deleted'
 import RoutineWorkoutsChangedHandler from '../application/event-handlers/routine-workouts-changed'
 import RoutineRedescribed from '../domain/events/routine-redescribed'
 import RoutineRenamed from '../domain/events/routine-renamed'
+import RoutineWorkoutDeleted from '../domain/events/routine-workout-deleted'
 import RoutineWorkoutsChanged from '../domain/events/routine-workouts-changed'
 import RoutinesController from './controllers/routines'
 import MongooseRoutineView from './models/mongoose/view'
@@ -44,6 +46,7 @@ const eventHandlers = [
   RoutineDeletedHandler,
   RoutineRenamedHandler,
   RoutineRedescribedHandler,
+  RoutineWorkoutDeletedHandler,
   RoutineWorkoutsChangedHandler,
 ]
 const queryHandlers = [GetRoutinesHandler, GetRoutineHandler]
@@ -71,6 +74,13 @@ const eventFactories = {
   }) => RoutineRedescribed.with({ description, id }),
   RoutineRenamed: ({ id, name }: { id: string; name: string }) =>
     RoutineRenamed.with({ id, name }),
+  RoutineWorkoutDeleted: ({
+    id,
+    workout,
+  }: {
+    id: string
+    workout: { exerciseId: string; reps: number; sets: number }
+  }) => RoutineWorkoutDeleted.with({ id, workout }),
   RoutineWorkoutsChanged: ({
     id,
     workouts,
