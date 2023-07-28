@@ -35,6 +35,7 @@ describe('RoutineCreatedHandler', () => {
     const routineDescription = 'routineDescription'
     const routineWorkouts = [
       {
+        exerciseDescription,
         exerciseId,
         exerciseName,
         reps: 12,

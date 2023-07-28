@@ -8,6 +8,7 @@ describe('MongooseRoutineView', () => {
   const description = 'description'
   const workouts = [
     {
+      exerciseDescription: 'exerciseDescription',
       exerciseId: 'exerciseId',
       exerciseName: 'exerciseName',
       reps: 12,

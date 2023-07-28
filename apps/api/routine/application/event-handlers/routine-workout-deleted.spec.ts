@@ -22,12 +22,14 @@ describe('RoutineWorkoutDeletedHandler', () => {
     const routineName = 'name'
     const routineDescription = 'description'
     const workoutOne = {
+      exerciseDescription: 'exerciseDescription',
       exerciseId,
       exerciseName: 'exerciseName',
       reps: 10,
       sets: 4,
     }
     const workoutTwo = {
+      exerciseDescription: 'exerciseDescription',
       exerciseId: 'exerciseId',
       exerciseName: 'exerciseName',
       reps: 10,

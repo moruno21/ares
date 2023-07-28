@@ -25,6 +25,7 @@ class RoutineCreatedHandler implements IEventHandler<RoutineCreated> {
       if (Either.isLeft(exercise)) return Either.left(exercise.value)
 
       workouts.push({
+        exerciseDescription: exercise.value.description,
         exerciseId: workout.exerciseId,
         exerciseName: exercise.value.name,
         reps: workout.reps,

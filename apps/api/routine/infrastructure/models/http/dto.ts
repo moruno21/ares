@@ -12,6 +12,10 @@ class RoutineWorkoutDto {
 
   @ApiProperty()
   @IsString()
+  readonly exerciseDescription?: string
+
+  @ApiProperty()
+  @IsString()
   readonly exerciseName?: string
 
   @ApiProperty()

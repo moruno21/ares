@@ -17,6 +17,7 @@ describe('RoutineDto', () => {
     .value as RoutineDescription
   const workoutsValue = [
     {
+      exerciseDescription: 'exerciseDescription',
       exerciseId: '303ce779-d987-470c-9ecc-28758498faa2',
       exerciseName: 'exerciseName',
       reps: 5,

@@ -8,6 +8,7 @@ type RoutineView = NameType<
     id: string
     name: string
     workouts: {
+      exerciseDescription: string
       exerciseId: string
       exerciseName: string
       reps: number

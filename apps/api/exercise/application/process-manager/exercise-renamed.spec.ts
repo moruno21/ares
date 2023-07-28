@@ -27,6 +27,7 @@ describe('ExerciseRenamedProcessManager', () => {
     const routineDescription = 'description'
     const routineWorkouts = [
       {
+        exerciseDescription: 'exerciseDescription',
         exerciseId,
         exerciseName: 'exerciseName',
         reps: 6,

@@ -15,6 +15,7 @@ class MongooseRoutineView implements Omit<RoutineView, '__name__' | 'id'> {
 
   @Prop()
   readonly workouts: {
+    exerciseDescription: string
     exerciseId: string
     exerciseName: string
     reps: number

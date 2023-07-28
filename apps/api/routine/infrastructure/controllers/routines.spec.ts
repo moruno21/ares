@@ -38,6 +38,7 @@ describe('RoutinesController', () => {
     const description = 'description'
     const workouts = [
       {
+        exerciseDescription: 'exerciseDescription',
         exerciseId: 'exerciseId',
         exerciseName: 'exerciseName',
         reps: 10,
@@ -97,6 +98,7 @@ describe('RoutinesController', () => {
     const description = 'description'
     const workouts = [
       {
+        exerciseDescription: 'exerciseDescription',
         exerciseId: 'exerciseId',
         exerciseName: 'exerciseName',
         reps: 8,
