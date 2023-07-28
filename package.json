@@ -119,6 +119,7 @@
     "vite": "4.0.1",
     "vite-plugin-dts": "~1.7.1",
     "vite-plugin-eslint": "1.8.1",
+    "vite-plugin-svgr": "3.2.0",
     "vite-tsconfig-paths": "4.0.2",
     "vitest": "0.25.8"
   }

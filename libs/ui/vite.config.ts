@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { join } from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import svgr from 'vite-plugin-svgr'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
@@ -42,6 +43,7 @@ export default defineConfig({
       tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
     }),
     react(),
+    svgr(),
     viteTsConfigPaths({
       root: '../../',
     }),
