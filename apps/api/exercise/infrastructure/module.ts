@@ -17,6 +17,7 @@ import ExerciseDeletedHandler from '~/exercise/application/event-handlers/exerci
 import ExerciseRedescribedHandler from '~/exercise/application/event-handlers/exercise-redescribed'
 import ExerciseRenamedHandler from '~/exercise/application/event-handlers/exercise-renamed'
 import ExerciseDeletedProcessManager from '~/exercise/application/process-manager/exercise-deleted'
+import ExerciseRedescribedProcessManager from '~/exercise/application/process-manager/exercise-redescribed'
 import ExerciseRenamedProcessManager from '~/exercise/application/process-manager/exercise-renamed'
 import GetExerciseHandler from '~/exercise/application/queries/handlers/get-exercise'
 import GetExercisesHandler from '~/exercise/application/queries/handlers/get-exercises'
@@ -49,6 +50,7 @@ const eventHandlers = [
 const processManagers = [
   ExerciseDeletedProcessManager,
   ExerciseRenamedProcessManager,
+  ExerciseRedescribedProcessManager,
 ]
 const queryHandlers = [GetExerciseHandler, GetExercisesHandler]
 const resolvers = [ExercisesResolver]

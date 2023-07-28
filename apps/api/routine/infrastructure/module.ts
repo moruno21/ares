@@ -18,6 +18,7 @@ import RoutineDeletedHandler from '~/routine/application/event-handlers/routine-
 import RoutineRedescribedHandler from '~/routine/application/event-handlers/routine-redescribed'
 import RoutineRenamedHandler from '~/routine/application/event-handlers/routine-renamed'
 import RoutineWorkoutDeletedHandler from '~/routine/application/event-handlers/routine-workout-deleted'
+import RoutineWorkoutRedescribedHandler from '~/routine/application/event-handlers/routine-workout-redescribed'
 import RoutineWorkoutRenamedHandler from '~/routine/application/event-handlers/routine-workout-renamed'
 import RoutineWorkoutsChangedHandler from '~/routine/application/event-handlers/routine-workouts-changed'
 import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
@@ -27,6 +28,7 @@ import RoutineDeleted from '~/routine/domain/events/routine-deleted'
 import RoutineRedescribed from '~/routine/domain/events/routine-redescribed'
 import RoutineRenamed from '~/routine/domain/events/routine-renamed'
 import RoutineWorkoutDeleted from '~/routine/domain/events/routine-workout-deleted'
+import RoutineWorkoutRedescribed from '~/routine/domain/events/routine-workout-redescribed'
 import RoutineWorkoutRenamed from '~/routine/domain/events/routine-workout-renamed'
 import RoutineWorkoutsChanged from '~/routine/domain/events/routine-workouts-changed'
 import EventStoreModule from '~/shared/eventstore/module'
@@ -51,6 +53,7 @@ const eventHandlers = [
   RoutineRedescribedHandler,
   RoutineWorkoutDeletedHandler,
   RoutineWorkoutRenamedHandler,
+  RoutineWorkoutRedescribedHandler,
   RoutineWorkoutsChangedHandler,
 ]
 const queryHandlers = [GetRoutinesHandler, GetRoutineHandler]
@@ -85,6 +88,13 @@ const eventFactories = {
     id: string
     workout: { exerciseId: string }
   }) => RoutineWorkoutDeleted.with({ id, workout }),
+  RoutineWorkoutRedescribed: ({
+    id,
+    workout,
+  }: {
+    id: string
+    workout: { exerciseDescription: string; exerciseId: string }
+  }) => RoutineWorkoutRedescribed.with({ id, workout }),
   RoutineWorkoutRenamed: ({
     id,
     workout,
