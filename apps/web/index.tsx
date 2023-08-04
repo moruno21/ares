@@ -1,3 +1,5 @@
+import './config/i18n'
+
 import GlobalStyles from '@ares/ui/styles/global'
 import theme from '@ares/ui/styles/theme'
 import { StrictMode } from 'react'
