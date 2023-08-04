@@ -22,6 +22,7 @@
     "../**/*.stories.tsx",
     "../**/*.stories.mdx",
     "*.js",
-    "preview.jsx"
+    "preview.tsx",
+    "main.ts"
   ]
 }

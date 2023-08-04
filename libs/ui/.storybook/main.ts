@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { mergeConfig } = require('vite')
-const viteTsConfigPaths = require('vite-tsconfig-paths').default
+import type { StorybookConfig } from '@storybook/react-vite'
+import { mergeConfig } from 'vite'
+import svgr from 'vite-plugin-svgr'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
-module.exports = {
+const config: StorybookConfig = {
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-essentials',
@@ -17,13 +18,11 @@ module.exports = {
     '../stories/**/*.stories.mdx',
     '../stories/**/*.stories.@(js|jsx|ts|tsx)',
   ],
-  async viteFinal(config, { configType }) {
+  async viteFinal(config) {
     return mergeConfig(config, {
-      plugins: [
-        viteTsConfigPaths({
-          root: '../../../',
-        }),
-      ],
+      plugins: [svgr(), tsconfigPaths()],
     })
   },
 }
+
+export default config
