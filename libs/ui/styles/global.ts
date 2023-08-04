@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  html, body {
+    height: 100%;
+  }
+
   a {
     color: unset;
     cursor: pointer;
