@@ -7,6 +7,8 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   :root {
+    --color-blue-10: #35155d;
+
     --font-primary: Public Sans, Arial, Helvetica, sans-serif;
     --font-secondary: Open Sans, Arial, Helvetica, sans-serif;
   }
@@ -21,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    color: ${({ theme }) => theme.colors.text.main};
     font-family: ${({ theme }) => theme.font.families.primary}; 
   }
 

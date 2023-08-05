@@ -1,6 +1,10 @@
 const theme = {
   breakpoints: {},
-  colors: {},
+  colors: {
+    text: {
+      main: 'var(--color-blue-10)',
+    },
+  },
   font: {
     families: {
       primary: 'var(--font-primary)',
