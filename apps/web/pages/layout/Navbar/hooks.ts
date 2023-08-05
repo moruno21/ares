@@ -10,7 +10,7 @@ const useNavbar = () => {
       {
         icon: HomeIcon,
         id: 'home',
-        route: ROUTES.HOME,
+        route: ROUTES.ROUTINES,
       },
       {
         icon: ExploreIcon,

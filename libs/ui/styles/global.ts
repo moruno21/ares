@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     --color-blue-10: #35155d;
+    --color-white: #ffffff;
 
     --font-primary: Public Sans, Arial, Helvetica, sans-serif;
     --font-secondary: Open Sans, Arial, Helvetica, sans-serif;

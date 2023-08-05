@@ -1,6 +1,13 @@
 const theme = {
-  breakpoints: {},
+  breakpoints: {
+    large: 1024,
+    medium: 767,
+    small: 414,
+  },
   colors: {
+    background: {
+      white: 'var(--color-white)',
+    },
     text: {
       main: 'var(--color-blue-10)',
     },
@@ -39,6 +46,14 @@ const theme = {
       semibold: 600,
       thin: 100,
     },
+  },
+  shadows: {
+    heavy:
+      '0rem 0.6875rem 0.9375rem -0.4375rem rgba(55, 40, 102, 0.1),0rem 1.5rem 2.375rem 0.1875rem rgba(55, 40, 102, 0.07),0rem 0.5625rem 2.875rem 0.5rem rgba(55, 40, 102, 0.06)',
+    light:
+      '0rem 0.1875rem 0.875rem 0.125rem rgba(55, 40, 102, 0.06), 0rem 0rem 0.625rem 0.0625rem rgba(55, 40, 102, 0.08), 0rem 0.3125rem 0.3125rem -0.1875rem rgba(55, 40, 102, 0.08)',
+    medium:
+      '0rem 0.3125rem 1.5rem 0.25rem rgba(55, 40, 102, 0.06), 0rem 0.8125rem 1.1875rem 0.125rem rgba(55, 40, 102, 0.07), 0rem 0.4375rem 0.5rem -0.25rem rgba(55, 40, 102, 0.1)',
   },
 } as const
 
