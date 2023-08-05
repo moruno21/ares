@@ -2,6 +2,6 @@
   "extends": ["@commitlint/config-conventional"],
   "rules": {
     "scope-empty": [2, "never"],
-    "scope-enum": [2, "always", ["admin", "api", "common", "web"]]
+    "scope-enum": [2, "always", ["admin", "api", "common", "ui", "web"]]
   }
 }
