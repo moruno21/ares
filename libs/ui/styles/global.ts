@@ -1,3 +1,5 @@
+import './fonts.css'
+
 import { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
 
@@ -5,7 +7,8 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   :root {
-    //Variables go here
+    --font-primary: Public Sans, Arial, Helvetica, sans-serif;
+    --font-secondary: Open Sans, Arial, Helvetica, sans-serif;
   }
 
   * {
@@ -15,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
     ::before {
       box-sizing: border-box;
     }
+  }
+
+  body {
+    font-family: ${({ theme }) => theme.font.families.primary}; 
   }
 
   html, body {

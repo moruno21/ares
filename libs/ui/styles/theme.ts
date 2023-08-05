@@ -2,7 +2,10 @@ const theme = {
   breakpoints: {},
   colors: {},
   font: {
-    family: {},
+    families: {
+      primary: 'var(--font-primary)',
+      secondary: 'var(--font-secondary)',
+    },
     lineHeights: {
       default: '1.125rem',
       large: '1.5rem',
