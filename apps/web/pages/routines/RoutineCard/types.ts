@@ -5,7 +5,3 @@ export type RoutineCardProps = Omit<HTMLAttributes<HTMLAnchorElement>, 'id'> & {
   id: string
   name: string
 }
-
-export type UseRoutineCardProps = {
-  id: RoutineCardProps['id']
-}

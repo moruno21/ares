@@ -1,14 +1,13 @@
 import { H2 } from '@ares/ui/components/Text'
 
-import useRoutineCard from './hooks'
+import { ROUTES } from '~/services/routing/Routes/constants'
+
 import { Container, Description } from './styles'
 import { RoutineCardProps } from './types'
 
 const RoutineCard = ({ description, id, name }: RoutineCardProps) => {
-  const { href } = useRoutineCard({ id })
-
   return (
-    <Container href={href}>
+    <Container to={`${ROUTES.ROUTINE}/${id}`}>
       <H2>{name}</H2>
       <Description>{description} </Description>
     </Container>

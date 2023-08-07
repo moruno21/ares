@@ -1,7 +1,8 @@
 import { Body1 } from '@ares/ui/components/Text'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const Container = styled.a`
+export const Container = styled(Link)`
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.medium};
   display: grid;
