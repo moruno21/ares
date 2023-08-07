@@ -4,11 +4,11 @@ import { InputStyles } from '../Text'
 
 export const Component = styled.input`
   ${InputStyles}
-  border: 0.0625rem solid ${({ theme }) => theme.colors.stroke.grey};
   background-color: ${({ theme }) => theme.colors.background.white};
   border-radius: 1rem;
   color: ${({ theme }) => theme.colors.text.main};
-  padding: 0.5rem 0.5rem 0.375rem;
+  outline: 0.0625rem solid ${({ theme }) => theme.colors.stroke.grey};
+  padding: 0.5rem 1rem;
   width: 100%;
 
   ::placeholder {
@@ -18,12 +18,12 @@ export const Component = styled.input`
   :enabled:hover,
   :focus {
     background-color: ${({ theme }) => theme.colors.background.white};
-    border-color: ${({ theme }) => theme.colors.stroke.main};
     color: ${({ theme }) => theme.colors.stroke.main};
+    outline-color: ${({ theme }) => theme.colors.stroke.main};
   }
 
   :focus {
-    border-width: 0.125rem;
+    outline-width: 0.125rem;
   }
 `
 
