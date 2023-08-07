@@ -6,7 +6,7 @@ import { ROUTES } from '~/services/routing/Routes/constants'
 import { UseRoutineCardProps } from './types'
 
 const useRoutineCard = ({ id }: UseRoutineCardProps) => {
-  const href = useMemo(() => generatePath(ROUTES.ROUTINES, { id }), [id])
+  const href = useMemo(() => generatePath(ROUTES.ROUTINE, { id }), [id])
 
   return { href }
 }
