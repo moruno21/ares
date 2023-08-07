@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ROUTES } from './constants'
 
@@ -11,6 +11,7 @@ const AppRoutes = () => (
     <Route element={<Layout />}>
       <Route path={ROUTES.ROUTINES} element={<Routines />}></Route>
       <Route path={ROUTES.EXPLORE} element={<>Explore</>}></Route>
+      <Route path="*" element={<Navigate to={ROUTES.ROUTINES} />}></Route>
     </Route>
   </Routes>
 )
