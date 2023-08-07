@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const useExercises = () => {
+  const { t } = useTranslation('exercises')
+
   const exercises = useMemo(
     () => [
       {
@@ -22,7 +25,7 @@ const useExercises = () => {
     [],
   )
 
-  return { exercises }
+  return { exercises, t }
 }
 
 export default useExercises

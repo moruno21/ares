@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const useRoutines = () => {
+  const { t } = useTranslation('routines')
+
   const routines = useMemo(
     () => [
       {
@@ -27,7 +30,7 @@ const useRoutines = () => {
     [],
   )
 
-  return { routines }
+  return { routines, t }
 }
 
 export default useRoutines

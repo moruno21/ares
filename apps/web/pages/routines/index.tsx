@@ -3,13 +3,13 @@ import RoutineCard from './RoutineCard'
 import { Container, Description, Header, RoutineCards, Title } from './styles'
 
 const Routines = () => {
-  const { routines } = useRoutines()
+  const { routines, t } = useRoutines()
 
   return (
     <Container>
       <Header>
-        <Title>Welcome</Title>
-        <Description>Your Routines</Description>
+        <Title>{t('title')}</Title>
+        <Description>{t('description')}</Description>
       </Header>
       <RoutineCards>
         {routines.map(({ description, id, name }) => (
