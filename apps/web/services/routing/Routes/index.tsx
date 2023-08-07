@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import Exercises from '~/pages/exercises'
+import PageLoading from '~/pages/layout/Loading'
 
 import { ROUTES } from './constants'
 
@@ -9,7 +10,7 @@ const Layout = lazy(() => import('~/pages/layout'))
 const Routines = lazy(() => import('~/pages/routines'))
 
 const AppRoutes = () => (
-  <Suspense>
+  <Suspense fallback={<PageLoading />}>
     <Routes>
       <Route element={<Layout />}>
         <Route path={ROUTES.ROUTINES} element={<Routines />}></Route>

@@ -11,6 +11,10 @@ const theme = {
     text: {
       main: 'var(--color-blue-10)',
     },
+    ui: {
+      blue10: 'var(--color-blue-10)',
+      white: 'var(--color-white)',
+    },
   },
   font: {
     families: {
