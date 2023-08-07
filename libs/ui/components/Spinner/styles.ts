@@ -6,6 +6,8 @@ export const Component = styled.span`
   border-right-color: ${({ theme }) => theme.colors.ui.white};
   border-radius: 50%;
   border-top-color: ${({ theme }) => theme.colors.ui.white};
+  box-sizing: border-box;
+  display: inline-block;
   min-height: 3.5rem;
   min-width: 3.5rem;
 
