@@ -12,6 +12,7 @@ const theme = {
     stroke: {
       disabled: 'var(--color-grey-10)',
       error: 'var(--color-red-20)',
+      grey: 'var(--color-grey-30)',
       main: 'var(--color-blue-30)',
     },
     text: {
