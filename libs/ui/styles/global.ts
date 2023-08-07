@@ -7,7 +7,14 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   :root {
+    --color-blue-10: #8cabff;
+    --color-blue-20: #4477ce;
     --color-blue-30: #35155d;
+    --color-grey-10: #e5ebee;
+    --color-grey-20: #ccdae0;
+    --color-grey-30: #a1b1ba;
+    --color-red-10: #ffeadd;
+    --color-red-20: #f31559;
     --color-white: #ffffff;
 
     --font-primary: Public Sans, Arial, Helvetica, sans-serif;

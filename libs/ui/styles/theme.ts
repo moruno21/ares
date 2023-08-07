@@ -6,10 +6,18 @@ const theme = {
   },
   colors: {
     background: {
+      error: 'var(--color-red-10)',
       white: 'var(--color-white)',
     },
-    text: {
+    stroke: {
+      disabled: 'var(--color-grey-10)',
+      error: 'var(--color-red-20)',
       main: 'var(--color-blue-30)',
+    },
+    text: {
+      disabled: 'var(--color-grey-20)',
+      main: 'var(--color-blue-30)',
+      placeholder: 'var(--color-grey-30)',
     },
     ui: {
       blue30: 'var(--color-blue-30)',
