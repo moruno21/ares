@@ -1,4 +1,5 @@
 import { ReactComponent as DefaultArrowRightIcon } from '@ares/ui/assets/icons/arrow-right.svg'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const ArrowRightIcon = styled(DefaultArrowRightIcon)`
@@ -6,7 +7,7 @@ export const ArrowRightIcon = styled(DefaultArrowRightIcon)`
   width: 1.5rem;
 `
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   align-items: center;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.medium};
