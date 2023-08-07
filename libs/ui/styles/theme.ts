@@ -9,10 +9,10 @@ const theme = {
       white: 'var(--color-white)',
     },
     text: {
-      main: 'var(--color-blue-10)',
+      main: 'var(--color-blue-30)',
     },
     ui: {
-      blue10: 'var(--color-blue-10)',
+      blue30: 'var(--color-blue-30)',
       white: 'var(--color-white)',
     },
   },

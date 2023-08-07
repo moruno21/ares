@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   :root {
-    --color-blue-10: #35155d;
+    --color-blue-30: #35155d;
     --color-white: #ffffff;
 
     --font-primary: Public Sans, Arial, Helvetica, sans-serif;

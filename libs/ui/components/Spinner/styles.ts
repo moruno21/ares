@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Component = styled.span`
   animation: rotation 1s linear infinite;
-  border: 0.5rem solid ${({ theme }) => theme.colors.ui.blue10};
+  border: 0.5rem solid ${({ theme }) => theme.colors.ui.blue30};
   border-right-color: ${({ theme }) => theme.colors.ui.white};
   border-radius: 50%;
   border-top-color: ${({ theme }) => theme.colors.ui.white};
