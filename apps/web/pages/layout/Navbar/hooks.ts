@@ -1,6 +1,6 @@
 import { ReactComponent as EditIcon } from '@ares/ui/assets/icons/edit.svg'
-import { ReactComponent as ExploreIcon } from '@ares/ui/assets/icons/explore.svg'
 import { ReactComponent as HomeIcon } from '@ares/ui/assets/icons/home.svg'
+import { ReactComponent as SearchIcon } from '@ares/ui/assets/icons/search.svg'
 import { useMemo } from 'react'
 
 import { ROUTES } from '~/services/routing/Routes/constants'
@@ -14,7 +14,7 @@ const useNavbar = () => {
         route: ROUTES.ROUTINES,
       },
       {
-        icon: ExploreIcon,
+        icon: SearchIcon,
         id: 'explore',
         route: ROUTES.EXPLORE,
       },
