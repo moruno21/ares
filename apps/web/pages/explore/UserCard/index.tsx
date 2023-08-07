@@ -1,10 +1,12 @@
-import { ArrowRightIcon, Container, Name } from './styles'
+import { H3 } from '@ares/ui/components/Text'
+
+import { ArrowRightIcon, Container } from './styles'
 import { UserCardProps } from './types'
 
 const UserCard = ({ name }: UserCardProps) => {
   return (
     <Container>
-      <Name>{name}</Name>
+      <H3>{name}</H3>
       <ArrowRightIcon />
     </Container>
   )

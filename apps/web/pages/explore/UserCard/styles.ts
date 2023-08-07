@@ -1,5 +1,4 @@
 import { ReactComponent as DefaultArrowRightIcon } from '@ares/ui/assets/icons/arrow-right.svg'
-import { H3 } from '@ares/ui/components/Text'
 import styled from 'styled-components'
 
 export const ArrowRightIcon = styled(DefaultArrowRightIcon)`
@@ -18,5 +17,3 @@ export const Container = styled.div`
   padding: 1.5rem;
   width: 100%;
 `
-
-export const Name = styled(H3)``

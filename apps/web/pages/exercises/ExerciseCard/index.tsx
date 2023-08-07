@@ -1,10 +1,12 @@
-import { Container, Description, Name } from './styles'
+import { H2 } from '@ares/ui/components/Text'
+
+import { Container, Description } from './styles'
 import { ExerciseCardProps } from './types'
 
 const ExerciseCard = ({ description, name }: ExerciseCardProps) => {
   return (
     <Container>
-      <Name>{name}</Name>
+      <H2>{name}</H2>
       <Description>{description} </Description>
     </Container>
   )

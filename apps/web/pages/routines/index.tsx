@@ -1,6 +1,8 @@
+import { H1, H3 } from '@ares/ui/components/Text'
+
 import useRoutines from './hooks'
 import RoutineCard from './RoutineCard'
-import { Container, Description, Header, RoutineCards, Title } from './styles'
+import { Container, Header, RoutineCards } from './styles'
 
 const Routines = () => {
   const { routines, t } = useRoutines()
@@ -8,8 +10,8 @@ const Routines = () => {
   return (
     <Container>
       <Header>
-        <Title>{t('title')}</Title>
-        <Description>{t('description')}</Description>
+        <H1>{t('title')}</H1>
+        <H3>{t('description')}</H3>
       </Header>
       <RoutineCards>
         {routines.map(({ description, id, name }) => (

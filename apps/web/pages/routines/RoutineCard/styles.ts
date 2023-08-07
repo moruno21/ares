@@ -1,4 +1,4 @@
-import { Body1, H2 } from '@ares/ui/components/Text'
+import { Body1 } from '@ares/ui/components/Text'
 import styled from 'styled-components'
 
 export const Container = styled.a`
@@ -17,5 +17,3 @@ export const Description = styled(Body1)`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 `
-
-export const Name = styled(H2)``

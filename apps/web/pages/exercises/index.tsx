@@ -1,6 +1,8 @@
+import { H1, H3 } from '@ares/ui/components/Text'
+
 import ExerciseCard from './ExerciseCard'
 import useExercises from './hooks'
-import { Container, Description, ExerciseCards, Header, Title } from './styles'
+import { Container, ExerciseCards, Header } from './styles'
 
 const Exercises = () => {
   const { exercises, t } = useExercises()
@@ -8,8 +10,8 @@ const Exercises = () => {
   return (
     <Container>
       <Header>
-        <Title>{t('title')}</Title>
-        <Description>{t('description')}</Description>
+        <H1>{t('title')}</H1>
+        <H3>{t('description')}</H3>
       </Header>
       <ExerciseCards>
         {exercises.map(({ description, id, name }) => (

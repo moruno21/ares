@@ -1,4 +1,3 @@
-import { H1, H3 } from '@ares/ui/components/Text'
 import styled from 'styled-components'
 
 import pxToRem from '~/lib/px-to-rem'
@@ -8,8 +7,6 @@ export const Container = styled.div`
   gap: 4.5rem;
   justify-items: center;
 `
-
-export const Description = styled(H3)``
 
 export const Header = styled.div`
   display: grid;
@@ -31,5 +28,3 @@ export const RoutineCards = styled.div`
     grid-template-columns: 1fr;
   }
 `
-
-export const Title = styled(H1)``

@@ -1,5 +1,7 @@
+import { H2 } from '@ares/ui/components/Text'
+
 import useRoutineCard from './hooks'
-import { Container, Description, Name } from './styles'
+import { Container, Description } from './styles'
 import { RoutineCardProps } from './types'
 
 const RoutineCard = ({ description, id, name }: RoutineCardProps) => {
@@ -7,7 +9,7 @@ const RoutineCard = ({ description, id, name }: RoutineCardProps) => {
 
   return (
     <Container href={href}>
-      <Name>{name}</Name>
+      <H2>{name}</H2>
       <Description>{description} </Description>
     </Container>
   )
