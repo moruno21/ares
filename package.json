@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "format": "prettier --write .",
+    "generate": "cd ./apps/web/ && graphql-codegen -r dotenv/config",
     "lint": "eslint --fix .",
     "prepare": "husky install",
     "serve": "npx nx run-many -t serve -p web api",
@@ -14,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "@apollo/client": "3.7.17",
     "@apollo/server": "4.7.4",
     "@apollo/subgraph": "2.4.8",
     "@eventstore/db-client": "5.0.1",
@@ -53,6 +55,9 @@
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
     "@cucumber/cucumber": "9.1.2",
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/typescript": "4.0.1",
+    "@graphql-codegen/typescript-operations": "4.0.1",
     "@nestjs/schematics": "9.0.0",
     "@nestjs/testing": "9.4.2",
     "@nrwl/cypress": "15.8.1",
