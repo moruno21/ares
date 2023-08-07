@@ -11,7 +11,7 @@ const useNavbar = () => {
       {
         icon: HomeIcon,
         id: 'home',
-        route: ROUTES.ROUTINES,
+        route: ROUTES.HOME,
       },
       {
         icon: SearchIcon,
