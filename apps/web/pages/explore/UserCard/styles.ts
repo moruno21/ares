@@ -10,7 +10,7 @@ export const ArrowRightIcon = styled(DefaultArrowRightIcon)`
 export const Container = styled(Link)`
   align-items: center;
   border-radius: 0.5rem;
-  box-shadow: ${({ theme }) => theme.shadows.medium};
+  box-shadow: ${({ theme }) => theme.shadows.light};
   display: flex;
   justify-content: space-between;
   max-width: 35rem;

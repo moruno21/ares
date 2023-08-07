@@ -14,6 +14,6 @@ export const Header = styled.div`
 
 export const UserCards = styled.div`
   display: grid;
-  gap: 4rem;
+  gap: 1rem;
   justify-items: center;
 `
