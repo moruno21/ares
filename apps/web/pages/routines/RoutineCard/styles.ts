@@ -11,11 +11,11 @@ export const Container = styled.a`
   padding: 1.5rem;
 `
 
-export const RoutineDescription = styled(Body1)`
+export const Description = styled(Body1)`
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 `
 
-export const RoutineName = styled(H2)``
+export const Name = styled(H2)``

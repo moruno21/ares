@@ -1,5 +1,5 @@
 import useRoutineCard from './hooks'
-import { Container, RoutineDescription, RoutineName } from './styles'
+import { Container, Description, Name } from './styles'
 import { RoutineCardProps } from './types'
 
 const RoutineCard = ({ description, id, name }: RoutineCardProps) => {
@@ -7,8 +7,8 @@ const RoutineCard = ({ description, id, name }: RoutineCardProps) => {
 
   return (
     <Container href={href}>
-      <RoutineName>{name}</RoutineName>
-      <RoutineDescription>{description} </RoutineDescription>
+      <Name>{name}</Name>
+      <Description>{description} </Description>
     </Container>
   )
 }
