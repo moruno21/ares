@@ -9,19 +9,37 @@ const theme = {
       error: 'var(--color-red-10)',
       white: 'var(--color-white)',
     },
+    buttonStates: {
+      primary: {
+        disabled: 'var(--color-grey-20)',
+        hover: 'var(--color-purple-20)',
+        pressed: 'var(--color-purple-10)',
+      },
+      secondary: {
+        disabled: 'var(--color-grey-20)',
+        hover: 'var(--color-grey-10)',
+        pressed: 'var(--color-grey-20)',
+      },
+    },
+    clickables: {
+      primaryButton: 'var(--color-purple-30)',
+      secondaryButton: 'var(--color-white)',
+    },
     stroke: {
       disabled: 'var(--color-grey-10)',
       error: 'var(--color-red-20)',
       grey: 'var(--color-grey-30)',
-      main: 'var(--color-blue-30)',
+      main: 'var(--color-purple-30)',
     },
     text: {
       disabled: 'var(--color-grey-20)',
-      main: 'var(--color-blue-30)',
+      error: 'var(--color-red-20)',
+      main: 'var(--color-purple-30)',
       placeholder: 'var(--color-grey-30)',
+      white: 'var(--color-white)',
     },
     ui: {
-      blue30: 'var(--color-blue-30)',
+      purple30: 'var(--color-purple-30)',
       white: 'var(--color-white)',
     },
   },
