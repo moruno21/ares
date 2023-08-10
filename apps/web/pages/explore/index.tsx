@@ -14,7 +14,7 @@ const Explore = () => {
       </Header>
       <UserCards>
         {users.map(({ id, name }) => (
-          <UserCard id={id} name={name} />
+          <UserCard key={id} id={id} name={name} />
         ))}
       </UserCards>
     </Container>
