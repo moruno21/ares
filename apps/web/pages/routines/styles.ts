@@ -18,13 +18,16 @@ export const RoutineCards = styled.div`
   display: grid;
   gap: 4rem 3rem;
   grid-template-columns: 1fr 1fr 1fr;
-  width: fit-content;
+  padding: 0 5rem;
+  width: 100%;
 
-  @media (max-width: ${({ theme }) => pxToRem(theme.breakpoints.large)}) {
+  @media (max-width: ${({ theme }) => pxToRem(theme.breakpoints.extralarge)}) {
     grid-template-columns: 1fr 1fr;
+    padding: 0;
   }
 
   @media (max-width: ${({ theme }) => pxToRem(theme.breakpoints.medium)}) {
     grid-template-columns: 1fr;
+    padding: 0;
   }
 `

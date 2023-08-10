@@ -7,7 +7,7 @@ export const Container = styled(Link)`
   box-shadow: ${({ theme }) => theme.shadows.medium};
   display: grid;
   gap: 2rem;
-  max-width: 25rem;
+  width: 100%;
   min-height: 10rem;
   padding: 1.5rem;
 `
