@@ -1,4 +1,16 @@
 {
   "title": "Exercises",
-  "description": "All the existing exercises"
+  "description": "All the existing exercises",
+  "exercise": {
+    "form": {
+      "inputs": {
+        "description": { "placeholder": "description" },
+        "name": { "placeholder": "name" }
+      },
+      "buttons": {
+        "save": { "label": "Save" },
+        "create": { "label": "Create New Exercise" }
+      }
+    }
+  }
 }
