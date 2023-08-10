@@ -147,6 +147,13 @@ export type ExerciseFragment = {
   name: string
 }
 
+export type RoutineFragment = {
+  __typename?: 'Routine'
+  description: string
+  id: string
+  name: string
+}
+
 export type CreateExerciseMutationVariables = Exact<{
   exerciseInput: ExerciseInput
 }>
@@ -196,6 +203,18 @@ export type ExercisesQuery = {
   __typename?: 'Query'
   exercises: Array<{
     __typename?: 'Exercise'
+    description: string
+    id: string
+    name: string
+  }>
+}
+
+export type RoutinesQueryVariables = Exact<{ [key: string]: never }>
+
+export type RoutinesQuery = {
+  __typename?: 'Query'
+  routines: Array<{
+    __typename?: 'Routine'
     description: string
     id: string
     name: string
