@@ -4,7 +4,7 @@ import EXERCISE_FRAGMENT from '../fragments/exercise'
 
 const DELETE_EXERCISE = gql`
   ${EXERCISE_FRAGMENT}
-  mutation deleteExercise($deleteExerciseId: String!) {
+  mutation DeleteExercise($deleteExerciseId: String!) {
     deleteExercise(id: $deleteExerciseId) {
       ...Exercise
     }

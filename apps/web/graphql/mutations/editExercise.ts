@@ -4,7 +4,7 @@ import EXERCISE_FRAGMENT from '../fragments/exercise'
 
 const CREATE_EXERCISE = gql`
   ${EXERCISE_FRAGMENT}
-  mutation editExercise(
+  mutation EditExercise(
     $editExerciseId: String!
     $exerciseInput: ExerciseInput!
   ) {

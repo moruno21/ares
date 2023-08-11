@@ -4,7 +4,7 @@ import EXERCISE_FRAGMENT from '~/graphql/fragments/exercise'
 
 const EXERCISES = gql`
   ${EXERCISE_FRAGMENT}
-  query exercises {
+  query Exercises {
     exercises {
       ...Exercise
     }

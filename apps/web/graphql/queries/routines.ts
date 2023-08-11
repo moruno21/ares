@@ -4,7 +4,7 @@ import ROUTINE_FRAGMENT from '~/graphql/fragments/routine'
 
 const ROUTINES = gql`
   ${ROUTINE_FRAGMENT}
-  query routines {
+  query Routines {
     routines {
       ...Routine
     }
