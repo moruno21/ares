@@ -5,6 +5,12 @@ class RoutineWorkout {
   @Field(() => String)
   exerciseId: string
 
+  @Field(() => String)
+  exerciseDescription: string
+
+  @Field(() => String)
+  exerciseName: string
+
   @Field(() => Number)
   reps: number
 
@@ -32,6 +38,12 @@ export class Routine {
 class RoutineWorkoutInput {
   @Field(() => String)
   exerciseId: string
+
+  @Field(() => String)
+  exerciseDescription: string
+
+  @Field(() => String)
+  exerciseName: string
 
   @Field(() => Number)
   reps: number
