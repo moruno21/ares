@@ -11,9 +11,19 @@ const theme = {
       white: 'var(--color-white)',
     },
     buttonStates: {
+      defaultIcon: {
+        disabled: 'var(--color-grey-20)',
+        hover: 'var(--color-grey-10)',
+        pressed: 'var(--color-grey-20)',
+      },
       primary: {
         disabled: 'var(--color-grey-20)',
         hover: 'var(--color-purple-20)',
+        pressed: 'var(--color-purple-10)',
+      },
+      primaryIcon: {
+        disabled: 'var(--color-grey-20)',
+        hover: 'var(--color-grey-20)',
         pressed: 'var(--color-purple-10)',
       },
       secondary: {
@@ -23,8 +33,15 @@ const theme = {
       },
     },
     clickables: {
+      defaultIcon: 'var(--color-white)',
       primaryButton: 'var(--color-purple-30)',
+      primaryIcon: 'var(--color-grey-10)',
       secondaryButton: 'var(--color-white)',
+    },
+    icon: {
+      disabled: 'var(--color-grey-10)',
+      main: 'var(--color-purple-30)',
+      white: 'var(--color-white)',
     },
     stroke: {
       disabled: 'var(--color-grey-10)',

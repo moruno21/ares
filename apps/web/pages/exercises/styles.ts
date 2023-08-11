@@ -1,5 +1,6 @@
 import { ReactComponent as DefaultCloseIcon } from '@ares/ui/assets/icons/close.svg'
 import DefaultButton from '@ares/ui/components/Button'
+import DefaultIconButton from '@ares/ui/components/IconButton'
 import { Body2 } from '@ares/ui/components/Text'
 import { Form } from 'formik'
 import styled from 'styled-components'
@@ -16,10 +17,6 @@ export const Card = styled.div`
   min-height: 7.25rem;
   padding: 1.5rem;
   width: 100%;
-`
-
-export const CloseButton = styled.button`
-  justify-self: end;
 `
 
 export const CloseIcon = styled(DefaultCloseIcon)`
@@ -66,4 +63,8 @@ export const Header = styled.div`
   display: grid;
   gap: 4.5rem;
   justify-items: center;
+`
+
+export const IconButton = styled(DefaultIconButton)`
+  justify-self: end;
 `

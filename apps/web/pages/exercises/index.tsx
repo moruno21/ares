@@ -8,7 +8,6 @@ import InputField from './InputField'
 import {
   Button,
   Card,
-  CloseButton,
   CloseIcon,
   Container,
   CreateExerciseSection,
@@ -18,6 +17,7 @@ import {
   ExerciseFormSection,
   Fields,
   Header,
+  IconButton,
 } from './styles'
 
 const Exercises = () => {
@@ -42,9 +42,9 @@ const Exercises = () => {
         {isCreateExerciseOpen ? (
           <Card>
             <ExerciseFormSection>
-              <CloseButton onClick={handleCloseCreateExercise}>
+              <IconButton onClick={handleCloseCreateExercise}>
                 <CloseIcon />
-              </CloseButton>
+              </IconButton>
               <Formik
                 enableReinitialize
                 initialValues={initialValues}

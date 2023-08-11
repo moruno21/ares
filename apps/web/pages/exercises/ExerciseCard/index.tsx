@@ -6,12 +6,12 @@ import { validationSchema } from '../constants'
 import InputField from '../InputField'
 import {
   Card,
-  CloseButton,
   CloseIcon,
   CustomErrorMessage,
   ExerciseForm,
   ExerciseFormSection,
   Fields,
+  IconButton,
 } from '../styles'
 import useExerciseCard from './hooks'
 import {
@@ -41,9 +41,9 @@ const ExerciseCard = ({ description, id, name }: ExerciseCardProps) => {
     <Card>
       {isEditExerciseOpen ? (
         <ExerciseFormSection>
-          <CloseButton onClick={handleCloseEditExercise}>
+          <IconButton onClick={handleCloseEditExercise}>
             <CloseIcon />
-          </CloseButton>
+          </IconButton>
           <Formik
             enableReinitialize
             initialValues={initialValues}
@@ -81,12 +81,12 @@ const ExerciseCard = ({ description, id, name }: ExerciseCardProps) => {
             <Description>{description}</Description>
           </Info>
           <CardButtons>
-            <button onClick={handleOpenEditExercise}>
+            <IconButton onClick={handleOpenEditExercise}>
               <EditIcon />
-            </button>
-            <button onClick={handleDeleteExercise}>
+            </IconButton>
+            <IconButton onClick={handleDeleteExercise}>
               <DeleteIcon />
-            </button>
+            </IconButton>
           </CardButtons>
         </Exercise>
       )}
