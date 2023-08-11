@@ -8,6 +8,7 @@ import { ROUTES } from './constants'
 const Exercises = lazy(() => import('~/pages/exercises'))
 const Explore = lazy(() => import('~/pages/explore'))
 const Layout = lazy(() => import('~/pages/layout'))
+const Routine = lazy(() => import('~/pages/routine'))
 const Routines = lazy(() => import('~/pages/routines'))
 
 const AppRoutes = () => (
@@ -16,10 +17,7 @@ const AppRoutes = () => (
       <Route element={<Layout />}>
         <Route path={ROUTES.HOME} element={<Routines />}></Route>
         <Route path={`${ROUTES.USER}/:id`} element={<Routines />}></Route>
-        <Route
-          path={`${ROUTES.ROUTINE}/:id`}
-          element={<>Individual Routine </>}
-        ></Route>
+        <Route path={`${ROUTES.ROUTINE}/:id`} element={<Routine />}></Route>
         <Route path={ROUTES.EXPLORE} element={<Explore />}></Route>
         <Route path={ROUTES.EXERCISES} element={<Exercises />}></Route>
         <Route path="*" element={<Navigate to={ROUTES.HOME} />}></Route>
