@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { ButtonStyles } from '~/components/Text'
-
+import { ButtonStyles } from '../Text'
 import { ComponentProps } from './types'
 
 export const Content = styled.span`

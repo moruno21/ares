@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-import { InputStyles } from '~/components/Text'
+import { Input1Styles } from '../Text'
 
 export const Component = styled.input`
-  ${InputStyles}
+  ${Input1Styles}
   border-bottom: 0.0625rem solid ${({ theme }) => theme.colors.stroke.main};
   border-radius: 0.25rem 0.25rem 0 0;
   color: ${({ theme }) => theme.colors.text.main};

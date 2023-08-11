@@ -9,8 +9,8 @@ import { ThemeProvider } from 'styled-components'
 
 import { Preview, StoryFn } from '@storybook/react'
 import React from 'react'
-import GlobalStyle from '~/styles/global'
-import theme from '~/styles/theme'
+import GlobalStyle from '../styles/global'
+import theme from '../styles/theme'
 
 const withThemeProvider = (Story: StoryFn) => (
   <ThemeProvider theme={theme}>
