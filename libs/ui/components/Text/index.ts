@@ -2,9 +2,9 @@ import styled, { css } from 'styled-components'
 
 export const Body1Styles = css`
   font-family: ${({ theme }) => theme.font.families.primary};
-  font-size: ${({ theme }) => theme.font.sizes.default};
+  font-size: ${({ theme }) => theme.font.sizes.medium};
   font-weight: ${({ theme }) => theme.font.weights.regular};
-  line-height: ${({ theme }) => theme.font.lineHeights.default};
+  line-height: ${({ theme }) => theme.font.lineHeights.medium};
 `
 
 export const Body1 = styled.span`
