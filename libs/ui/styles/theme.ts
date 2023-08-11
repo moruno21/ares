@@ -34,6 +34,7 @@ const theme = {
     },
     clickables: {
       defaultIcon: 'var(--color-white)',
+      optionHover: 'var(--color-grey-10)',
       primaryButton: 'var(--color-purple-30)',
       primaryIcon: 'var(--color-grey-10)',
       secondaryButton: 'var(--color-white)',
@@ -53,6 +54,7 @@ const theme = {
       disabled: 'var(--color-grey-20)',
       error: 'var(--color-red-20)',
       main: 'var(--color-purple-30)',
+      neutral: 'var(--color-grey-30)',
       placeholder: 'var(--color-grey-30)',
       white: 'var(--color-white)',
     },
