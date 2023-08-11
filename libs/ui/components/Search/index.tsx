@@ -1,6 +1,7 @@
 import { forwardRef, InputHTMLAttributes, memo } from 'react'
 
-import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg'
+import { ReactComponent as SearchIcon } from '~/assets/icons/search.svg'
+
 import { Component, Container, Label } from './styles'
 import { InputProps } from './types'
 

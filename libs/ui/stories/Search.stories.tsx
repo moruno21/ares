@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import Component from '../components/Search'
+import Component from '~/components/Search'
 
 const meta: Meta<typeof Component> = {
   args: {

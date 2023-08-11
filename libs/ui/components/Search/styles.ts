@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { InputStyles } from '../Text'
+import { InputStyles } from '~/components/Text'
 
 export const Component = styled.input`
   ${InputStyles}

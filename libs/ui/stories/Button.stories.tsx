@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import Component from '../components/Button'
+import Component from '~/components/Button'
 
 const meta: Meta<typeof Component> = {
   args: {

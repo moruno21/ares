@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import Component from '../components/Spinner'
+import Component from '~/components/Spinner'
 
 const meta: Meta<typeof Component> = {
   component: Component,

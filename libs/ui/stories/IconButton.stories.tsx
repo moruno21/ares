@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import { ReactComponent as SearchIcon } from '../assets/icons/close.svg'
-import Component from '../components/IconButton'
+import { ReactComponent as SearchIcon } from '~/assets/icons/close.svg'
+import Component from '~/components/IconButton'
 
 const meta: Meta<typeof Component> = {
   argTypes: {

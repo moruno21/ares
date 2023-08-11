@@ -12,7 +12,7 @@ import {
   H4,
   Input as InputComponent,
   Link as LinkComponent,
-} from '../components/Text'
+} from '~/components/Text'
 
 const meta: Meta = {
   title: 'Atoms/Text',
