@@ -102,15 +102,26 @@ export const H4 = styled.h4`
   ${H4Styles}
 `
 
-export const InputStyles = css`
+export const Input1Styles = css`
   font-family: ${({ theme }) => theme.font.families.primary};
   font-size: ${({ theme }) => theme.font.sizes.default};
   font-weight: ${({ theme }) => theme.font.weights.regular};
   line-height: 1.25rem;
 `
 
-export const Input = styled.span`
-  ${InputStyles}
+export const Input1 = styled.span`
+  ${Input1Styles}
+`
+
+export const Input2Styles = css`
+  font-family: ${({ theme }) => theme.font.families.primary};
+  font-size: ${({ theme }) => theme.font.sizes.default};
+  font-weight: ${({ theme }) => theme.font.weights.semibold};
+  line-height: 1.25rem;
+`
+
+export const Input2 = styled.span`
+  ${Input2Styles}
 `
 
 export const LinkHoverStyles = css`

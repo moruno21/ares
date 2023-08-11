@@ -10,7 +10,8 @@ import {
   H2,
   H3,
   H4,
-  Input as InputComponent,
+  Input1 as Input1Component,
+  Input2 as Input2Component,
   Link as LinkComponent,
 } from '../components/Text'
 
@@ -38,6 +39,8 @@ export const Body4 = () => <Body4Component>Text</Body4Component>
 
 export const Button = () => <ButtonComponent>Text</ButtonComponent>
 
-export const Input = () => <InputComponent>Text</InputComponent>
+export const Input1 = () => <Input1Component>Text</Input1Component>
+
+export const Input2 = () => <Input2Component>Text</Input2Component>
 
 export const Link = () => <LinkComponent>Text</LinkComponent>
