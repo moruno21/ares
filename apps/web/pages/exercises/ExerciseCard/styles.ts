@@ -1,9 +1,8 @@
+import pxToRem from '@ares/lib/px-to-rem'
 import { ReactComponent as DefaultDeleteIcon } from '@ares/ui/assets/icons/delete.svg'
 import { ReactComponent as DefaultEditIcon } from '@ares/ui/assets/icons/edit.svg'
 import { Body1 } from '@ares/ui/components/Text'
 import styled from 'styled-components'
-
-import pxToRem from '~/lib/px-to-rem'
 
 export const CardButtons = styled.div`
   display: grid;

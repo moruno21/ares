@@ -1,6 +1,5 @@
+import pxToRem from '@ares/lib/px-to-rem'
 import styled from 'styled-components'
-
-import pxToRem from '~/lib/px-to-rem'
 
 export const Container = styled.div`
   display: grid;
