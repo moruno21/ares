@@ -1,4 +1,4 @@
-import pxToRem from '@ares/lib/px-to-rem'
+import pxToRem from '@ares/ui/lib/px-to-rem'
 import styled from 'styled-components'
 
 export const Container = styled.div`
