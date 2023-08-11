@@ -1,5 +1,5 @@
-import { ReactComponent as EditIcon } from '@ares/ui/assets/icons/edit.svg'
 import { ReactComponent as HomeIcon } from '@ares/ui/assets/icons/home.svg'
+import { ReactComponent as InfoIcon } from '@ares/ui/assets/icons/info.svg'
 import { ReactComponent as SearchIcon } from '@ares/ui/assets/icons/search.svg'
 import { useMemo } from 'react'
 
@@ -19,7 +19,7 @@ const useNavbar = () => {
         route: ROUTES.EXPLORE,
       },
       {
-        icon: EditIcon,
+        icon: InfoIcon,
         id: 'exercises',
         route: ROUTES.EXERCISES,
       },
