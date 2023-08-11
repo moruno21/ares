@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 export const CardButtons = styled.div`
   display: grid;
-  gap: 1rem;
   grid-auto-flow: column;
 `
 
