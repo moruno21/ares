@@ -16,8 +16,8 @@ const Routine = () => {
             <Workouts>
               {routine.workouts.map(({ exerciseName, reps, sets }, index) => (
                 <Workout
-                  key={index}
                   exerciseName={exerciseName}
+                  key={index}
                   reps={reps}
                   sets={sets}
                 />

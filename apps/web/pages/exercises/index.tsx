@@ -85,9 +85,9 @@ const Exercises = () => {
       <ExerciseCards>
         {exercises.map(({ description, id, name }) => (
           <ExerciseCard
-            key={id}
             description={description}
             id={id}
+            key={id}
             name={name}
           ></ExerciseCard>
         ))}

@@ -16,9 +16,9 @@ const Routines = () => {
       <RoutineCards>
         {routines.map(({ description, id, name }) => (
           <RoutineCard
-            key={id}
             id={id}
             description={description}
+            key={id}
             name={name}
           ></RoutineCard>
         ))}
