@@ -12,7 +12,11 @@ const Routine = () => {
     <Container>
       {routine ? (
         <Content>
-          <Header description={routine.description} name={routine.name} />
+          <Header
+            id={routine.id}
+            description={routine.description}
+            name={routine.name}
+          />
           {routine.workouts.length > 0 ? (
             <Workouts>
               {routine.workouts.map(({ exerciseName, reps, sets }, index) => (

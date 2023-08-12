@@ -1,4 +1,13 @@
 {
+  "delete_modal": {
+    "buttons": {
+      "cancel": { "label": "Cancel" },
+      "delete": { "label": "Delete" }
+    },
+    "close": "Close",
+    "description": "This action will delete \"<em>{{name}}</em>\" with all its including workouts.",
+    "title": "Delete \"{{name}}\"?"
+  },
   "no_workouts": "This routine has no workouts added. Click the edit button to add some.",
   "workout": {
     "exercise": {
