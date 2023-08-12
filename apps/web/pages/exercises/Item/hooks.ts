@@ -1,16 +1,14 @@
 import { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import useExercise from '~/hooks/useExercise'
 
-import { Values } from '../types'
+import { Values } from '../Layout/types'
 import { UseItemProps } from './types'
 
 const useItem = ({ description, id, name }: UseItemProps) => {
   const { edit: editExercise, remove: deleteExercise } = useExercise()
   const [editError, setEditError] = useState<string>()
   const [isEditExerciseOpen, setIsEditExerciseOpen] = useState(false)
-  const { t } = useTranslation('exercises')
 
   const initialValues = useMemo(
     () => ({ description, name }),
@@ -54,7 +52,6 @@ const useItem = ({ description, id, name }: UseItemProps) => {
     handleSubmit,
     initialValues,
     isEditExerciseOpen,
-    t,
   }
 }
 

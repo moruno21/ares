@@ -1,24 +1,18 @@
-import Button from '@ares/ui/components/Button'
 import { H3 } from '@ares/ui/components/Text'
 import { Formik } from 'formik'
 
-import { validationSchema } from '../constants'
-import InputField from '../InputField'
-import {
-  CloseIcon,
-  CustomErrorMessage,
-  ExerciseForm,
-  Fields,
-  IconButton,
-} from '../styles'
-import useExercise from './hooks'
+import Form from '../Form'
+import { validationSchema } from './constants'
+import useItem from './hooks'
 import {
   CardButtons,
+  CloseIcon,
   Container,
   Content,
   DeleteIcon,
   Description,
   EditIcon,
+  IconButton,
   Info,
 } from './styles'
 import { ItemProps } from './types'
@@ -32,8 +26,7 @@ const Item = ({ description, id, name }: ItemProps) => {
     handleSubmit,
     initialValues,
     isEditExerciseOpen,
-    t,
-  } = useExercise({ description, id, name })
+  } = useItem({ description, id, name })
 
   return (
     <Container>
@@ -50,26 +43,7 @@ const Item = ({ description, id, name }: ItemProps) => {
             validateOnMount
             validationSchema={validationSchema}
           >
-            <ExerciseForm>
-              <Fields>
-                <InputField
-                  name="name"
-                  placeholder={t('exercise.form.inputs.name.placeholder')}
-                />
-                <InputField
-                  name="description"
-                  placeholder={t(
-                    'exercise.form.inputs.description.placeholder',
-                  )}
-                />
-              </Fields>
-              <Button type="submit">
-                {t('exercise.form.buttons.save.label')}
-              </Button>
-              {editError ? (
-                <CustomErrorMessage>{editError}</CustomErrorMessage>
-              ) : null}
-            </ExerciseForm>
+            <Form error={editError} />
           </Formik>
         </>
       ) : (

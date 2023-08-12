@@ -1,20 +1,17 @@
 import { H1, H3 } from '@ares/ui/components/Text'
 import { Formik } from 'formik'
 
+import Form from '../Form'
+import Item from '../Item'
 import { initialValues, validationSchema } from './constants'
 import useLayout from './hooks'
-import InputField from './InputField'
-import Item from './Item'
 import {
   Button,
   Card,
   CloseIcon,
   Container,
   CreateExerciseSection,
-  CustomErrorMessage,
-  ExerciseForm,
   Exercises,
-  Fields,
   Header,
   IconButton,
 } from './styles'
@@ -50,26 +47,7 @@ const Layout = () => {
               validateOnMount
               validationSchema={validationSchema}
             >
-              <ExerciseForm>
-                <Fields>
-                  <InputField
-                    name="name"
-                    placeholder={t('exercise.form.inputs.name.placeholder')}
-                  />
-                  <InputField
-                    name="description"
-                    placeholder={t(
-                      'exercise.form.inputs.description.placeholder',
-                    )}
-                  />
-                </Fields>
-                <Button type="submit">
-                  {t('exercise.form.buttons.save.label')}
-                </Button>
-                {createError ? (
-                  <CustomErrorMessage>{createError}</CustomErrorMessage>
-                ) : null}
-              </ExerciseForm>
+              <Form error={createError} />
             </Formik>
           </Card>
         ) : (

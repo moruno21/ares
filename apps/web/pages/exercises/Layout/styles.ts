@@ -1,8 +1,6 @@
 import { ReactComponent as DefaultCloseIcon } from '@ares/ui/assets/icons/close.svg'
 import DefaultButton from '@ares/ui/components/Button'
 import DefaultIconButton from '@ares/ui/components/IconButton'
-import { Body2 } from '@ares/ui/components/Text'
-import { Form } from 'formik'
 import styled from 'styled-components'
 
 export const Button = styled(DefaultButton)`
@@ -35,24 +33,10 @@ export const CreateExerciseSection = styled.div`
   justify-items: center;
 `
 
-export const CustomErrorMessage = styled(Body2)`
-  color: ${({ theme }) => theme.colors.text.error};
-`
-
 export const Exercises = styled.div`
   display: grid;
   gap: 3rem;
   justify-items: center;
-`
-
-export const ExerciseForm = styled(Form)`
-  display: grid;
-  gap: 3rem;
-`
-
-export const Fields = styled.div`
-  display: grid;
-  gap: 1.5rem;
 `
 
 export const Header = styled.div`

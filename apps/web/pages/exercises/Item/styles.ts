@@ -1,5 +1,7 @@
+import { ReactComponent as DefaultCloseIcon } from '@ares/ui/assets/icons/close.svg'
 import { ReactComponent as DefaultDeleteIcon } from '@ares/ui/assets/icons/delete.svg'
 import { ReactComponent as DefaultEditIcon } from '@ares/ui/assets/icons/edit.svg'
+import DefaultIconButton from '@ares/ui/components/IconButton'
 import { Body1 } from '@ares/ui/components/Text'
 import pxToRem from '@ares/ui/lib/px-to-rem'
 import styled from 'styled-components'
@@ -7,6 +9,11 @@ import styled from 'styled-components'
 export const CardButtons = styled.div`
   display: grid;
   grid-auto-flow: column;
+`
+
+export const CloseIcon = styled(DefaultCloseIcon)`
+  height: 1.5rem;
+  width: 1.5rem;
 `
 
 export const Container = styled.div`
@@ -53,6 +60,10 @@ export const Description = styled(Body1)`
 export const EditIcon = styled(DefaultEditIcon)`
   height: 1.5rem;
   width: 1.5rem;
+`
+
+export const IconButton = styled(DefaultIconButton)`
+  justify-self: end;
 `
 
 export const Info = styled.div`
