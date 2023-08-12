@@ -5,26 +5,25 @@ import { Formik } from 'formik'
 import { validationSchema } from '../constants'
 import InputField from '../InputField'
 import {
-  Card,
   CloseIcon,
   CustomErrorMessage,
   ExerciseForm,
-  ExerciseFormSection,
   Fields,
   IconButton,
 } from '../styles'
-import useExerciseCard from './hooks'
+import useExercise from './hooks'
 import {
   CardButtons,
+  Container,
+  Content,
   DeleteIcon,
   Description,
   EditIcon,
-  Exercise,
   Info,
 } from './styles'
-import { ExerciseCardProps } from './types'
+import { ItemProps } from './types'
 
-const ExerciseCard = ({ description, id, name }: ExerciseCardProps) => {
+const Item = ({ description, id, name }: ItemProps) => {
   const {
     editError,
     handleCloseEditExercise,
@@ -35,12 +34,12 @@ const ExerciseCard = ({ description, id, name }: ExerciseCardProps) => {
     isEditError,
     isEditExerciseOpen,
     t,
-  } = useExerciseCard({ description, id, name })
+  } = useExercise({ description, id, name })
 
   return (
-    <Card>
+    <Container>
       {isEditExerciseOpen ? (
-        <ExerciseFormSection>
+        <>
           <IconButton onClick={handleCloseEditExercise}>
             <CloseIcon />
           </IconButton>
@@ -73,9 +72,9 @@ const ExerciseCard = ({ description, id, name }: ExerciseCardProps) => {
               ) : null}
             </ExerciseForm>
           </Formik>
-        </ExerciseFormSection>
+        </>
       ) : (
-        <Exercise>
+        <Content>
           <Info>
             <H3>{name}</H3>
             <Description>{description}</Description>
@@ -88,10 +87,10 @@ const ExerciseCard = ({ description, id, name }: ExerciseCardProps) => {
               <DeleteIcon />
             </IconButton>
           </CardButtons>
-        </Exercise>
+        </Content>
       )}
-    </Card>
+    </Container>
   )
 }
 
-export default ExerciseCard
+export default Item

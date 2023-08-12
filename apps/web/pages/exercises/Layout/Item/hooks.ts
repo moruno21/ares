@@ -12,9 +12,9 @@ import {
 } from '~/graphql/types'
 
 import { Values } from '../types'
-import { UseExerciseCardProps } from './types'
+import { UseItemProps } from './types'
 
-const useExerciseCard = ({ description, id, name }: UseExerciseCardProps) => {
+const useItem = ({ description, id, name }: UseItemProps) => {
   const { cache, mutate } = useApolloClient()
   const [editError, setEditError] = useState<string>()
   const [isEditError, setIsEditError] = useState(false)
@@ -85,4 +85,4 @@ const useExerciseCard = ({ description, id, name }: UseExerciseCardProps) => {
   }
 }
 
-export default useExerciseCard
+export default useItem

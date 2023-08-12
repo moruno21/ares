@@ -13,6 +13,7 @@ export const Button = styled(DefaultButton)`
 export const Card = styled.div`
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.medium};
+  display: grid;
   max-width: 37.5rem;
   min-height: 7.25rem;
   padding: 1.5rem;
@@ -38,7 +39,7 @@ export const CustomErrorMessage = styled(Body2)`
   color: ${({ theme }) => theme.colors.text.error};
 `
 
-export const ExerciseCards = styled.div`
+export const Exercises = styled.div`
   display: grid;
   gap: 3rem;
   justify-items: center;
@@ -47,10 +48,6 @@ export const ExerciseCards = styled.div`
 export const ExerciseForm = styled(Form)`
   display: grid;
   gap: 3rem;
-`
-
-export const ExerciseFormSection = styled.div`
-  display: grid;
 `
 
 export const Fields = styled.div`

@@ -2,9 +2,9 @@ import { H1, H3 } from '@ares/ui/components/Text'
 import { Formik } from 'formik'
 
 import { initialValues, validationSchema } from './constants'
-import ExerciseCard from './ExerciseCard'
 import useLayout from './hooks'
 import InputField from './InputField'
+import Item from './Item'
 import {
   Button,
   Card,
@@ -12,9 +12,8 @@ import {
   Container,
   CreateExerciseSection,
   CustomErrorMessage,
-  ExerciseCards,
   ExerciseForm,
-  ExerciseFormSection,
+  Exercises,
   Fields,
   Header,
   IconButton,
@@ -41,40 +40,38 @@ const Layout = () => {
       <CreateExerciseSection>
         {isCreateExerciseOpen ? (
           <Card>
-            <ExerciseFormSection>
-              <IconButton onClick={handleCloseCreateExercise}>
-                <CloseIcon />
-              </IconButton>
-              <Formik
-                enableReinitialize
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-                validateOnBlur={true}
-                validateOnMount
-                validationSchema={validationSchema}
-              >
-                <ExerciseForm>
-                  <Fields>
-                    <InputField
-                      name="name"
-                      placeholder={t('exercise.form.inputs.name.placeholder')}
-                    />
-                    <InputField
-                      name="description"
-                      placeholder={t(
-                        'exercise.form.inputs.description.placeholder',
-                      )}
-                    />
-                  </Fields>
-                  <Button type="submit">
-                    {t('exercise.form.buttons.save.label')}
-                  </Button>
-                  {isCreateError ? (
-                    <CustomErrorMessage>{createError}</CustomErrorMessage>
-                  ) : null}
-                </ExerciseForm>
-              </Formik>
-            </ExerciseFormSection>
+            <IconButton onClick={handleCloseCreateExercise}>
+              <CloseIcon />
+            </IconButton>
+            <Formik
+              enableReinitialize
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              validateOnBlur={true}
+              validateOnMount
+              validationSchema={validationSchema}
+            >
+              <ExerciseForm>
+                <Fields>
+                  <InputField
+                    name="name"
+                    placeholder={t('exercise.form.inputs.name.placeholder')}
+                  />
+                  <InputField
+                    name="description"
+                    placeholder={t(
+                      'exercise.form.inputs.description.placeholder',
+                    )}
+                  />
+                </Fields>
+                <Button type="submit">
+                  {t('exercise.form.buttons.save.label')}
+                </Button>
+                {isCreateError ? (
+                  <CustomErrorMessage>{createError}</CustomErrorMessage>
+                ) : null}
+              </ExerciseForm>
+            </Formik>
           </Card>
         ) : (
           <Button onClick={handleOpenCreateExercise}>
@@ -82,16 +79,11 @@ const Layout = () => {
           </Button>
         )}
       </CreateExerciseSection>
-      <ExerciseCards>
+      <Exercises>
         {exercises.map(({ description, id, name }) => (
-          <ExerciseCard
-            description={description}
-            id={id}
-            key={id}
-            name={name}
-          ></ExerciseCard>
+          <Item description={description} id={id} key={id} name={name}></Item>
         ))}
-      </ExerciseCards>
+      </Exercises>
     </Container>
   )
 }
