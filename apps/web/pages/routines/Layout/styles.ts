@@ -13,7 +13,7 @@ export const Header = styled.div`
   justify-items: center;
 `
 
-export const RoutineCards = styled.div`
+export const Routines = styled.div`
   display: grid;
   gap: 4rem 3rem;
   grid-template-columns: 1fr 1fr 1fr;

@@ -3,9 +3,9 @@ import { H2 } from '@ares/ui/components/Text'
 import { ROUTES } from '~/services/routing/Routes/constants'
 
 import { Container, Description } from './styles'
-import { RoutineCardProps } from './types'
+import { RoutineProps } from './types'
 
-const RoutineCard = ({ description, id, name }: RoutineCardProps) => {
+const Routine = ({ description, id, name }: RoutineProps) => {
   return (
     <Container to={`${ROUTES.ROUTINE}/${id}`}>
       <H2>{name}</H2>
@@ -14,4 +14,4 @@ const RoutineCard = ({ description, id, name }: RoutineCardProps) => {
   )
 }
 
-export default RoutineCard
+export default Routine

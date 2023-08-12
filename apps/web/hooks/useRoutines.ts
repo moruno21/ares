@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/client'
 import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import ROUTINES from '~/graphql/queries/routines'
-import { RoutinesQuery } from '~/graphql/types'
+import { RoutinesQuery, RoutinesQueryVariables } from '~/graphql/types'
 
 const useRoutines = () => {
-  const { data } = useQuery<RoutinesQuery>(ROUTINES)
-  const { t } = useTranslation('routines')
+  const { data, loading } = useQuery<RoutinesQuery, RoutinesQueryVariables>(
+    ROUTINES,
+  )
 
   const routines = useMemo(() => {
     if (!data) return []
@@ -15,7 +15,7 @@ const useRoutines = () => {
     return data.routines
   }, [data])
 
-  return { routines, t }
+  return { loading, routines }
 }
 
 export default useRoutines
