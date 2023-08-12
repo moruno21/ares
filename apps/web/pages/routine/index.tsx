@@ -1,4 +1,5 @@
-import { Body1 } from '../../../../libs/ui/components/Text'
+import { Body1 } from '@ares/ui/components/Text'
+
 import Header from './Header'
 import useLayout from './hooks'
 import { Container, Content, Workouts } from './styles'
