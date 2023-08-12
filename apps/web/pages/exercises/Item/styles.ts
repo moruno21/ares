@@ -2,6 +2,7 @@ import { ReactComponent as DefaultCloseIcon } from '@ares/ui/assets/icons/close.
 import { ReactComponent as DefaultDeleteIcon } from '@ares/ui/assets/icons/delete.svg'
 import { ReactComponent as DefaultEditIcon } from '@ares/ui/assets/icons/edit.svg'
 import DefaultIconButton from '@ares/ui/components/IconButton'
+import DefaultModal from '@ares/ui/components/Modal'
 import { Body1 } from '@ares/ui/components/Text'
 import pxToRem from '@ares/ui/lib/px-to-rem'
 import styled from 'styled-components'
@@ -69,4 +70,17 @@ export const IconButton = styled(DefaultIconButton)`
 export const Info = styled.div`
   display: grid;
   gap: 1.5rem;
+`
+
+export const Footer = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: column;
+  justify-content: end;
+`
+
+export const Modal = styled(DefaultModal)`
+  em {
+    font-weight: ${({ theme }) => theme.font.weights.bold};
+  }
 `
