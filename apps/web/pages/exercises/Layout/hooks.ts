@@ -1,5 +1,5 @@
-import { ApolloError, useApolloClient, useQuery } from '@apollo/client'
-import { useCallback, useMemo, useState } from 'react'
+import { ApolloError, useApolloClient } from '@apollo/client'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import CREATE_EXERCISE from '~/graphql/mutations/createExercise'
@@ -7,24 +7,18 @@ import EXERCISES from '~/graphql/queries/exercises'
 import {
   CreateExerciseMutation,
   CreateExerciseMutationVariables,
-  ExercisesQuery,
 } from '~/graphql/types'
+import useExercises from '~/hooks/useExercises'
 
 import { Values } from './types'
 
-const useExercises = () => {
+const useLayout = () => {
   const { cache, mutate } = useApolloClient()
   const [createError, setCreateError] = useState<string>()
-  const { data } = useQuery<ExercisesQuery>(EXERCISES)
+  const { exercises } = useExercises()
   const [isCreateError, setIsCreateError] = useState(false)
   const [isCreateExerciseOpen, setIsCreateExerciseOpen] = useState(false)
   const { t } = useTranslation('exercises')
-
-  const exercises = useMemo(() => {
-    if (!data) return []
-
-    return data.exercises
-  }, [data])
 
   const handleCloseCreateExercise = useCallback(() => {
     setIsCreateExerciseOpen(false)
@@ -81,4 +75,4 @@ const useExercises = () => {
   }
 }
 
-export default useExercises
+export default useLayout

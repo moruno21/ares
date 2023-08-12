@@ -5,7 +5,7 @@ import PageLoading from '~/pages/layout/Loading'
 
 import { ROUTES } from './constants'
 
-const Exercises = lazy(() => import('~/pages/exercises'))
+const ExercisesLayout = lazy(() => import('~/pages/exercises/Layout'))
 const Explore = lazy(() => import('~/pages/explore'))
 const Layout = lazy(() => import('~/pages/layout'))
 const Routine = lazy(() => import('~/pages/routine'))
@@ -19,7 +19,7 @@ const AppRoutes = () => (
         <Route path={`${ROUTES.USER}/:id`} element={<Routines />}></Route>
         <Route path={`${ROUTES.ROUTINE}/:id`} element={<Routine />}></Route>
         <Route path={ROUTES.EXPLORE} element={<Explore />}></Route>
-        <Route path={ROUTES.EXERCISES} element={<Exercises />}></Route>
+        <Route path={ROUTES.EXERCISES} element={<ExercisesLayout />}></Route>
         <Route path="*" element={<Navigate to={ROUTES.HOME} />}></Route>
       </Route>
     </Routes>

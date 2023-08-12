@@ -3,7 +3,7 @@ import { Formik } from 'formik'
 
 import { initialValues, validationSchema } from './constants'
 import ExerciseCard from './ExerciseCard'
-import useExercises from './hooks'
+import useLayout from './hooks'
 import InputField from './InputField'
 import {
   Button,
@@ -20,7 +20,7 @@ import {
   IconButton,
 } from './styles'
 
-const Exercises = () => {
+const Layout = () => {
   const {
     createError,
     exercises,
@@ -30,7 +30,7 @@ const Exercises = () => {
     isCreateError,
     isCreateExerciseOpen,
     t,
-  } = useExercises()
+  } = useLayout()
 
   return (
     <Container>
@@ -96,4 +96,4 @@ const Exercises = () => {
   )
 }
 
-export default Exercises
+export default Layout
