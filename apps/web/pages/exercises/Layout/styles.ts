@@ -26,17 +26,20 @@ export const CloseIcon = styled(DefaultCloseIcon)`
 export const Container = styled.div`
   display: grid;
   gap: 4.5rem;
+  justify-items: center;
 `
 
 export const CreateExerciseSection = styled.div`
   display: grid;
   justify-items: center;
+  width: 100%;
 `
 
 export const Exercises = styled.div`
   display: grid;
   gap: 3rem;
   justify-items: center;
+  width: 100%;
 `
 
 export const Header = styled.div`
