@@ -7,12 +7,13 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   :root {
-    --color-purple-10: #6c2bbe;
-    --color-purple-20: #51208d;
-    --color-purple-30: #35155d;
+    --color-dimmer: rgb(53, 21, 93, 0.3);
     --color-grey-10: #e5ebee;
     --color-grey-20: #ccdae0;
     --color-grey-30: #a1b1ba;
+    --color-purple-10: #6c2bbe;
+    --color-purple-20: #51208d;
+    --color-purple-30: #35155d;
     --color-red-10: #ffeadd;
     --color-red-20: #f31559;
     --color-white: #ffffff;

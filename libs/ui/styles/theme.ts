@@ -7,6 +7,7 @@ const theme = {
   },
   colors: {
     background: {
+      dimmer: 'var(--color-dimmer)',
       error: 'var(--color-red-10)',
       white: 'var(--color-white)',
     },
