@@ -1,11 +1,11 @@
 import { Body1 } from '../../../../libs/ui/components/Text'
 import Header from './Header'
-import useRoutine from './hooks'
+import useLayout from './hooks'
 import { Container, Content, Workouts } from './styles'
 import Workout from './Workout'
 
 const Routine = () => {
-  const { routine, t } = useRoutine()
+  const { routine, t } = useLayout()
 
   return (
     <Container>
