@@ -1,4 +1,14 @@
 {
   "description": "Your routines",
+  "form": {
+    "buttons": {
+      "create": { "label": "Create New Routine" },
+      "save": { "label": "Save" }
+    },
+    "inputs": {
+      "description": { "placeholder": "description" },
+      "name": { "placeholder": "name" }
+    }
+  },
   "title": "Welcome"
 }

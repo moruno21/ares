@@ -187,6 +187,20 @@ export type CreateExerciseMutation = {
   }
 }
 
+export type CreateRoutineMutationVariables = Exact<{
+  routineInput: RoutineInput
+}>
+
+export type CreateRoutineMutation = {
+  __typename?: 'Mutation'
+  createRoutine: {
+    __typename?: 'Routine'
+    description: string
+    id: string
+    name: string
+  }
+}
+
 export type DeleteExerciseMutationVariables = Exact<{
   deleteExerciseId: Scalars['String']['input']
 }>
