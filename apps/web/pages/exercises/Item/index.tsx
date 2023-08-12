@@ -68,48 +68,48 @@ const Item = ({ description, id, name }: ItemProps) => {
             <IconButton onClick={handleOpenDeleteModal}>
               <DeleteIcon />
             </IconButton>
-            <Suspense>
-              {isDeleteModalOpen ? (
-                <Modal
-                  close-aria-label={t('exercise.delete_modal.close')}
-                  footer={
-                    <Footer>
-                      <Button
-                        onClick={handleCloseDeleteModal}
-                        variant="secondary"
-                      >
-                        {t('exercise.delete_modal.buttons.cancel.label')}
-                      </Button>
-                      <Button onClick={handleDeleteExercise}>
-                        {t('exercise.delete_modal.buttons.delete.label')}
-                      </Button>
-                    </Footer>
-                  }
-                  id="delete_exercise_modal"
-                  onClose={handleCloseDeleteModal}
-                  title={
-                    <Trans
-                      i18nKey="exercise.delete_modal.title"
-                      t={t}
-                      values={{ name }}
-                    />
-                  }
-                >
-                  <span>
-                    <Trans
-                      components={{
-                        // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-                        em: <em />,
-                      }}
-                      i18nKey="exercise.delete_modal.description"
-                      t={t}
-                      values={{ name }}
-                    />
-                  </span>
-                </Modal>
-              ) : null}
-            </Suspense>
           </CardButtons>
+          <Suspense>
+            {isDeleteModalOpen ? (
+              <Modal
+                close-aria-label={t('exercise.delete_modal.close')}
+                footer={
+                  <Footer>
+                    <Button
+                      onClick={handleCloseDeleteModal}
+                      variant="secondary"
+                    >
+                      {t('exercise.delete_modal.buttons.cancel.label')}
+                    </Button>
+                    <Button onClick={handleDeleteExercise}>
+                      {t('exercise.delete_modal.buttons.delete.label')}
+                    </Button>
+                  </Footer>
+                }
+                id="delete_exercise_modal"
+                onClose={handleCloseDeleteModal}
+                title={
+                  <Trans
+                    i18nKey="exercise.delete_modal.title"
+                    t={t}
+                    values={{ name }}
+                  />
+                }
+              >
+                <span>
+                  <Trans
+                    components={{
+                      // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+                      em: <em />,
+                    }}
+                    i18nKey="exercise.delete_modal.description"
+                    t={t}
+                    values={{ name }}
+                  />
+                </span>
+              </Modal>
+            ) : null}
+          </Suspense>
         </Content>
       )}
     </Container>

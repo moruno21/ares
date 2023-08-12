@@ -63,6 +63,13 @@ export const EditIcon = styled(DefaultEditIcon)`
   width: 1.5rem;
 `
 
+export const Footer = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: column;
+  justify-content: end;
+`
+
 export const IconButton = styled(DefaultIconButton)`
   justify-self: end;
 `
@@ -70,13 +77,6 @@ export const IconButton = styled(DefaultIconButton)`
 export const Info = styled.div`
   display: grid;
   gap: 1.5rem;
-`
-
-export const Footer = styled.div`
-  display: grid;
-  gap: 1rem;
-  grid-auto-flow: column;
-  justify-content: end;
 `
 
 export const Modal = styled(DefaultModal)`
