@@ -1,25 +1,21 @@
 {
-  "description": "All the existing exercises",
-  "exercise": {
-    "delete_modal": {
-      "buttons": {
-        "cancel": { "label": "Cancel" },
-        "delete": { "label": "Delete" }
-      },
-      "close": "Close",
-      "description": "This action will delete all the routine's workouts that contains \"<em>{{name}}</em>\".",
-      "title": "Delete \"{{name}}\"?"
+  "create": { "label": "Create New Exercise" },
+  "delete_modal": {
+    "buttons": {
+      "cancel": { "label": "Cancel" },
+      "delete": { "label": "Delete" }
     },
-    "form": {
-      "buttons": {
-        "create": { "label": "Create New Exercise" },
-        "save": { "label": "Save" }
-      },
-      "inputs": {
-        "description": { "placeholder": "description" },
-        "name": { "placeholder": "name" }
-      }
-    }
+    "close": "Close",
+    "description": "This action will delete all the routine's workouts that contains \"<em>{{name}}</em>\".",
+    "title": "Delete \"{{name}}\"?"
+  },
+  "description": "All the existing exercises",
+  "form": {
+    "inputs": {
+      "description": { "placeholder": "description" },
+      "name": { "placeholder": "name" }
+    },
+    "save": { "label": "Save" }
   },
   "title": "Exercises"
 }

@@ -52,7 +52,7 @@ const Layout = () => {
           </Card>
         ) : (
           <Button onClick={handleOpenCreateExercise}>
-            {t('exercise.form.buttons.create.label')}
+            {t('create.label')}
           </Button>
         )}
       </CreateExerciseSection>

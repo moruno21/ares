@@ -72,28 +72,24 @@ const Item = ({ description, id, name }: ItemProps) => {
           <Suspense>
             {isDeleteModalOpen ? (
               <Modal
-                close-aria-label={t('exercise.delete_modal.close')}
+                close-aria-label={t('delete_modal.close')}
                 footer={
                   <Footer>
                     <Button
                       onClick={handleCloseDeleteModal}
                       variant="secondary"
                     >
-                      {t('exercise.delete_modal.buttons.cancel.label')}
+                      {t('delete_modal.buttons.cancel.label')}
                     </Button>
                     <Button onClick={handleDeleteExercise}>
-                      {t('exercise.delete_modal.buttons.delete.label')}
+                      {t('delete_modal.buttons.delete.label')}
                     </Button>
                   </Footer>
                 }
                 id="delete_exercise_modal"
                 onClose={handleCloseDeleteModal}
                 title={
-                  <Trans
-                    i18nKey="exercise.delete_modal.title"
-                    t={t}
-                    values={{ name }}
-                  />
+                  <Trans i18nKey="delete_modal.title" t={t} values={{ name }} />
                 }
               >
                 <span>
@@ -102,7 +98,7 @@ const Item = ({ description, id, name }: ItemProps) => {
                       // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
                       em: <em />,
                     }}
-                    i18nKey="exercise.delete_modal.description"
+                    i18nKey="delete_modal.description"
                     t={t}
                     values={{ name }}
                   />

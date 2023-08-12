@@ -17,7 +17,7 @@ const Form = ({ error }: FormProps) => {
             as={Input}
             name="name"
             onChange={handleChangeName}
-            placeholder={t('exercise.form.inputs.name.placeholder')}
+            placeholder={t('form.inputs.name.placeholder')}
           />
           <ErrorMessage name="name">
             {(msg) => <CustomErrorMessage>{msg}</CustomErrorMessage>}
@@ -26,13 +26,13 @@ const Form = ({ error }: FormProps) => {
             as={Input}
             name="description"
             onChange={handleChangeDescription}
-            placeholder={t('exercise.form.inputs.description.placeholder')}
+            placeholder={t('form.inputs.description.placeholder')}
           />
           <ErrorMessage name="description">
             {(msg) => <CustomErrorMessage>{msg}</CustomErrorMessage>}
           </ErrorMessage>
         </Fields>
-        <Button type="submit">{t('exercise.form.buttons.save.label')}</Button>
+        <Button type="submit">{t('form.save.label')}</Button>
       </Content>
       {error ? <CustomErrorMessage>{error}</CustomErrorMessage> : null}
     </Container>

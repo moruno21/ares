@@ -31,7 +31,7 @@ const Form = () => {
             {(msg) => <CustomErrorMessage>{msg}</CustomErrorMessage>}
           </ErrorMessage>
         </Fields>
-        <Button type="submit">{t('form.buttons.save.label')}</Button>
+        <Button type="submit">{t('form.save.label')}</Button>
       </Content>
     </Container>
   )

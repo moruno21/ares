@@ -50,9 +50,7 @@ const Layout = () => {
             </Formik>
           </Card>
         ) : (
-          <Button onClick={handleOpenCreateRoutine}>
-            {t('form.buttons.create.label')}
-          </Button>
+          <Button onClick={handleOpenCreateRoutine}>{t('create.label')}</Button>
         )}
       </CreateRoutineSection>
       <Routines>
