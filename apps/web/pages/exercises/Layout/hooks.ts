@@ -1,26 +1,20 @@
-import { ApolloError, useApolloClient } from '@apollo/client'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import CREATE_EXERCISE from '~/graphql/mutations/createExercise'
-import EXERCISES from '~/graphql/queries/exercises'
-import {
-  CreateExerciseMutation,
-  CreateExerciseMutationVariables,
-} from '~/graphql/types'
+import useExercise from '~/hooks/useExercise'
 import useExercises from '~/hooks/useExercises'
 
 import { Values } from './types'
 
 const useLayout = () => {
-  const { cache, mutate } = useApolloClient()
+  const { create: createExercise } = useExercise()
   const [createError, setCreateError] = useState<string>()
   const { exercises } = useExercises()
-  const [isCreateError, setIsCreateError] = useState(false)
   const [isCreateExerciseOpen, setIsCreateExerciseOpen] = useState(false)
   const { t } = useTranslation('exercises')
 
   const handleCloseCreateExercise = useCallback(() => {
+    setCreateError('')
     setIsCreateExerciseOpen(false)
   }, [])
 
@@ -30,37 +24,18 @@ const useLayout = () => {
 
   const handleSubmit = useCallback(
     async (values: Values) => {
-      try {
-        const response = await mutate<
-          CreateExerciseMutation,
-          CreateExerciseMutationVariables
-        >({
-          mutation: CREATE_EXERCISE,
-          variables: {
-            exerciseInput: {
-              description: values.description,
-              name: values.name,
-            },
-          },
-        })
+      const result = await createExercise(values)
+      if (!result) return
 
-        cache.writeQuery({
-          data: {
-            exercises: [...exercises, response.data?.createExercise],
-          },
-          query: EXERCISES,
-        })
-
-        setIsCreateError(false)
-        handleCloseCreateExercise()
-      } catch (err) {
-        if (err instanceof ApolloError) {
-          setCreateError(err.message)
-          setIsCreateError(true)
-        }
+      const { error } = result
+      if (error) {
+        setCreateError(error)
+        return
       }
+
+      handleCloseCreateExercise()
     },
-    [cache, exercises, handleCloseCreateExercise, mutate],
+    [createExercise, handleCloseCreateExercise],
   )
 
   return {
@@ -69,7 +44,6 @@ const useLayout = () => {
     handleCloseCreateExercise,
     handleOpenCreateExercise,
     handleSubmit,
-    isCreateError,
     isCreateExerciseOpen,
     t,
   }

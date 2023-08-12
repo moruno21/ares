@@ -31,7 +31,6 @@ const Item = ({ description, id, name }: ItemProps) => {
     handleOpenEditExercise,
     handleSubmit,
     initialValues,
-    isEditError,
     isEditExerciseOpen,
     t,
   } = useExercise({ description, id, name })
@@ -67,7 +66,7 @@ const Item = ({ description, id, name }: ItemProps) => {
               <Button type="submit">
                 {t('exercise.form.buttons.save.label')}
               </Button>
-              {isEditError ? (
+              {editError ? (
                 <CustomErrorMessage>{editError}</CustomErrorMessage>
               ) : null}
             </ExerciseForm>

@@ -1,23 +1,14 @@
-import { ApolloError, useApolloClient } from '@apollo/client'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import DELETE_EXERCISE from '~/graphql/mutations/deleteExercise'
-import EDIT_EXERCISE from '~/graphql/mutations/editExercise'
-import {
-  DeleteExerciseMutation,
-  DeleteExerciseMutationVariables,
-  EditExerciseMutation,
-  EditExerciseMutationVariables,
-} from '~/graphql/types'
+import useExercise from '~/hooks/useExercise'
 
 import { Values } from '../types'
 import { UseItemProps } from './types'
 
 const useItem = ({ description, id, name }: UseItemProps) => {
-  const { cache, mutate } = useApolloClient()
+  const { edit: editExercise, remove: deleteExercise } = useExercise()
   const [editError, setEditError] = useState<string>()
-  const [isEditError, setIsEditError] = useState(false)
   const [isEditExerciseOpen, setIsEditExerciseOpen] = useState(false)
   const { t } = useTranslation('exercises')
 
@@ -28,19 +19,12 @@ const useItem = ({ description, id, name }: UseItemProps) => {
 
   const handleCloseEditExercise = useCallback(() => {
     setIsEditExerciseOpen(false)
+    setEditError('')
   }, [])
 
   const handleDeleteExercise = useCallback(async () => {
-    await mutate<DeleteExerciseMutation, DeleteExerciseMutationVariables>({
-      mutation: DELETE_EXERCISE,
-      variables: { deleteExerciseId: id },
-    })
-
-    cache.evict({
-      id: cache.identify({ __typename: 'Exercise', id }),
-    })
-    cache.gc()
-  }, [mutate, id, cache])
+    await deleteExercise(id)
+  }, [deleteExercise, id])
 
   const handleOpenEditExercise = useCallback(() => {
     setIsEditExerciseOpen(true)
@@ -48,28 +32,18 @@ const useItem = ({ description, id, name }: UseItemProps) => {
 
   const handleSubmit = useCallback(
     async (values: Values) => {
-      try {
-        await mutate<EditExerciseMutation, EditExerciseMutationVariables>({
-          mutation: EDIT_EXERCISE,
-          variables: {
-            editExerciseId: id,
-            exerciseInput: {
-              description: values.description,
-              name: values.name,
-            },
-          },
-        })
+      const result = await editExercise(id, values)
+      if (!result) return
 
-        setIsEditError(false)
-        handleCloseEditExercise()
-      } catch (err) {
-        if (err instanceof ApolloError) {
-          setEditError(err.message)
-          setIsEditError(true)
-        }
+      const { error } = result
+      if (error) {
+        setEditError(error)
+        return
       }
+
+      handleCloseEditExercise()
     },
-    [mutate, id, handleCloseEditExercise],
+    [editExercise, id, handleCloseEditExercise],
   )
 
   return {
@@ -79,7 +53,6 @@ const useItem = ({ description, id, name }: UseItemProps) => {
     handleOpenEditExercise,
     handleSubmit,
     initialValues,
-    isEditError,
     isEditExerciseOpen,
     t,
   }

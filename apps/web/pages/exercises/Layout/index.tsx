@@ -26,7 +26,6 @@ const Layout = () => {
     handleCloseCreateExercise,
     handleOpenCreateExercise,
     handleSubmit,
-    isCreateError,
     isCreateExerciseOpen,
     t,
   } = useLayout()
@@ -67,7 +66,7 @@ const Layout = () => {
                 <Button type="submit">
                   {t('exercise.form.buttons.save.label')}
                 </Button>
-                {isCreateError ? (
+                {createError ? (
                   <CustomErrorMessage>{createError}</CustomErrorMessage>
                 ) : null}
               </ExerciseForm>
