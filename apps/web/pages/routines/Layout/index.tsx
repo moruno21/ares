@@ -1,7 +1,7 @@
 import { H1, H3 } from '@ares/ui/components/Text'
 
+import Item from '../Item'
 import useRoutines from './hooks'
-import Item from './Item'
 import { Container, Header, Routines } from './styles'
 
 const Layout = () => {
