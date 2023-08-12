@@ -6,5 +6,5 @@
     "reps": { "label": "Reps" },
     "sets": { "label": "Sets" }
   },
-  "no_workouts": "This routine has no workouts added"
+  "no_workouts": "This routine has no workouts added. Click the edit button to add some."
 }
