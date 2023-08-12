@@ -1,9 +1,9 @@
 import { Body1 } from '@ares/ui/components/Text'
 
-import Header from './Header'
+import Header from '../Header'
+import Workout from '../Workout'
 import useLayout from './hooks'
 import { Container, Content, Workouts } from './styles'
-import Workout from './Workout'
 
 const Routine = () => {
   const { routine, t } = useLayout()
