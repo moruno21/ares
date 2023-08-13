@@ -53,7 +53,10 @@ class MongooseExerciseViews implements ExerciseViews {
   async withName(
     name: string,
   ): Promise<Either<NotFoundExercise, ExerciseView>> {
-    const mongooseView = await this.views.findOne({ name }).lean().exec()
+    const mongooseView = await this.views
+      .findOne({ name: { $options: 'i', $regex: name } })
+      .lean()
+      .exec()
 
     if (!mongooseView) return Either.left(NotFoundExercise.withName(name))
 

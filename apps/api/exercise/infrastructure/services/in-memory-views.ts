@@ -58,7 +58,9 @@ class InMemoryExerciseViews implements ExerciseViews {
   async withName(
     name: string,
   ): Promise<Either<NotFoundExercise, ExerciseView>> {
-    const foundView = this.views.find((view) => view.name === name)
+    const foundView = this.views.find(
+      (view) => view.name.toLowerCase() === name.toLowerCase(),
+    )
 
     if (!foundView) return Either.left(NotFoundExercise.withName(name))
 
