@@ -1,10 +1,10 @@
 import { H1, H3 } from '@ares/ui/components/Text'
 import { Formik } from 'formik'
 
-import Form from '../Form'
-import Item from '../Item'
 import { initialValues, validationSchema } from './constants'
+import Form from './Form'
 import useLayout from './hooks'
+import Item from './Item'
 import {
   Button,
   Card,
