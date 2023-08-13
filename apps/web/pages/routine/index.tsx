@@ -1,11 +1,11 @@
+import Button from '@ares/ui/components/Button'
+import IconButton from '@ares/ui/components/IconButton'
+import Input from '@ares/ui/components/Input'
 import { Body1 } from '@ares/ui/components/Text'
 import { ErrorMessage, Field as FormikField, Form, Formik } from 'formik'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next'
 
-import Button from '../../../../libs/ui/components/Button'
-import IconButton from '../../../../libs/ui/components/IconButton'
-import Input from '../../../../libs/ui/components/Input'
 import { validationSchema } from './constants'
 import useLayout from './hooks'
 import {
