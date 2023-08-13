@@ -1,8 +1,8 @@
 import Button from '@ares/ui/components/Button'
 import Input from '@ares/ui/components/Input'
 import { ErrorMessage, Field as FormikField } from 'formik'
+import { useTranslation } from 'react-i18next'
 
-import useForm from './hooks'
 import {
   Container,
   Content,
@@ -14,7 +14,7 @@ import {
 import { FormProps } from './types'
 
 const Form = ({ error }: FormProps) => {
-  const { handleChangeDescription, handleChangeName, t } = useForm()
+  const { t } = useTranslation('exercises')
 
   return (
     <Container>
@@ -26,7 +26,6 @@ const Form = ({ error }: FormProps) => {
               as={Input}
               id="exercise_name"
               name="name"
-              onChange={handleChangeName}
               placeholder={t('form.inputs.name.placeholder')}
             />
             <ErrorMessage name="name">
@@ -41,7 +40,6 @@ const Form = ({ error }: FormProps) => {
               as={Input}
               id="exercise_description"
               name="description"
-              onChange={handleChangeDescription}
               placeholder={t('form.inputs.description.placeholder')}
             />
             <ErrorMessage name="description">

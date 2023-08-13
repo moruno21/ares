@@ -4,8 +4,8 @@ import { Formik } from 'formik'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next'
 
+import { validationSchema } from '../constants'
 import Form from '../Form'
-import { validationSchema } from './constants'
 import useItem from './hooks'
 import {
   CardButtons,
