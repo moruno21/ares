@@ -10,8 +10,11 @@
   },
   "header_form": {
     "inputs": {
-      "description": { "placeholder": "description" },
-      "name": { "placeholder": "name" }
+      "description": {
+        "label": "Routine Description",
+        "placeholder": "Description"
+      },
+      "name": { "label": "Routine Name", "placeholder": "Name" }
     },
     "save": { "label": "Save" }
   },

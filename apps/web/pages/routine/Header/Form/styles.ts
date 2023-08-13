@@ -1,4 +1,4 @@
-import { Body2 } from '@ares/ui/components/Text'
+import { Body2, Body2Styles } from '@ares/ui/components/Text'
 import { Form } from 'formik'
 import styled from 'styled-components'
 
@@ -16,7 +16,16 @@ export const CustomErrorMessage = styled(Body2)`
   color: ${({ theme }) => theme.colors.text.error};
 `
 
+export const Field = styled.div`
+  display: grid;
+  gap: 0.75rem;
+`
+
 export const Fields = styled.div`
   display: grid;
-  gap: 1.5rem;
+  gap: 3rem;
+`
+
+export const Label = styled.label`
+  ${Body2Styles}
 `
