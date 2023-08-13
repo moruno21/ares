@@ -1,15 +1,18 @@
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import useRoutine from '~/hooks/useRoutine'
 import useRoutines from '~/hooks/useRoutines'
+import { ROUTES } from '~/services/routing/Routes/constants'
 
 import { Values } from './types'
 
 const useLayout = () => {
-  const [isCreateRoutineOpen, setIsCreateRoutineOpen] = useState(false)
-  const { routines } = useRoutines()
   const { create: createRoutine } = useRoutine({})
+  const [isCreateRoutineOpen, setIsCreateRoutineOpen] = useState(false)
+  const navigate = useNavigate()
+  const { routines } = useRoutines()
   const { t } = useTranslation('routines')
 
   const handleCloseCreateRoutine = useCallback(() => {
@@ -26,8 +29,9 @@ const useLayout = () => {
       if (!result) return
 
       handleCloseCreateRoutine()
+      navigate(`${ROUTES.ROUTINE}/${result.createdRoutine?.id}`)
     },
-    [createRoutine, handleCloseCreateRoutine],
+    [createRoutine, handleCloseCreateRoutine, navigate],
   )
 
   return {
