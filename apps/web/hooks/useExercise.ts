@@ -62,25 +62,6 @@ const useExercise = () => {
     [cache, mutate],
   )
 
-  const remove = useCallback(
-    async (id: string) => {
-      try {
-        await mutate<DeleteExerciseMutation, DeleteExerciseMutationVariables>({
-          mutation: DELETE_EXERCISE,
-          variables: { deleteExerciseId: id },
-        })
-
-        cache.evict({
-          id: cache.identify({ __typename: 'Exercise', id }),
-        })
-        cache.gc()
-      } catch (err) {
-        throw err
-      }
-    },
-    [cache, mutate],
-  )
-
   const edit = useCallback(
     async (id: string, { description, name }: ExerciseInput) => {
       try {
@@ -107,6 +88,25 @@ const useExercise = () => {
       }
     },
     [mutate],
+  )
+
+  const remove = useCallback(
+    async (id: string) => {
+      try {
+        await mutate<DeleteExerciseMutation, DeleteExerciseMutationVariables>({
+          mutation: DELETE_EXERCISE,
+          variables: { deleteExerciseId: id },
+        })
+
+        cache.evict({
+          id: cache.identify({ __typename: 'Exercise', id }),
+        })
+        cache.gc()
+      } catch (err) {
+        throw err
+      }
+    },
+    [cache, mutate],
   )
 
   return { create, edit, remove }

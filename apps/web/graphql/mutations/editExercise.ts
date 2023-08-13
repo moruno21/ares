@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 import EXERCISE_FRAGMENT from '../fragments/exercise'
 
-const CREATE_EXERCISE = gql`
+const EDIT_EXERCISE = gql`
   ${EXERCISE_FRAGMENT}
   mutation EditExercise(
     $editExerciseId: String!
@@ -14,4 +14,4 @@ const CREATE_EXERCISE = gql`
   }
 `
 
-export default CREATE_EXERCISE
+export default EDIT_EXERCISE
