@@ -3,7 +3,7 @@ import { Formik } from 'formik'
 
 import { initialValues, validationSchema } from './constants'
 import Form from './Form'
-import useRoutines from './hooks'
+import useLayout from './hooks'
 import Item from './Item'
 import {
   Button,
@@ -24,7 +24,7 @@ const Layout = () => {
     isCreateRoutineOpen,
     routines,
     t,
-  } = useRoutines()
+  } = useLayout()
 
   return (
     <Container>

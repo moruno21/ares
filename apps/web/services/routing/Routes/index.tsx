@@ -5,11 +5,11 @@ import PageLoading from '~/pages/layout/Loading'
 
 import { ROUTES } from './constants'
 
-const ExercisesLayout = lazy(() => import('~/pages/exercises/Layout'))
+const ExercisesLayout = lazy(() => import('~/pages/exercises'))
 const Explore = lazy(() => import('~/pages/explore'))
 const Layout = lazy(() => import('~/pages/layout'))
-const RoutineLayout = lazy(() => import('~/pages/routine/Layout'))
-const RoutinesLayout = lazy(() => import('~/pages/routines/Layout'))
+const RoutineLayout = lazy(() => import('~/pages/routine'))
+const RoutinesLayout = lazy(() => import('~/pages/routines'))
 
 const AppRoutes = () => (
   <Suspense fallback={<PageLoading />}>

@@ -1,11 +1,11 @@
 import { Body1 } from '@ares/ui/components/Text'
 
-import Header from '../Header'
-import Workout from '../Workout'
+import Header from './Header'
 import useLayout from './hooks'
 import { Container, Content, Workouts } from './styles'
+import Workout from './Workout'
 
-const Routine = () => {
+const Layout = () => {
   const { routine, t } = useLayout()
 
   return (
@@ -37,4 +37,4 @@ const Routine = () => {
   )
 }
 
-export default Routine
+export default Layout
