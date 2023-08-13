@@ -24,6 +24,10 @@ const useHeader = ({ id }: UseHeaderProps) => {
     navigate(ROUTES.HOME)
   }, [deleteRoutine, handleCloseDeleteModal, id, navigate])
 
+  const handleGoBack = useCallback(() => {
+    navigate(-1)
+  }, [navigate])
+
   const handleOpenDeleteModal = useCallback(() => {
     setIsDeleteModalOpen(true)
   }, [])
@@ -31,6 +35,7 @@ const useHeader = ({ id }: UseHeaderProps) => {
   return {
     handleCloseDeleteModal,
     handleDeleteRoutine,
+    handleGoBack,
     handleOpenDeleteModal,
     isDeleteModalOpen,
     t,

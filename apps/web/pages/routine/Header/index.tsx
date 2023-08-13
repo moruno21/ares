@@ -7,6 +7,7 @@ import { Trans } from 'react-i18next'
 import useHeader from './hooks'
 import {
   Buttons,
+  ChevronLeftIcon,
   Container,
   DeleteIcon,
   EditIcon,
@@ -20,6 +21,7 @@ const Header = ({ description, id, name }: HeaderProps) => {
   const {
     handleCloseDeleteModal,
     handleDeleteRoutine,
+    handleGoBack,
     handleOpenDeleteModal,
     isDeleteModalOpen,
     t,
@@ -30,6 +32,9 @@ const Header = ({ description, id, name }: HeaderProps) => {
       <Title>
         <H1>{name}</H1>
         <Buttons>
+          <IconButton>
+            <ChevronLeftIcon onClick={handleGoBack} />
+          </IconButton>
           <IconButton>
             <EditIcon />
           </IconButton>
