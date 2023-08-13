@@ -116,17 +116,15 @@ export type RoutineInput = {
 
 export type RoutineWorkout = {
   __typename?: 'RoutineWorkout'
-  exerciseDescription: Scalars['String']['output']
+  exerciseDescription?: Maybe<Scalars['String']['output']>
   exerciseId: Scalars['String']['output']
-  exerciseName: Scalars['String']['output']
+  exerciseName?: Maybe<Scalars['String']['output']>
   reps: Scalars['Float']['output']
   sets: Scalars['Float']['output']
 }
 
 export type RoutineWorkoutInput = {
-  exerciseDescription: Scalars['String']['input']
   exerciseId: Scalars['String']['input']
-  exerciseName: Scalars['String']['input']
   reps: Scalars['Float']['input']
   sets: Scalars['Float']['input']
 }
@@ -165,9 +163,9 @@ export type RoutineDetailsFragment = {
   name: string
   workouts: Array<{
     __typename?: 'RoutineWorkout'
-    exerciseDescription: string
+    exerciseDescription?: string
     exerciseId: string
-    exerciseName: string
+    exerciseName?: string
     reps: number
     sets: number
   }>
@@ -244,6 +242,21 @@ export type EditExerciseMutation = {
   }
 }
 
+export type EditRoutineMutationVariables = Exact<{
+  editRoutineId: Scalars['String']['input']
+  routineInput: RoutineInput
+}>
+
+export type EditRoutineMutation = {
+  __typename?: 'Mutation'
+  editRoutine: {
+    __typename?: 'Routine'
+    description: string
+    id: string
+    name: string
+  }
+}
+
 export type ExercisesQueryVariables = Exact<{ [key: string]: never }>
 
 export type ExercisesQuery = {
@@ -269,9 +282,9 @@ export type RoutineQuery = {
     name: string
     workouts: Array<{
       __typename?: 'RoutineWorkout'
-      exerciseDescription: string
+      exerciseDescription?: string
       exerciseId: string
-      exerciseName: string
+      exerciseName?: string
       reps: number
       sets: number
     }>

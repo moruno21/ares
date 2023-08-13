@@ -3,6 +3,7 @@ import { useCallback, useMemo } from 'react'
 
 import CREATE_ROUTINE from '~/graphql/mutations/createRoutine'
 import DELETE_ROUTINE from '~/graphql/mutations/deleteRoutine'
+import EDIT_ROUTINE from '~/graphql/mutations/editRoutine'
 import ROUTINE from '~/graphql/queries/routine'
 import ROUTINES from '~/graphql/queries/routines'
 import {
@@ -10,6 +11,8 @@ import {
   CreateRoutineMutationVariables,
   DeleteRoutineMutation,
   DeleteRoutineMutationVariables,
+  EditRoutineMutation,
+  EditRoutineMutationVariables,
   RoutineInput,
   RoutineQuery,
   RoutinesQuery,
@@ -69,6 +72,39 @@ const useRoutine = ({ id }: UseRoutineProps) => {
     [cache, mutate],
   )
 
+  const edit = useCallback(
+    async (
+      editRoutineId: string,
+      { description, name, workouts }: RoutineInput,
+    ) => {
+      try {
+        const response = await mutate<
+          EditRoutineMutation,
+          EditRoutineMutationVariables
+        >({
+          mutation: EDIT_ROUTINE,
+          variables: {
+            editRoutineId: editRoutineId,
+            routineInput: {
+              description,
+              name,
+              workouts: workouts.map(({ exerciseId, reps, sets }) => ({
+                exerciseId,
+                reps,
+                sets,
+              })),
+            },
+          },
+        })
+
+        return { editedExercise: response.data?.editRoutine }
+      } catch (err) {
+        throw err
+      }
+    },
+    [mutate],
+  )
+
   const remove = useCallback(
     async (deleteRoutineId: string) => {
       try {
@@ -88,7 +124,7 @@ const useRoutine = ({ id }: UseRoutineProps) => {
     [cache, mutate],
   )
 
-  return { create, remove, routine }
+  return { create, edit, remove, routine }
 }
 
 export default useRoutine

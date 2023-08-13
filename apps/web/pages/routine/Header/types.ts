@@ -7,5 +7,12 @@ export type HeaderProps = Omit<HTMLAttributes<HTMLDivElement>, 'id'> & {
 }
 
 export type UseHeaderProps = {
+  description: HeaderProps['description']
   id: HeaderProps['id']
+  name: HeaderProps['name']
+}
+
+export type Values = {
+  description: string
+  name: string
 }

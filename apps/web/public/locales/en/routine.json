@@ -8,6 +8,13 @@
     "description": "This action will delete \"<em>{{name}}</em>\" with all its including workouts.",
     "title": "Delete \"{{name}}\"?"
   },
+  "header_form": {
+    "inputs": {
+      "description": { "placeholder": "description" },
+      "name": { "placeholder": "name" }
+    },
+    "save": { "label": "Save" }
+  },
   "no_workouts": "This routine has no workouts added. Click the edit button to add some.",
   "workout": {
     "exercise": {
