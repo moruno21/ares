@@ -17,7 +17,9 @@ const Routine = () => {
             description={routine.description}
             name={routine.name}
           />
-          {routine.workouts.length > 0 ? (
+          {routine.workouts.length < 1 ? (
+            <Body1>{t('no_workouts')}</Body1>
+          ) : (
             <Workouts>
               {routine.workouts.map(({ exerciseName, reps, sets }, index) => (
                 <Workout
@@ -28,8 +30,6 @@ const Routine = () => {
                 />
               ))}
             </Workouts>
-          ) : (
-            <Body1>{t('no_workouts')}</Body1>
           )}
         </Content>
       ) : null}
