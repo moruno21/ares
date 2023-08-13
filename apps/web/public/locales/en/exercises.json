@@ -12,8 +12,11 @@
   "description": "All the existing exercises",
   "form": {
     "inputs": {
-      "description": { "placeholder": "description" },
-      "name": { "placeholder": "name" }
+      "description": {
+        "label": "Exercise Description",
+        "placeholder": "Description"
+      },
+      "name": { "label": "Exercise Name", "placeholder": "Name" }
     },
     "save": { "label": "Save" }
   },
