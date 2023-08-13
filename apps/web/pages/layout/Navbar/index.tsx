@@ -7,8 +7,12 @@ const Navbar = () => {
   return (
     <Container>
       <Menu>
-        {menuItems.map(({ icon: Icon, id, route }) => (
-          <Item key={id} to={route}>
+        {menuItems.map(({ icon: Icon, id, isActive, route }) => (
+          <Item
+            aria-current={isActive ? 'page' : undefined}
+            key={id}
+            to={route}
+          >
             <Icon />
           </Item>
         ))}

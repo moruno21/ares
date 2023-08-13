@@ -14,6 +14,17 @@ export const Container = styled.div`
 `
 
 export const Item = styled(Link)`
+  align-content: center;
+  border-radius: 0.5rem;
+  display: grid;
+  height: 2.5rem;
+  justify-content: center;
+  width: 2.5rem;
+
+  &[aria-current] {
+    background-color: ${({ theme }) => theme.colors.background.grey};
+  }
+
   svg {
     height: 1.5rem;
     width: 1.5rem;

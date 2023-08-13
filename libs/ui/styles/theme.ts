@@ -9,6 +9,7 @@ const theme = {
     background: {
       dimmer: 'var(--color-dimmer)',
       error: 'var(--color-red-10)',
+      grey: 'var(--color-grey-20)',
       white: 'var(--color-white)',
     },
     buttonStates: {
