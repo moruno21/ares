@@ -15,7 +15,9 @@ import {
   RoutinesQuery,
 } from '~/graphql/types'
 
-const useRoutine = ({ id }: { id?: string }) => {
+import { UseRoutineProps } from './types'
+
+const useRoutine = ({ id }: UseRoutineProps) => {
   const { cache, mutate } = useApolloClient()
   const { data } = useQuery<RoutineQuery>(ROUTINE, {
     variables: { routineId: id ?? '' },
