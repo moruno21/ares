@@ -18,7 +18,7 @@
     },
     "save": { "label": "Save" }
   },
-  "no_workouts": "This routine has no workouts added. Click the edit button to add some.",
+  "no_workouts": "This routine has no workouts added.",
   "workout": {
     "exercise": {
       "name": { "label": "Exercise" }
