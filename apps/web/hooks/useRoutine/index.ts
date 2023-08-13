@@ -23,7 +23,8 @@ import { UseRoutineProps } from './types'
 const useRoutine = ({ id }: UseRoutineProps) => {
   const { cache, mutate } = useApolloClient()
   const { data } = useQuery<RoutineQuery>(ROUTINE, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-first',
     skip: !id,
     variables: { routineId: id ?? '' },
   })
