@@ -127,7 +127,9 @@ describe('MongooseExerciseViews', () => {
 
     const response = await mongooseViews.withName(name)
 
-    expect(viewsFindOne).toHaveBeenCalledWith({ name })
+    expect(viewsFindOne).toHaveBeenCalledWith({
+      name: { $options: 'i', $regex: name },
+    })
     expect(response).toStrictEqual(
       Either.right(MongooseExerciseView.toExerciseView(mongooseView)),
     )
@@ -145,7 +147,9 @@ describe('MongooseExerciseViews', () => {
       name,
     )) as Left<NotFoundExercise>
 
-    expect(viewsFindOne).toHaveBeenCalledWith({ name })
+    expect(viewsFindOne).toHaveBeenCalledWith({
+      name: { $options: 'i', $regex: name },
+    })
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
