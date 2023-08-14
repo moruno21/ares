@@ -12,8 +12,14 @@ export const validationSchema = Yup.object().shape({
   workouts: Yup.array().of(
     Yup.object().shape({
       exerciseName: Yup.string().min(4, 'too short').required('Required'),
-      reps: Yup.number().min(1).required('Required'),
-      sets: Yup.number().min(1).required('Required'),
+      reps: Yup.number()
+        .required('Required')
+        .min(1, 'Reps must be higher than 0')
+        .max(100, 'Reps must be lower than 100'),
+      sets: Yup.number()
+        .required('Required')
+        .min(1, 'Sets must be higher than 0')
+        .max(100, 'Sets must be lower than 100'),
     }),
   ),
 })

@@ -2,7 +2,13 @@ import Button from '@ares/ui/components/Button'
 import IconButton from '@ares/ui/components/IconButton'
 import Input from '@ares/ui/components/Input'
 import { Body1 } from '@ares/ui/components/Text'
-import { ErrorMessage, Field as FormikField, Form, Formik } from 'formik'
+import {
+  ErrorMessage,
+  Field as FormikField,
+  FieldArray,
+  Form,
+  Formik,
+} from 'formik'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next'
 
@@ -52,7 +58,7 @@ const Layout = () => {
           enableReinitialize
           initialValues={initialValues}
           onSubmit={handleSubmit}
-          validateOnBlur={true}
+          validateOnBlur={false}
           validateOnMount
           validationSchema={validationSchema}
         >
@@ -165,18 +171,32 @@ const Layout = () => {
               {routine.workouts.length < 1 ? (
                 <Body1>{t('no_workouts')}</Body1>
               ) : (
-                <Workouts>
-                  {routine.workouts.map(
-                    ({ exerciseName, reps, sets }, index) => (
-                      <Workout
-                        exerciseName={exerciseName ?? ''}
-                        key={index}
-                        reps={reps}
-                        sets={sets}
-                      />
-                    ),
+                <FieldArray name="workouts">
+                  {(arrayHelpers) => (
+                    <>
+                      <Workouts>
+                        {routine.workouts.map(
+                          ({ exerciseName, reps, sets }, index) => (
+                            <Workout
+                              exerciseName={exerciseName ?? ''}
+                              index={index}
+                              key={index}
+                              reps={reps}
+                              sets={sets}
+                            />
+                          ),
+                        )}
+                      </Workouts>
+                      <Button
+                        // eslint-disable-next-line react/jsx-no-bind
+                        onClick={() => arrayHelpers.push({})}
+                        type="button"
+                      >
+                        Add new Workout
+                      </Button>
+                    </>
                   )}
-                </Workouts>
+                </FieldArray>
               )}
             </Content>
           </Form>

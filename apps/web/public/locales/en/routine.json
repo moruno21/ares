@@ -23,6 +23,17 @@
     "exercise": {
       "name": { "label": "Exercise" }
     },
+    "form": {
+      "inputs": {
+        "exercise": {
+          "label": "Exercise",
+          "placeholder": "Exercise"
+        },
+        "reps": { "label": "Reps", "placeholder": "Reps" },
+        "sets": { "label": "Sets", "placeholder": "Sets" }
+      },
+      "save": { "label": "Save Workout" }
+    },
     "reps": { "label": "Reps" },
     "sets": { "label": "Sets" }
   }

@@ -15,6 +15,7 @@ import {
   EditRoutineMutationVariables,
   RoutineInput,
   RoutineQuery,
+  RoutineQueryVariables,
   RoutinesQuery,
 } from '~/graphql/types'
 
@@ -22,12 +23,15 @@ import { UseRoutineProps } from './types'
 
 const useRoutine = ({ id }: UseRoutineProps) => {
   const { cache, mutate } = useApolloClient()
-  const { data } = useQuery<RoutineQuery>(ROUTINE, {
-    fetchPolicy: 'network-only',
-    nextFetchPolicy: 'cache-first',
-    skip: !id,
-    variables: { routineId: id ?? '' },
-  })
+  const { data, refetch } = useQuery<RoutineQuery, RoutineQueryVariables>(
+    ROUTINE,
+    {
+      fetchPolicy: 'network-only',
+      nextFetchPolicy: 'cache-first',
+      skip: !id,
+      variables: { routineId: id ?? '' },
+    },
+  )
 
   const routine = useMemo(() => (data ? data.routine : undefined), [data])
 
@@ -100,12 +104,20 @@ const useRoutine = ({ id }: UseRoutineProps) => {
           },
         })
 
+        const updatedRoutine = await refetch()
+        cache.writeQuery({
+          data: {
+            routine: updatedRoutine,
+          },
+          query: ROUTINE,
+        })
+
         return { editedExercise: response.data?.editRoutine }
       } catch (err) {
         throw err
       }
     },
-    [mutate],
+    [cache, mutate, refetch],
   )
 
   const remove = useCallback(
