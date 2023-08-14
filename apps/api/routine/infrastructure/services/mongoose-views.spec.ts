@@ -17,7 +17,6 @@ describe('MongooseRoutineViews', () => {
   const description = 'description'
   const workouts = [
     {
-      exerciseDescription: 'exerciseDescription',
       exerciseId: 'exerciseId',
       exerciseName: 'exerciseName',
       reps: 10,
@@ -173,7 +172,6 @@ describe('MongooseRoutineViews', () => {
   it('changes workouts of a view', async () => {
     const anotherWorkouts = [
       {
-        exerciseDescription: 'exerciseDescription',
         exerciseId: 'ab41543a-9879-4f9b-a23c-aeffa2725feb',
         exerciseName: 'exerciseName',
         reps: 4,

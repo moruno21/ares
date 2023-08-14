@@ -39,7 +39,6 @@ describe('RoutineWorkoutsChangedHandler', () => {
     const routineDescription = 'routineDescription'
     const routineWorkouts = [
       {
-        exerciseDescription,
         exerciseId,
         exerciseName,
         reps: 8,
@@ -74,7 +73,6 @@ describe('RoutineWorkoutsChangedHandler', () => {
 
     expect(routineViewsChangeWorkouts).toHaveBeenCalledWith(routineId, [
       {
-        exerciseDescription,
         exerciseId: anotherWorkouts[0].exerciseId,
         exerciseName,
         reps: anotherWorkouts[0].reps,

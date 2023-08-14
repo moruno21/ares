@@ -22,7 +22,6 @@ describe('RoutineRenamedHandler', () => {
     const description = 'description'
     const workouts = [
       {
-        exerciseDescription: 'exerciseDescription',
         exerciseId: '98747d8b-3f2a-4548-b029-ff163b1e8941',
         exerciseName: 'exerciseName',
         reps: 8,

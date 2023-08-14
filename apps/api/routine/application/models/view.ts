@@ -3,7 +3,6 @@ import NameType from '~/shared/name-type'
 const __name__ = 'RoutineView'
 
 export type RoutineWorkoutView = Readonly<{
-  exerciseDescription: string
   exerciseId: string
   exerciseName: string
   reps: number

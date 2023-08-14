@@ -20,14 +20,12 @@ describe('RoutineWorkoutRenamedHandler', () => {
     const routineName = 'name'
     const routineDescription = 'description'
     const workoutOne = {
-      exerciseDescription: 'exerciseDescriptionOne',
       exerciseId: 'exerciseIdOne',
       exerciseName: 'exerciseNameOne',
       reps: 10,
       sets: 4,
     }
     const workoutTwo = {
-      exerciseDescription: 'exerciseDescriptionTwo',
       exerciseId: 'exerciseIdTwo',
       exerciseName: 'exerciseNameTwo',
       reps: 10,

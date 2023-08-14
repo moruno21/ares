@@ -6,9 +6,6 @@ class RoutineWorkout {
   exerciseId: string
 
   @Field(() => String, { nullable: true })
-  exerciseDescription: string
-
-  @Field(() => String, { nullable: true })
   exerciseName: string
 
   @Field(() => Number)
