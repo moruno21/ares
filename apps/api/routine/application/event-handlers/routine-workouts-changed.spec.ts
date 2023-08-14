@@ -1,6 +1,9 @@
+import ExerciseView from '~/exercise/application/models/view'
+import ExerciseViews from '~/exercise/application/services/views'
 import RoutineWorkoutsChanged from '~/routine/domain/events/routine-workouts-changed'
 import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
 import Either, { Left } from '~/shared/either'
+import ExerciseViewsMock from '~/test/mocks/exercise/application/services/views'
 import RoutineViewsMock from '~/test/mocks/routine/application/services/views'
 
 import RoutineView from '../models/view'
@@ -8,52 +11,89 @@ import RoutineViews from '../services/views'
 import RoutineWorkoutsChangedHandler from './routine-workouts-changed'
 
 describe('RoutineWorkoutsChangedHandler', () => {
-  let views: RoutineViews
+  let routineViews: RoutineViews
+  let exerciseViews: ExerciseViews
   let workoutsChangedHandler: RoutineWorkoutsChangedHandler
 
   beforeEach(() => {
-    views = RoutineViewsMock.mock()
-    workoutsChangedHandler = new RoutineWorkoutsChangedHandler(views)
+    exerciseViews = ExerciseViewsMock.mock()
+    routineViews = RoutineViewsMock.mock()
+    workoutsChangedHandler = new RoutineWorkoutsChangedHandler(
+      exerciseViews,
+      routineViews,
+    )
   })
 
   it('change workouts of a routine view with routine workouts changed', async () => {
-    const id = 'id'
-    const name = 'name'
-    const description = 'description'
-    const workouts = [
+    const exerciseId = 'exerciseId'
+    const exerciseName = 'exerciseName'
+    const exerciseDescription = 'exerciseDescription'
+    const exerciseView = ExerciseView.with({
+      description: exerciseDescription,
+      id: exerciseId,
+      name: exerciseName,
+    })
+
+    const routineId = 'routineId'
+    const routineName = 'routineName'
+    const routineDescription = 'routineDescription'
+    const routineWorkouts = [
       {
-        exerciseDescription: 'exerciseDescription',
-        exerciseId: '98747d8b-3f2a-4548-b029-ff163b1e8941',
-        exerciseName: 'exerciseName',
+        exerciseDescription,
+        exerciseId,
+        exerciseName,
         reps: 8,
         sets: 6,
       },
     ]
-    const view = RoutineView.with({ description, id, name, workouts })
+    const routineView = RoutineView.with({
+      description: routineDescription,
+      id: routineId,
+      name: routineName,
+      workouts: routineWorkouts,
+    })
 
-    const viewsChangeWorkouts = jest.spyOn(views, 'changeWorkouts')
-    const viewsWithId = jest.spyOn(views, 'withId')
+    const exerciseViewsWithId = jest.spyOn(exerciseViews, 'withId')
+    const routineViewsChangeWorkouts = jest.spyOn(
+      routineViews,
+      'changeWorkouts',
+    )
+    const routineViewsWithId = jest.spyOn(routineViews, 'withId')
 
-    viewsWithId.mockResolvedValue(Either.right(view))
+    exerciseViewsWithId.mockResolvedValue(Either.right(exerciseView))
+    routineViewsWithId.mockResolvedValue(Either.right(routineView))
 
-    const anotherWorkouts = [
-      { exerciseId: '31a72de7-ef7f-43e8-8fd4-b2bbcf9e520b', reps: 6, sets: 5 },
-    ]
+    const anotherWorkouts = [{ exerciseId, reps: 6, sets: 5 }]
+
     await workoutsChangedHandler.handle(
-      RoutineWorkoutsChanged.with({ id, workouts: anotherWorkouts }),
+      RoutineWorkoutsChanged.with({
+        id: routineId,
+        workouts: anotherWorkouts,
+      }),
     )
 
-    expect(viewsChangeWorkouts).toHaveBeenCalledWith(id, anotherWorkouts)
+    expect(routineViewsChangeWorkouts).toHaveBeenCalledWith(routineId, [
+      {
+        exerciseDescription,
+        exerciseId: anotherWorkouts[0].exerciseId,
+        exerciseName,
+        reps: anotherWorkouts[0].reps,
+        sets: anotherWorkouts[0].sets,
+      },
+    ])
   })
 
   it('cannot change workouts of a routine view that does not exist', async () => {
     const id = 'id'
     const notFound = NotFoundRoutine.withId(id)
 
-    const viewsChangeWorkouts = jest.spyOn(views, 'changeWorkouts')
-    const viewsWithId = jest.spyOn(views, 'withId')
+    const routineViewsChangeWorkouts = jest.spyOn(
+      routineViews,
+      'changeWorkouts',
+    )
+    const routineViewsWithId = jest.spyOn(routineViews, 'withId')
 
-    viewsWithId.mockResolvedValue(Either.left(notFound))
+    routineViewsWithId.mockResolvedValue(Either.left(notFound))
 
     const anotherWorkouts = [
       { exerciseId: 'ab41543a-9879-4f9b-a23c-aeffa2725feb', reps: 4, sets: 4 },
@@ -63,7 +103,7 @@ describe('RoutineWorkoutsChangedHandler', () => {
       RoutineWorkoutsChanged.with({ id, workouts: anotherWorkouts }),
     )) as Left<NotFoundRoutine>
 
-    expect(viewsChangeWorkouts).not.toHaveBeenCalled()
+    expect(routineViewsChangeWorkouts).not.toHaveBeenCalled()
     expect(Either.isRight(response)).toBe(false)
     expect(response.value.__name__).toBe(notFound.__name__)
     expect(response.value.code).toBe(notFound.code)
