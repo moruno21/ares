@@ -8,7 +8,6 @@ const ROUTINE_DETAILS_FRAGMENT = gql`
     workouts {
       exerciseId
       exerciseName
-      exerciseDescription
       sets
       reps
     }

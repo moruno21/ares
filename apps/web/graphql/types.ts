@@ -116,7 +116,6 @@ export type RoutineInput = {
 
 export type RoutineWorkout = {
   __typename?: 'RoutineWorkout'
-  exerciseDescription?: Maybe<Scalars['String']['output']>
   exerciseId: Scalars['String']['output']
   exerciseName?: Maybe<Scalars['String']['output']>
   reps: Scalars['Float']['output']
@@ -163,7 +162,6 @@ export type RoutineDetailsFragment = {
   name: string
   workouts: Array<{
     __typename?: 'RoutineWorkout'
-    exerciseDescription?: string
     exerciseId: string
     exerciseName?: string
     reps: number
@@ -282,7 +280,6 @@ export type RoutineQuery = {
     name: string
     workouts: Array<{
       __typename?: 'RoutineWorkout'
-      exerciseDescription?: string
       exerciseId: string
       exerciseName?: string
       reps: number
