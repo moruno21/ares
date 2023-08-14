@@ -12,8 +12,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           maxLength={maxLength}
           ref={ref}
-          type="text"
           value={value}
+          type={type}
           {...props}
         />
       </Container>
