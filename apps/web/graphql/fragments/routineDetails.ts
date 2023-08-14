@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-const ROUTINE_FRAGMENT = gql`
+const ROUTINE_DETAILS_FRAGMENT = gql`
   fragment RoutineDetails on Routine {
     description
     id
@@ -15,4 +15,4 @@ const ROUTINE_FRAGMENT = gql`
   }
 `
 
-export default ROUTINE_FRAGMENT
+export default ROUTINE_DETAILS_FRAGMENT
