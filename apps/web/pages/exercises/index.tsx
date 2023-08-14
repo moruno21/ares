@@ -18,7 +18,6 @@ import {
 
 const Layout = () => {
   const {
-    createError,
     exercises,
     handleCloseCreateExercise,
     handleOpenCreateExercise,
@@ -47,7 +46,7 @@ const Layout = () => {
               validateOnMount
               validationSchema={validationSchema}
             >
-              <Form error={createError} />
+              <Form />
             </Formik>
           </Card>
         ) : (

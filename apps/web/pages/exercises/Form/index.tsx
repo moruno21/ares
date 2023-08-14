@@ -11,9 +11,8 @@ import {
   Fields,
   Label,
 } from './styles'
-import { FormProps } from './types'
 
-const Form = ({ error }: FormProps) => {
+const Form = () => {
   const { t } = useTranslation('exercises')
 
   return (
@@ -49,7 +48,6 @@ const Form = ({ error }: FormProps) => {
         </Fields>
         <Button type="submit">{t('form.save.label')}</Button>
       </Content>
-      {error ? <CustomErrorMessage>{error}</CustomErrorMessage> : null}
     </Container>
   )
 }

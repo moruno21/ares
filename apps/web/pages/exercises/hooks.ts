@@ -1,3 +1,4 @@
+import { FormikHelpers } from 'formik'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -8,13 +9,11 @@ import { Values } from './types'
 
 const useLayout = () => {
   const { create: createExercise } = useExercise()
-  const [createError, setCreateError] = useState<string>()
   const { exercises } = useExercises()
   const [isCreateExerciseOpen, setIsCreateExerciseOpen] = useState(false)
   const { t } = useTranslation('exercises')
 
   const handleCloseCreateExercise = useCallback(() => {
-    setCreateError('')
     setIsCreateExerciseOpen(false)
   }, [])
 
@@ -23,13 +22,13 @@ const useLayout = () => {
   }, [])
 
   const handleSubmit = useCallback(
-    async (values: Values) => {
+    async (values: Values, { setFieldError }: FormikHelpers<Values>) => {
       const result = await createExercise(values)
       if (!result) return
 
       const { error } = result
       if (error) {
-        setCreateError(error)
+        setFieldError('name', error)
         return
       }
 
@@ -39,7 +38,6 @@ const useLayout = () => {
   )
 
   return {
-    createError,
     exercises,
     handleCloseCreateExercise,
     handleOpenCreateExercise,

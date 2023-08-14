@@ -24,7 +24,6 @@ import { ItemProps } from './types'
 
 const Item = ({ description, id, name }: ItemProps) => {
   const {
-    editError,
     handleCloseDeleteModal,
     handleCloseEditExercise,
     handleDeleteExercise,
@@ -52,7 +51,7 @@ const Item = ({ description, id, name }: ItemProps) => {
             validateOnMount
             validationSchema={validationSchema}
           >
-            <Form error={editError} />
+            <Form />
           </Formik>
         </>
       ) : (
