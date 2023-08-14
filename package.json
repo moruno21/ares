@@ -45,6 +45,7 @@
     "react-router-dom": "6.11.1",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.0.0",
+    "shallow-equal-object": "1.1.1",
     "styled-components": "5.3.9",
     "styled-reset": "4.4.6",
     "tslib": "2.3.0",
