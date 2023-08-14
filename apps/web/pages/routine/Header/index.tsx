@@ -5,21 +5,18 @@ import { ErrorMessage, Field as FormikField } from 'formik'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next'
 
-import { CustomErrorMessage } from '../styles'
+import { CustomErrorMessage, DeleteIcon, EditIcon, Label } from '../styles'
 import useHeader from './hooks'
 import {
   Buttons,
   ChevronLeftIcon,
   Content,
-  DeleteIcon,
   Description,
-  EditIcon,
   Field,
   Fields,
   Footer,
   Form,
   Info,
-  Label,
   Modal,
   Title,
 } from './styles'

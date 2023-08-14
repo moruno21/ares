@@ -1,4 +1,6 @@
-import { Body2 } from '@ares/ui/components/Text'
+import { ReactComponent as DefaultDeleteIcon } from '@ares/ui/assets/icons/delete.svg'
+import { ReactComponent as DefaultEditIcon } from '@ares/ui/assets/icons/edit.svg'
+import { Body2, Body2Styles } from '@ares/ui/components/Text'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -16,6 +18,20 @@ export const Content = styled.div`
 
 export const CustomErrorMessage = styled(Body2)`
   color: ${({ theme }) => theme.colors.text.error};
+`
+
+export const DeleteIcon = styled(DefaultDeleteIcon)`
+  height: 1.5rem;
+  width: 1.5rem;
+`
+
+export const EditIcon = styled(DefaultEditIcon)`
+  height: 1.5rem;
+  width: 1.5rem;
+`
+
+export const Label = styled.label`
+  ${Body2Styles}
 `
 
 export const Workouts = styled.div`

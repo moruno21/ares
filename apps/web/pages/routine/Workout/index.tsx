@@ -4,18 +4,15 @@ import Input from '@ares/ui/components/Input'
 import { Body1, H4 } from '@ares/ui/components/Text'
 import { ErrorMessage, Field as FormikField } from 'formik'
 
-import { CustomErrorMessage } from '../styles'
+import { CustomErrorMessage, DeleteIcon, EditIcon, Label } from '../styles'
 import useWorkout from './hooks'
 import {
   Buttons,
   Container,
   Content,
-  DeleteIcon,
-  EditIcon,
   Field,
   Form,
   Info,
-  Label,
   WorkoutSettings,
 } from './styles'
 import { WorkoutProps } from './types'
