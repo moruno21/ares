@@ -7,7 +7,13 @@ type RoutineViews = Readonly<{
   add: (view: RoutineView) => Promise<RoutineView>
   changeWorkouts: (
     id: string,
-    workouts: { exerciseId: string; reps: number; sets: number }[],
+    workouts: {
+      exerciseDescription: string
+      exerciseId: string
+      exerciseName: string
+      reps: number
+      sets: number
+    }[],
   ) => Promise<void>
   delete: (id: string) => Promise<void>
   getAll: () => Promise<RoutineView[]>
