@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Values } from '../types'
 
 const useWorkout = () => {
-  const { handleBlur, handleSubmit, initialValues, setFieldValue } =
+  const { errors, handleBlur, handleSubmit, initialValues, setFieldValue } =
     useFormikContext<Values>()
   const [isEditWorkoutOpen, setIsEditWorkoutOpen] = useState(false)
   const { t } = useTranslation('routine')
@@ -34,8 +34,11 @@ const useWorkout = () => {
 
   const handleSaveWorkout = useCallback(() => {
     handleSubmit()
+
+    if (Object.keys(errors).length > 0) return
+
     handleCloseEditWorkout()
-  }, [handleCloseEditWorkout, handleSubmit])
+  }, [handleCloseEditWorkout, handleSubmit, errors])
 
   return {
     handleBlurInput,
