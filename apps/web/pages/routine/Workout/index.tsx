@@ -17,7 +17,13 @@ import {
 } from './styles'
 import { WorkoutProps } from './types'
 
-const Workout = ({ exerciseName, index, reps, sets }: WorkoutProps) => {
+const Workout = ({
+  exerciseName,
+  handleDeleteWorkout,
+  index,
+  reps,
+  sets,
+}: WorkoutProps) => {
   const {
     handleBlurInput,
     handleOpenEditWorkout,
@@ -99,7 +105,11 @@ const Workout = ({ exerciseName, index, reps, sets }: WorkoutProps) => {
             <IconButton onClick={handleOpenEditWorkout}>
               <EditIcon />
             </IconButton>
-            <IconButton>
+            <IconButton
+              // eslint-disable-next-line react/jsx-no-bind
+              onClick={() => handleDeleteWorkout(index)}
+              type="submit"
+            >
               <DeleteIcon />
             </IconButton>
           </Buttons>
