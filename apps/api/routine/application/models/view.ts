@@ -2,18 +2,20 @@ import NameType from '~/shared/name-type'
 
 const __name__ = 'RoutineView'
 
+export type RoutineWorkoutView = Readonly<{
+  exerciseDescription: string
+  exerciseId: string
+  exerciseName: string
+  reps: number
+  sets: number
+}>
+
 type RoutineView = NameType<
   Readonly<{
     description: string
     id: string
     name: string
-    workouts: {
-      exerciseDescription: string
-      exerciseId: string
-      exerciseName: string
-      reps: number
-      sets: number
-    }[]
+    workouts: RoutineWorkoutView[]
   }>,
   typeof __name__
 >

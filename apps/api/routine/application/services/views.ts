@@ -1,20 +1,11 @@
 import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
 import Either from '~/shared/either'
 
-import RoutineView from '../models/view'
+import RoutineView, { RoutineWorkoutView } from '../models/view'
 
 type RoutineViews = Readonly<{
   add: (view: RoutineView) => Promise<RoutineView>
-  changeWorkouts: (
-    id: string,
-    workouts: {
-      exerciseDescription: string
-      exerciseId: string
-      exerciseName: string
-      reps: number
-      sets: number
-    }[],
-  ) => Promise<void>
+  changeWorkouts: (id: string, workouts: RoutineWorkoutView[]) => Promise<void>
   delete: (id: string) => Promise<void>
   getAll: () => Promise<RoutineView[]>
   redescribe: (id: string, description: string) => Promise<void>

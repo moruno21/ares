@@ -1,6 +1,8 @@
 import { Prop, Schema } from '@nestjs/mongoose'
 
-import RoutineView from '~/routine/application/models/view'
+import RoutineView, {
+  RoutineWorkoutView,
+} from '~/routine/application/models/view'
 
 @Schema({ versionKey: false })
 class MongooseRoutineView implements Omit<RoutineView, '__name__' | 'id'> {
@@ -14,13 +16,7 @@ class MongooseRoutineView implements Omit<RoutineView, '__name__' | 'id'> {
   readonly name: string
 
   @Prop()
-  readonly workouts: {
-    exerciseDescription: string
-    exerciseId: string
-    exerciseName: string
-    reps: number
-    sets: number
-  }[]
+  readonly workouts: RoutineWorkoutView[]
 
   constructor(
     _id: MongooseRoutineView['_id'],

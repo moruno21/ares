@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
-import RoutineView from '~/routine/application/models/view'
+import RoutineView, {
+  RoutineWorkoutView,
+} from '~/routine/application/models/view'
 import RoutineViews from '~/routine/application/services/views'
 import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
 import Either from '~/shared/either'
@@ -24,13 +26,7 @@ class MongooseRoutineViews implements RoutineViews {
 
   async changeWorkouts(
     id: string,
-    workouts: {
-      exerciseDescription: string
-      exerciseId: string
-      exerciseName: string
-      reps: number
-      sets: number
-    }[],
+    workouts: RoutineWorkoutView[],
   ): Promise<void> {
     await this.views.updateOne({ _id: id }, { workouts }).lean().exec()
   }
