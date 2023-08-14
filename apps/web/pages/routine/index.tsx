@@ -42,6 +42,7 @@ const Layout = () => {
                             <Workout
                               exerciseName={exerciseName ?? ''}
                               index={index}
+                              handleDeleteWorkout={arrayHelpers.remove}
                               key={index}
                               reps={reps}
                               sets={sets}
@@ -49,13 +50,7 @@ const Layout = () => {
                           ),
                         )}
                       </Workouts>
-                      <Button
-                        // eslint-disable-next-line react/jsx-no-bind
-                        onClick={() => arrayHelpers.push({})}
-                        type="button"
-                      >
-                        Add new Workout
-                      </Button>
+                      <Button>Add new Workout</Button>
                     </>
                   )}
                 </FieldArray>
