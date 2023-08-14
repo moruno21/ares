@@ -16,8 +16,7 @@ const useLayout = () => {
 
   const handleSubmit = useCallback(
     async (values: Values) => {
-      const result = await editRoutine(id ?? '', values)
-      if (!result) return
+      await editRoutine(id ?? '', values)
     },
     [editRoutine, id],
   )
