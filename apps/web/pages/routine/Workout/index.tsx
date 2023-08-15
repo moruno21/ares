@@ -1,6 +1,5 @@
 import Button from '@ares/ui/components/Button'
 import IconButton from '@ares/ui/components/IconButton'
-import Input from '@ares/ui/components/Input'
 import { Body1, H4 } from '@ares/ui/components/Text'
 import { ErrorMessage, Field as FormikField } from 'formik'
 
@@ -10,14 +9,17 @@ import {
   Buttons,
   Container,
   Content,
+  Dropdown,
   Field,
   Form,
   Info,
+  InputUnit,
   WorkoutSettings,
 } from './styles'
 import { WorkoutProps } from './types'
 
 const Workout = ({
+  exerciseId,
   exerciseName,
   handleDeleteWorkout,
   index,
@@ -25,28 +27,42 @@ const Workout = ({
   sets,
 }: WorkoutProps) => {
   const {
+    dropdownOptions,
+    exercise,
     handleBlurInput,
+    handleExerciseChange,
     handleOpenEditWorkout,
     handleSaveWorkout,
     initialValues,
     isEditWorkoutOpen,
     t,
-  } = useWorkout()
+  } = useWorkout({ exerciseId, index })
 
   return (
     <Container>
       {isEditWorkoutOpen ? (
         <Form>
           <Field>
-            <H4>{t('workout.exercise.name.label')}</H4>
-            <Body1>{exerciseName}</Body1>
+            <Label htmlFor={`workouts_[${index}]_sets`}>
+              {t('workout.form.inputs.exercise.label')}
+            </Label>
+            <Dropdown
+              noResultsMessage={t('workout.form.inputs.exercise.no_result')}
+              onChange={handleExerciseChange}
+              options={dropdownOptions}
+              placeholder={t('workout.form.inputs.exercise.placeholder')}
+              value={exercise}
+            />
           </Field>
+          <ErrorMessage name={`workouts[${index}].sets`}>
+            {(msg) => <CustomErrorMessage>{msg}</CustomErrorMessage>}
+          </ErrorMessage>
           <Field>
             <Label htmlFor={`workouts_[${index}]_sets`}>
               {t('workout.form.inputs.sets.label')}
             </Label>
             <FormikField
-              as={Input}
+              as={InputUnit}
               id={`workouts_[${index}]_sets`}
               data-initialvalue={initialValues.workouts[index].sets}
               max={100}
@@ -65,7 +81,7 @@ const Workout = ({
               {t('workout.form.inputs.reps.label')}
             </Label>
             <FormikField
-              as={Input}
+              as={InputUnit}
               data-initialvalue={initialValues.workouts[index].reps}
               id={`workouts_[${index}]_.reps`}
               max={100}

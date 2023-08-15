@@ -27,6 +27,7 @@
       "inputs": {
         "exercise": {
           "label": "Exercise",
+          "no_result": "Exercise not found",
           "placeholder": "Exercise"
         },
         "reps": { "label": "Reps", "placeholder": "Reps" },

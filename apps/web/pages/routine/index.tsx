@@ -38,8 +38,9 @@ const Layout = () => {
                     <>
                       <Workouts>
                         {routine.workouts.map(
-                          ({ exerciseName, reps, sets }, index) => (
+                          ({ exerciseId, exerciseName, reps, sets }, index) => (
                             <Workout
+                              exerciseId={exerciseId}
                               exerciseName={exerciseName ?? ''}
                               index={index}
                               handleDeleteWorkout={arrayHelpers.remove}

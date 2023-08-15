@@ -11,7 +11,7 @@ export const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name cannot be empty').max(50, 'Too long name'),
   workouts: Yup.array().of(
     Yup.object().shape({
-      exerciseName: Yup.string().min(4, 'too short').required('Required'),
+      exerciseId: Yup.string().required('Required'),
       reps: Yup.number()
         .required('Required')
         .min(1, 'Reps must be higher than 0')

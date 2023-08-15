@@ -1,14 +1,25 @@
+import { DropdownProps } from '@ares/ui/components/Dropdown'
 import { useFormikContext } from 'formik'
-import { FocusEvent, useCallback, useState } from 'react'
+import { FocusEvent, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Values } from '../types'
+import useExercises from '~/hooks/useExercises'
 
-const useWorkout = () => {
+import { Values } from '../types'
+import { UseWorkoutProps } from './types'
+
+const useWorkout = ({ exerciseId, index }: UseWorkoutProps) => {
   const { errors, handleBlur, handleSubmit, initialValues, setFieldValue } =
     useFormikContext<Values>()
+  const [exercise, setExercise] = useState<string>(exerciseId)
+  const { exercises } = useExercises()
   const [isEditWorkoutOpen, setIsEditWorkoutOpen] = useState(false)
   const { t } = useTranslation('routine')
+
+  const dropdownOptions = useMemo(
+    () => exercises.map(({ id, name }) => ({ text: name, value: id })),
+    [exercises],
+  )
 
   const handleBlurInput = useCallback(
     (event: FocusEvent<HTMLInputElement>) => {
@@ -28,6 +39,16 @@ const useWorkout = () => {
     setIsEditWorkoutOpen(false)
   }, [])
 
+  const handleExerciseChange: DropdownProps['onChange'] = useCallback(
+    (value) => {
+      if (!value) return
+
+      setFieldValue(`workouts[${index}].exerciseId`, value)
+      setExercise(value)
+    },
+    [index, setFieldValue],
+  )
+
   const handleOpenEditWorkout = useCallback(() => {
     setIsEditWorkoutOpen(true)
   }, [])
@@ -41,8 +62,10 @@ const useWorkout = () => {
   }, [handleCloseEditWorkout, handleSubmit, errors])
 
   return {
+    dropdownOptions,
+    exercise,
     handleBlurInput,
-    handleCloseEditWorkout,
+    handleExerciseChange,
     handleOpenEditWorkout,
     handleSaveWorkout,
     initialValues,
