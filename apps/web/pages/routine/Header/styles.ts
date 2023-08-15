@@ -1,8 +1,9 @@
 import { ReactComponent as DefaultChevronLeftIcon } from '@ares/ui/assets/icons/chevron-left.svg'
 import { ReactComponent as DefaultExternalIcon } from '@ares/ui/assets/icons/external.svg'
 import DefaultModal from '@ares/ui/components/Modal'
-import { H1, H4 } from '@ares/ui/components/Text'
+import { Body3Styles, H1, H4 } from '@ares/ui/components/Text'
 import pxToRem from '@ares/ui/lib/px-to-rem'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Buttons = styled.div`
@@ -73,6 +74,21 @@ export const Modal = styled(DefaultModal)`
   em {
     font-weight: ${({ theme }) => theme.font.weights.bold};
   }
+`
+
+export const ShareLink = styled(Link)`
+  ${Body3Styles}
+  font-weight: ${({ theme }) => theme.font.weights.medium};
+  word-break: break-all;
+
+  :hover {
+    text-decoration: underline;
+  }
+`
+
+export const ShareModalDescription = styled.div`
+  display: grid;
+  gap: 1rem;
 `
 
 export const Title = styled(H1)`

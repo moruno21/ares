@@ -13,6 +13,7 @@ const useHeader = () => {
   const { errors, handleSubmit } = useFormikContext<Routine>()
   const { id } = useParams()
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [isEditHeaderOpen, setIsEditHeaderOpen] = useState(false)
   const navigate = useNavigate()
   const { remove: deleteRoutine } = useRoutine({ id })
@@ -26,6 +27,10 @@ const useHeader = () => {
 
   const handleCloseEditHeader = useCallback(() => {
     setIsEditHeaderOpen(false)
+  }, [])
+
+  const handleCloseShareModal = useCallback(() => {
+    setIsShareModalOpen(false)
   }, [])
 
   const handleDeleteRoutine = useCallback(async () => {
@@ -47,6 +52,10 @@ const useHeader = () => {
     setIsEditHeaderOpen(true)
   }, [])
 
+  const handleOpenShareModal = useCallback(() => {
+    setIsShareModalOpen(true)
+  }, [])
+
   const handleSaveHeader = useCallback(() => {
     handleSubmit()
 
@@ -57,14 +66,17 @@ const useHeader = () => {
 
   return {
     handleCloseDeleteModal,
+    handleCloseShareModal,
     handleDeleteRoutine,
     handleGoBack,
     handleOpenDeleteModal,
     handleOpenEditHeader,
+    handleOpenShareModal,
     handleSaveHeader,
     idHash,
     isDeleteModalOpen,
     isEditHeaderOpen,
+    isShareModalOpen,
     t,
   }
 }

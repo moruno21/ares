@@ -4,7 +4,6 @@ import Input from '@ares/ui/components/Input'
 import { ErrorMessage, Field as FormikField } from 'formik'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next'
-import { Link } from 'react-router-dom'
 
 import { ROUTES } from '~/services/routing/Routes/constants'
 
@@ -22,6 +21,8 @@ import {
   Form,
   Info,
   Modal,
+  ShareLink,
+  ShareModalDescription,
   Title,
 } from './styles'
 import { HeaderProps } from './types'
@@ -29,14 +30,17 @@ import { HeaderProps } from './types'
 const Header = ({ description, name }: HeaderProps) => {
   const {
     handleCloseDeleteModal,
+    handleCloseShareModal,
     handleDeleteRoutine,
     handleGoBack,
     handleOpenDeleteModal,
     handleOpenEditHeader,
+    handleOpenShareModal,
     handleSaveHeader,
     idHash,
     isDeleteModalOpen,
     isEditHeaderOpen,
+    isShareModalOpen,
     t,
   } = useHeader()
 
@@ -91,19 +95,41 @@ const Header = ({ description, name }: HeaderProps) => {
             <IconButton onClick={handleOpenEditHeader}>
               <EditIcon />
             </IconButton>
-            <Link
-              rel="noopener noreferrer"
-              target="_blank"
-              to={`${ROUTES.LANDING}/${idHash}`}
-            >
-              <IconButton>
-                <ExternalIcon />
-              </IconButton>
-            </Link>
+            <IconButton onClick={handleOpenShareModal}>
+              <ExternalIcon />
+            </IconButton>
             <IconButton onClick={handleOpenDeleteModal}>
               <DeleteIcon />
             </IconButton>
           </Buttons>
+          <Suspense>
+            {isShareModalOpen ? (
+              <Modal
+                close-aria-label={t('share_modal.close')}
+                footer={
+                  <Footer>
+                    <Button onClick={handleCloseShareModal}>
+                      {t('share_modal.buttons.got_it.label')}
+                    </Button>
+                  </Footer>
+                }
+                id="share_routine_modal"
+                onClose={handleCloseShareModal}
+                title={t('share_modal.title')}
+              >
+                <ShareModalDescription>
+                  {t('share_modal.description')}
+                  <ShareLink
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    to={`${ROUTES.LANDING}/${idHash}`}
+                  >
+                    {`${window.location.origin}${ROUTES.LANDING}/${idHash}`}
+                  </ShareLink>
+                </ShareModalDescription>
+              </Modal>
+            ) : null}
+          </Suspense>
           <Suspense>
             {isDeleteModalOpen ? (
               <Modal

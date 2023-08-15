@@ -23,6 +23,14 @@
     "save": { "label": "Save" }
   },
   "no_workouts": "This routine has no workouts added.",
+  "share_modal": {
+    "buttons": {
+      "got_it": { "label": "Got it" }
+    },
+    "close": "Close",
+    "description": "Here you have the link to share your routine with your friends:",
+    "title": "Share your routine!"
+  },
   "workout": {
     "exercise_name": { "label": "Exercise" },
     "form": {
