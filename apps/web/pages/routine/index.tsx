@@ -5,12 +5,14 @@ import { FieldArray, Form, Formik } from 'formik'
 import { validationSchema } from './constants'
 import Header from './Header'
 import useLayout from './hooks'
-import { Container, Content, Workouts } from './styles'
+import { Container, Content, CustomErrorMessage, Workouts } from './styles'
 import Workout from './Workout'
 
-Header
 const Layout = () => {
-  const { handleSubmit, initialValues, routine, t } = useLayout()
+  const { addWorkoutInitialValues, handleSubmit, initialValues, routine, t } =
+    useLayout()
+
+  console.log(addWorkoutInitialValues)
 
   return (
     <Container>
@@ -30,12 +32,12 @@ const Layout = () => {
                 name={routine.name}
                 description={routine.description}
               ></Header>
-              {routine.workouts.length < 1 ? (
-                <Body1>{t('no_workouts')}</Body1>
-              ) : (
-                <FieldArray name="workouts">
-                  {(arrayHelpers) => (
-                    <>
+              <FieldArray name="workouts">
+                {(arrayHelpers) => (
+                  <>
+                    {routine.workouts.length < 1 ? (
+                      <Body1>{t('no_workouts')}</Body1>
+                    ) : (
                       <Workouts>
                         {routine.workouts.map(
                           ({ exerciseId, exerciseName, reps, sets }, index) => (
@@ -51,11 +53,25 @@ const Layout = () => {
                           ),
                         )}
                       </Workouts>
-                      <Button>Add new Workout</Button>
-                    </>
-                  )}
-                </FieldArray>
-              )}
+                    )}
+                    {addWorkoutInitialValues ? (
+                      <Button
+                        // eslint-disable-next-line react/jsx-no-bind
+                        onClick={() =>
+                          arrayHelpers.push(addWorkoutInitialValues)
+                        }
+                        type="submit"
+                      >
+                        {t('add_workout.label')}
+                      </Button>
+                    ) : (
+                      <CustomErrorMessage>
+                        {t('add_workout.error')}
+                      </CustomErrorMessage>
+                    )}
+                  </>
+                )}
+              </FieldArray>
             </Content>
           </Form>
         </Formik>

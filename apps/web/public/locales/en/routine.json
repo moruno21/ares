@@ -1,4 +1,8 @@
 {
+  "add_workout": {
+    "error": "It's not possible to add workouts at the moment. Please try again later.",
+    "label": "Add New Workout"
+  },
   "delete_modal": {
     "buttons": {
       "cancel": { "label": "Cancel" },
