@@ -1,9 +1,10 @@
 import { useFormikContext } from 'formik'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import useRoutine from '~/hooks/useRoutine'
+import { encrypt } from '~/lib/encryption'
 import { ROUTES } from '~/services/routing/Routes/constants'
 
 import { Values } from '../types'
@@ -16,6 +17,8 @@ const useHeader = () => {
   const navigate = useNavigate()
   const { remove: deleteRoutine } = useRoutine({ id })
   const { t } = useTranslation('routine')
+
+  const idHash = useMemo(() => encodeURIComponent(encrypt(id ?? '')), [id])
 
   const handleCloseDeleteModal = useCallback(() => {
     setIsDeleteModalOpen(false)
@@ -59,6 +62,7 @@ const useHeader = () => {
     handleOpenDeleteModal,
     handleOpenEditHeader,
     handleSaveHeader,
+    idHash,
     isDeleteModalOpen,
     isEditHeaderOpen,
     t,

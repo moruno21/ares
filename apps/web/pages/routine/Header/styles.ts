@@ -1,4 +1,5 @@
 import { ReactComponent as DefaultChevronLeftIcon } from '@ares/ui/assets/icons/chevron-left.svg'
+import { ReactComponent as DefaultExternalIcon } from '@ares/ui/assets/icons/external.svg'
 import DefaultModal from '@ares/ui/components/Modal'
 import { H1, H4 } from '@ares/ui/components/Text'
 import pxToRem from '@ares/ui/lib/px-to-rem'
@@ -34,6 +35,11 @@ export const Content = styled.div`
 
 export const Description = styled(H4)`
   width: fit-content;
+`
+
+export const ExternalIcon = styled(DefaultExternalIcon)`
+  height: 1.5rem;
+  width: 1.5rem;
 `
 
 export const Field = styled.div`

@@ -1,0 +1,8 @@
+{
+  "workout": {
+    "exercise_name": { "label": "Exercise" },
+    "reps": { "label": "Reps" },
+    "sets": { "label": "Sets" }
+  },
+  "not_found": "Routine not found."
+}

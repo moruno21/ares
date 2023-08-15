@@ -7,6 +7,7 @@ import { ROUTES } from './constants'
 
 const ExercisesLayout = lazy(() => import('~/pages/exercises'))
 const Explore = lazy(() => import('~/pages/explore'))
+const LandingLayout = lazy(() => import('~/pages/landing'))
 const Layout = lazy(() => import('~/pages/layout'))
 const RoutineLayout = lazy(() => import('~/pages/routine'))
 const RoutinesLayout = lazy(() => import('~/pages/routines'))
@@ -23,6 +24,10 @@ const AppRoutes = () => (
         ></Route>
         <Route path={ROUTES.EXPLORE} element={<Explore />}></Route>
         <Route path={ROUTES.EXERCISES} element={<ExercisesLayout />}></Route>
+        <Route
+          path={`${ROUTES.LANDING}/:idHash`}
+          element={<LandingLayout />}
+        ></Route>
         <Route path="*" element={<Navigate to={ROUTES.HOME} />}></Route>
       </Route>
     </Routes>

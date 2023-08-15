@@ -4,6 +4,9 @@ import Input from '@ares/ui/components/Input'
 import { ErrorMessage, Field as FormikField } from 'formik'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
+import { ROUTES } from '~/services/routing/Routes/constants'
 
 import { CustomErrorMessage, DeleteIcon, EditIcon, Label } from '../styles'
 import useHeader from './hooks'
@@ -12,6 +15,7 @@ import {
   ChevronLeftIcon,
   Content,
   Description,
+  ExternalIcon,
   Field,
   Fields,
   Footer,
@@ -30,6 +34,7 @@ const Header = ({ description, name }: HeaderProps) => {
     handleOpenDeleteModal,
     handleOpenEditHeader,
     handleSaveHeader,
+    idHash,
     isDeleteModalOpen,
     isEditHeaderOpen,
     t,
@@ -89,6 +94,15 @@ const Header = ({ description, name }: HeaderProps) => {
             <IconButton onClick={handleOpenDeleteModal}>
               <DeleteIcon />
             </IconButton>
+            <Link
+              rel="noopener noreferrer"
+              target="_blank"
+              to={`${ROUTES.LANDING}/${idHash}`}
+            >
+              <IconButton>
+                <ExternalIcon />
+              </IconButton>
+            </Link>
           </Buttons>
           <Suspense>
             {isDeleteModalOpen ? (
