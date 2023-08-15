@@ -59,7 +59,7 @@
   font-style: italic;
   font-weight: 400;
   src: local('Public Sans'),
-    url('/fonts/PublicSans-RegularItalic.ttf') format('truetype');
+    url('/fonts/PublicSans-Italic.ttf') format('truetype');
 }
 
 @font-face {
