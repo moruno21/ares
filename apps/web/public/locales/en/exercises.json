@@ -20,5 +20,6 @@
     },
     "save": { "label": "Save" }
   },
+  "no_exercises": "There are no exercises right now. Create one below!",
   "title": "Exercises"
 }

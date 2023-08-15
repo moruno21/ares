@@ -11,6 +11,7 @@ import {
   CloseIcon,
   Container,
   CreateExerciseSection,
+  EmptyMessage,
   Exercises,
   Header,
   IconButton,
@@ -32,6 +33,9 @@ const Layout = () => {
         <H1>{t('title')}</H1>
         <H3>{t('description')}</H3>
       </Header>
+      {exercises.length < 1 && !isCreateExerciseOpen ? (
+        <EmptyMessage>{t('no_exercises')}</EmptyMessage>
+      ) : null}
       <CreateExerciseSection>
         {isCreateExerciseOpen ? (
           <Card>
