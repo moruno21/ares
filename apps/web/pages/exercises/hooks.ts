@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import useExercise from '~/hooks/useExercise'
 import useExercises from '~/hooks/useExercises'
 
-import { Values } from './types'
+import { Exercise } from './types'
 
 const useLayout = () => {
   const { create: createExercise } = useExercise()
@@ -22,8 +22,8 @@ const useLayout = () => {
   }, [])
 
   const handleSubmit = useCallback(
-    async (values: Values, { setFieldError }: FormikHelpers<Values>) => {
-      const result = await createExercise(values)
+    async (exercise: Exercise, { setFieldError }: FormikHelpers<Exercise>) => {
+      const result = await createExercise(exercise)
       if (!result) return
 
       const { error } = result

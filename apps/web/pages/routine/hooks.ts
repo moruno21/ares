@@ -6,7 +6,7 @@ import useExercises from '~/hooks/useExercises'
 import useRoutine from '~/hooks/useRoutine'
 
 import { initialValues as emptyInitialValues } from './constants'
-import { Values } from './types'
+import { Routine } from './types'
 
 const useLayout = () => {
   const { id } = useParams()
@@ -23,8 +23,8 @@ const useLayout = () => {
   }, [exercises])
 
   const handleSubmit = useCallback(
-    async (values: Values) => {
-      await editRoutine(id ?? '', values)
+    async (editedRoutine: Routine) => {
+      await editRoutine(id ?? '', editedRoutine)
     },
     [editRoutine, id],
   )

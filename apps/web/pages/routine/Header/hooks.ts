@@ -7,10 +7,10 @@ import useRoutine from '~/hooks/useRoutine'
 import { encrypt } from '~/lib/encryption'
 import { ROUTES } from '~/services/routing/Routes/constants'
 
-import { Values } from '../types'
+import { Routine } from '../types'
 
 const useHeader = () => {
-  const { errors, handleSubmit } = useFormikContext<Values>()
+  const { errors, handleSubmit } = useFormikContext<Routine>()
   const { id } = useParams()
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditHeaderOpen, setIsEditHeaderOpen] = useState(false)

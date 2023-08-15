@@ -6,7 +6,7 @@ import useRoutine from '~/hooks/useRoutine'
 import useRoutines from '~/hooks/useRoutines'
 import { ROUTES } from '~/services/routing/Routes/constants'
 
-import { Values } from './types'
+import { Routine } from './types'
 
 const useLayout = () => {
   const { create: createRoutine } = useRoutine({})
@@ -24,8 +24,8 @@ const useLayout = () => {
   }, [])
 
   const handleSubmit = useCallback(
-    async (values: Values) => {
-      const result = await createRoutine(values)
+    async (routine: Routine) => {
+      const result = await createRoutine(routine)
       if (!result) return
 
       handleCloseCreateRoutine()

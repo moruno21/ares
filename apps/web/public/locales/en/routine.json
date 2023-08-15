@@ -24,9 +24,7 @@
   },
   "no_workouts": "This routine has no workouts added.",
   "workout": {
-    "exercise": {
-      "name": { "label": "Exercise" }
-    },
+    "exercise_name": { "label": "Exercise" },
     "form": {
       "inputs": {
         "exercise": {

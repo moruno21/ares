@@ -100,7 +100,7 @@ const Workout = ({
         <Content>
           <Info>
             <Field>
-              <H4>{t('workout.exercise.name.label')}</H4>
+              <H4>{t('workout.exercise_name.label')}</H4>
               <Body1>{exerciseName}</Body1>
             </Field>
             <WorkoutSettings>

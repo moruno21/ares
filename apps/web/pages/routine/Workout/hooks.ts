@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next'
 
 import useExercises from '~/hooks/useExercises'
 
-import { Values } from '../types'
+import { Routine } from '../types'
 import { UseWorkoutProps } from './types'
 
 const useWorkout = ({ exerciseId, index }: UseWorkoutProps) => {
   const { errors, handleBlur, handleSubmit, initialValues, setFieldValue } =
-    useFormikContext<Values>()
+    useFormikContext<Routine>()
   const [exercise, setExercise] = useState<string>(exerciseId)
   const { exercises } = useExercises()
   const [isEditWorkoutOpen, setIsEditWorkoutOpen] = useState(false)

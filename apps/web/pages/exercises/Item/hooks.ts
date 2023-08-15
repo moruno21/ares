@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import useExercise from '~/hooks/useExercise'
 
-import { Values } from '../types'
+import { Exercise } from '../types'
 import { UseItemProps } from './types'
 
 const useItem = ({ description, id, name }: UseItemProps) => {
@@ -40,8 +40,8 @@ const useItem = ({ description, id, name }: UseItemProps) => {
   }, [])
 
   const handleSubmit = useCallback(
-    async (values: Values, { setFieldError }: FormikHelpers<Values>) => {
-      const result = await editExercise(id, values)
+    async (exercise: Exercise, { setFieldError }: FormikHelpers<Exercise>) => {
+      const result = await editExercise(id, exercise)
       if (!result) return
 
       const { error } = result

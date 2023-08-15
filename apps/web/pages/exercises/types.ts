@@ -1,4 +1,4 @@
-export type Values = {
+export type Exercise = {
   description: string
   name: string
 }
