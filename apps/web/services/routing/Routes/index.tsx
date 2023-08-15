@@ -24,12 +24,12 @@ const AppRoutes = () => (
         ></Route>
         <Route path={ROUTES.EXPLORE} element={<Explore />}></Route>
         <Route path={ROUTES.EXERCISES} element={<ExercisesLayout />}></Route>
-        <Route
-          path={`${ROUTES.LANDING}/:idHash`}
-          element={<LandingLayout />}
-        ></Route>
         <Route path="*" element={<Navigate to={ROUTES.HOME} />}></Route>
       </Route>
+      <Route
+        path={`${ROUTES.LANDING}/:idHash`}
+        element={<LandingLayout />}
+      ></Route>
     </Routes>
   </Suspense>
 )

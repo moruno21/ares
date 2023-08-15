@@ -3,13 +3,16 @@ import pxToRem from '@ares/ui/lib/px-to-rem'
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  border-radius: 0.5rem;
-  box-shadow: ${({ theme }) => theme.shadows.light};
-  display: grid;
-  gap: 4.5rem;
-  margin: auto;
-  max-width: 45rem;
-  padding: 2rem;
+  width: 100%;
+  padding: 3rem 4rem 5rem;
+
+  @media (max-width: ${({ theme }) => pxToRem(theme.breakpoints.medium)}) {
+    padding: 3rem 2rem 5rem;
+  }
+
+  @media (max-width: ${({ theme }) => pxToRem(theme.breakpoints.small)}) {
+    padding: 2rem 1rem 4rem;
+  }
 `
 
 export const Field = styled.span`
@@ -34,6 +37,16 @@ export const Settings = styled.div`
 
 export const NotFoundMessage = styled(Body2)`
   color: ${({ theme }) => theme.colors.text.error};
+`
+
+export const Routine = styled.div`
+  border-radius: 0.5rem;
+  box-shadow: ${({ theme }) => theme.shadows.light};
+  display: grid;
+  gap: 4.5rem;
+  margin: auto;
+  max-width: 45rem;
+  padding: 2rem;
 `
 
 export const Workout = styled.div`

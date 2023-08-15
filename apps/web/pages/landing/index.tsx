@@ -6,6 +6,7 @@ import {
   Field,
   Header,
   NotFoundMessage,
+  Routine,
   Settings,
   Workout,
   Workouts,
@@ -17,7 +18,7 @@ const Layout = ({}) => {
   return (
     <Container>
       {routine ? (
-        <>
+        <Routine>
           <Header>
             <H1>{routine.name}</H1>
             <H3>{routine.description}</H3>
@@ -42,7 +43,7 @@ const Layout = ({}) => {
               </Workout>
             ))}
           </Workouts>
-        </>
+        </Routine>
       ) : (
         <NotFoundMessage>{t('not_found')}</NotFoundMessage>
       )}
