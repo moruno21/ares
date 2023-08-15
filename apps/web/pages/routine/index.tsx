@@ -42,8 +42,8 @@ const Layout = () => {
                             <Workout
                               exerciseId={exerciseId}
                               exerciseName={exerciseName ?? ''}
-                              index={index}
                               handleDeleteWorkout={arrayHelpers.remove}
+                              index={index}
                               key={index}
                               reps={reps}
                               sets={sets}
