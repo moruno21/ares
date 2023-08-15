@@ -1,14 +1,7 @@
 import { ButtonHTMLAttributes } from 'react'
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?:
-    | 'cta-outstanding'
-    | 'cta-primary'
-    | 'cta-secondary'
-    | 'ghost-link'
-    | 'primary'
-    | 'raw-link'
-    | 'secondary'
+  variant?: 'primary' | 'secondary'
 }
 
 export type ComponentProps = {
