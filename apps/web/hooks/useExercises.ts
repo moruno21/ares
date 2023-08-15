@@ -9,11 +9,7 @@ const useExercises = () => {
     EXERCISES,
   )
 
-  const exercises = useMemo(() => {
-    if (!data) return []
-
-    return data.exercises
-  }, [data])
+  const exercises = useMemo(() => data?.exercises ?? [], [data])
 
   return { exercises, loading }
 }
