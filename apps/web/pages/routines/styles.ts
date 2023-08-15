@@ -1,6 +1,7 @@
 import { ReactComponent as DefaultCloseIcon } from '@ares/ui/assets/icons/close.svg'
 import DefaultButton from '@ares/ui/components/Button'
 import DefaultIconButton from '@ares/ui/components/IconButton'
+import { Body3Styles } from '@ares/ui/components/Text'
 import pxToRem from '@ares/ui/lib/px-to-rem'
 import styled from 'styled-components'
 
@@ -34,6 +35,11 @@ export const CreateRoutineSection = styled.div`
   display: grid;
   justify-items: center;
   width: 100%;
+`
+
+export const EmptyMessage = styled.div`
+  ${Body3Styles}
+  font-size: ${({ theme }) => theme.font.sizes.medium};
 `
 
 export const Header = styled.div`

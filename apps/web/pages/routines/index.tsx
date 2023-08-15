@@ -11,6 +11,7 @@ import {
   CloseIcon,
   Container,
   CreateRoutineSection,
+  EmptyMessage,
   Header,
   IconButton,
   Routines,
@@ -32,6 +33,9 @@ const Layout = () => {
         <H1>{t('title')}</H1>
         <H3>{t('description')}</H3>
       </Header>
+      {routines.length < 1 && !isCreateRoutineOpen ? (
+        <EmptyMessage>{t('no_routines')}</EmptyMessage>
+      ) : null}
       <CreateRoutineSection>
         {isCreateRoutineOpen ? (
           <Card>

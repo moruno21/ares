@@ -11,5 +11,6 @@
     },
     "save": { "label": "Save" }
   },
+  "no_routines": "Create yout first routine below!",
   "title": "Welcome"
 }
