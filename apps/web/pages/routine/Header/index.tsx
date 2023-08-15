@@ -91,9 +91,6 @@ const Header = ({ description, name }: HeaderProps) => {
             <IconButton onClick={handleOpenEditHeader}>
               <EditIcon />
             </IconButton>
-            <IconButton onClick={handleOpenDeleteModal}>
-              <DeleteIcon />
-            </IconButton>
             <Link
               rel="noopener noreferrer"
               target="_blank"
@@ -103,6 +100,9 @@ const Header = ({ description, name }: HeaderProps) => {
                 <ExternalIcon />
               </IconButton>
             </Link>
+            <IconButton onClick={handleOpenDeleteModal}>
+              <DeleteIcon />
+            </IconButton>
           </Buttons>
           <Suspense>
             {isDeleteModalOpen ? (

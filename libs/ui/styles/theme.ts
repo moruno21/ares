@@ -44,6 +44,7 @@ const theme = {
     icon: {
       disabled: 'var(--color-grey-10)',
       main: 'var(--color-purple-30)',
+      red: 'var(--color-red-20)',
       white: 'var(--color-white)',
     },
     stroke: {

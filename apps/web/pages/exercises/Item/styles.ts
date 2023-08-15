@@ -43,6 +43,7 @@ export const Content = styled.div`
 `
 
 export const DeleteIcon = styled(DefaultDeleteIcon)`
+  color: ${({ theme }) => theme.colors.icon.red};
   height: 1.5rem;
   width: 1.5rem;
 `
