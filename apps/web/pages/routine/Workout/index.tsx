@@ -54,9 +54,6 @@ const Workout = ({
               value={exercise}
             />
           </Field>
-          <ErrorMessage name={`workouts[${index}].sets`}>
-            {(msg) => <CustomErrorMessage>{msg}</CustomErrorMessage>}
-          </ErrorMessage>
           <Field>
             <Label htmlFor={`workouts_[${index}]_sets`}>
               {t('workout.form.inputs.sets.label')}
