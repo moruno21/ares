@@ -12,8 +12,6 @@ const Layout = () => {
   const { addWorkoutInitialValues, handleSubmit, initialValues, routine, t } =
     useLayout()
 
-  console.log(addWorkoutInitialValues)
-
   return (
     <Container>
       {routine ? (
