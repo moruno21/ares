@@ -1,8 +1,9 @@
 export const ROUTES = {
   EXERCISES: '/exercises',
   EXPLORE: '/explore',
-  HOME: '/',
+  HOME: '/routines',
   LANDING: '/landing',
+  LOGIN: '/',
   ROUTINE: '/routine',
   USER: '/user',
 }

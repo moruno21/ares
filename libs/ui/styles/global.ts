@@ -22,6 +22,8 @@ const GlobalStyle = createGlobalStyle`
     --font-secondary: Open Sans, Arial, Helvetica, sans-serif;
   }
 
+  height: 100%;
+
   * {
     box-sizing: border-box;
 
