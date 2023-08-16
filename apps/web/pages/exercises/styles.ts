@@ -1,7 +1,7 @@
 import { ReactComponent as DefaultCloseIcon } from '@ares/ui/assets/icons/close.svg'
 import DefaultButton from '@ares/ui/components/Button'
 import DefaultIconButton from '@ares/ui/components/IconButton'
-import { Body3Styles } from '@ares/ui/components/Text'
+import { Body3Styles, H3 } from '@ares/ui/components/Text'
 import styled from 'styled-components'
 
 export const Button = styled(DefaultButton)`
@@ -34,6 +34,10 @@ export const CreateExerciseSection = styled.div`
   display: grid;
   justify-items: center;
   width: 100%;
+`
+
+export const Description = styled(H3)`
+  text-align: center;
 `
 
 export const EmptyMessage = styled.div`

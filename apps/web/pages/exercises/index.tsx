@@ -1,4 +1,4 @@
-import { H1, H3 } from '@ares/ui/components/Text'
+import { H1 } from '@ares/ui/components/Text'
 import { Formik } from 'formik'
 
 import { initialValues, validationSchema } from './constants'
@@ -11,6 +11,7 @@ import {
   CloseIcon,
   Container,
   CreateExerciseSection,
+  Description,
   EmptyMessage,
   Exercises,
   Header,
@@ -31,7 +32,7 @@ const Layout = () => {
     <Container>
       <Header>
         <H1>{t('title')}</H1>
-        <H3>{t('description')}</H3>
+        <Description>{t('description')}</Description>
       </Header>
       {exercises.length < 1 && !isCreateExerciseOpen ? (
         <EmptyMessage>{t('no_exercises')}</EmptyMessage>
