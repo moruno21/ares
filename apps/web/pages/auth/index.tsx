@@ -1,7 +1,14 @@
 import { GoogleLogin } from '@react-oauth/google'
 
 import useLayout from './hooks'
-import { Card, Container, Description, ErrorMessage, Title } from './styles'
+import {
+  Card,
+  Container,
+  Description,
+  ErrorMessage,
+  LoginTitle,
+  Title,
+} from './styles'
 
 const Layout = () => {
   const { error, handleError, handleSuccess, t } = useLayout()
@@ -11,6 +18,7 @@ const Layout = () => {
       <Title>{t('title')}</Title>
       <Description>{t('description')}</Description>
       <Card>
+        <LoginTitle>{t('login.title')}</LoginTitle>
         <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
       </Card>
       {error ? <ErrorMessage>{error}</ErrorMessage> : null}

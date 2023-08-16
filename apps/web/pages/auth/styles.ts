@@ -1,4 +1,4 @@
-import { Body2, H1, H3 } from '@ares/ui/components/Text'
+import { Body2, H1, H3, H4 } from '@ares/ui/components/Text'
 import pxToRem from '@ares/ui/lib/px-to-rem'
 import styled from 'styled-components'
 
@@ -7,10 +7,10 @@ export const Card = styled.div`
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.medium};
   display: grid;
-  height: 10rem;
-  justify-content: center;
-  padding: 3rem;
-  max-width: 18rem;
+  gap: 2rem;
+  height: fit-content;
+  justify-items: center;
+  padding: 3rem 2rem;
 `
 
 export const Container = styled.div`
@@ -36,6 +36,10 @@ export const Description = styled(H3)`
 
 export const ErrorMessage = styled(Body2)`
   color: ${({ theme }) => theme.colors.text.error};
+`
+
+export const LoginTitle = styled(H4)`
+  width: fit-content;
 `
 
 export const Title = styled(H1)`
