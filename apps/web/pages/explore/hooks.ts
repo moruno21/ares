@@ -2,10 +2,12 @@ import { ChangeEventHandler, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { User } from '~/graphql/types'
+import useMe from '~/hooks/useMe'
 import useUsers from '~/hooks/useUsers'
 
 const useExplore = () => {
   const { t } = useTranslation('explore')
+  const { me } = useMe()
   const { users } = useUsers()
   const [filteredUsers, setFilteredUsers] = useState<User[]>([])
 
@@ -17,10 +19,13 @@ const useExplore = () => {
       }
 
       setFilteredUsers(
-        users.filter(({ name }) => name.startsWith(event.target.value)),
+        users.filter(
+          ({ name }) =>
+            name.startsWith(event.target.value) && name !== me?.name,
+        ),
       )
     },
-    [users],
+    [me, users],
   )
 
   return { filteredUsers, handleSearch, t }
