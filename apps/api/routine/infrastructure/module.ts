@@ -31,6 +31,7 @@ import RoutineWorkoutRenamed from '~/routine/domain/events/routine-workout-renam
 import RoutineWorkoutsChanged from '~/routine/domain/events/routine-workouts-changed'
 import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
+import MongooseUserView from '~/user/infrastructure/models/mongoose/view'
 
 import RoutinesController from './controllers/routines'
 import MongooseRoutineView from './models/mongoose/view'
@@ -61,13 +62,15 @@ const eventFactories = {
     description,
     id,
     name,
+    ownerId,
     workouts,
   }: {
     description: string
     id: string
     name: string
+    ownerId: string
     workouts: { exerciseId: string; reps: number; sets: number }[]
-  }) => RoutineCreated.with({ description, id, name, workouts }),
+  }) => RoutineCreated.with({ description, id, name, ownerId, workouts }),
   RoutineDeleted: ({ id }: { id: string }) => RoutineDeleted.with({ id }),
   RoutineRedescribed: ({
     description,
@@ -126,6 +129,12 @@ const eventFactories = {
       {
         name: MongooseRoutineView.name,
         schema: SchemaFactory.createForClass(MongooseRoutineView),
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: MongooseUserView.name,
+        schema: SchemaFactory.createForClass(MongooseUserView),
       },
     ]),
   ],
