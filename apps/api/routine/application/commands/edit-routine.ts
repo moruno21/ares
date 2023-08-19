@@ -7,6 +7,7 @@ type EditRoutineType = NameType<
     description: string
     id: string
     name: string
+    ownerId: string
     workouts: {
       exerciseId: string
       reps: number
@@ -23,6 +24,7 @@ class EditRoutine implements EditRoutineType {
     readonly id: EditRoutineType['id'],
     readonly description: EditRoutineType['description'],
     readonly name: EditRoutineType['name'],
+    readonly ownerId: EditRoutineType['ownerId'],
     readonly workouts: EditRoutineType['workouts'],
   ) {}
 
@@ -30,9 +32,10 @@ class EditRoutine implements EditRoutineType {
     description,
     id,
     name,
+    ownerId,
     workouts,
   }: Omit<EditRoutineType, '__name__'>): EditRoutine {
-    return new this(id, description, name, workouts)
+    return new this(id, description, name, ownerId, workouts)
   }
 }
 

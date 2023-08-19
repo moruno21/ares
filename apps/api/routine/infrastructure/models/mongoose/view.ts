@@ -16,34 +16,47 @@ class MongooseRoutineView implements Omit<RoutineView, '__name__' | 'id'> {
   readonly name: string
 
   @Prop()
+  readonly ownerId: string
+
+  @Prop()
   readonly workouts: RoutineWorkoutView[]
 
   constructor(
     _id: MongooseRoutineView['_id'],
     description: MongooseRoutineView['description'],
     name: MongooseRoutineView['name'],
+    ownerId: MongooseRoutineView['ownerId'],
     workouts: MongooseRoutineView['workouts'],
   ) {
     this._id = _id
     this.description = description
     this.name = name
+    this.ownerId = ownerId
     this.workouts = workouts
   }
 
-  static fromRoutineView({ description, id, name, workouts }: RoutineView) {
-    return new this(id, description, name, workouts)
+  static fromRoutineView({
+    description,
+    id,
+    name,
+    ownerId,
+    workouts,
+  }: RoutineView) {
+    return new this(id, description, name, ownerId, workouts)
   }
 
   static toRoutineView({
     _id,
     description,
     name,
+    ownerId,
     workouts,
   }: MongooseRoutineView) {
     return RoutineView.with({
       description,
       id: _id,
       name,
+      ownerId,
       workouts,
     })
   }

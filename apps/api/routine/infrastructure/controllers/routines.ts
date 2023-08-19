@@ -92,6 +92,7 @@ class RoutinesController {
           description: dto.description,
           id: Uuid.generate(),
           name: dto.name,
+          ownerId: dto.ownerId,
           workouts: dto.workouts,
         }),
       )
@@ -119,6 +120,7 @@ class RoutinesController {
           description: dto.description,
           id,
           name: dto.name,
+          ownerId: dto.ownerId,
           workouts: dto.workouts,
         }),
       )

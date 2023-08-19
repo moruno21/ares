@@ -23,6 +23,7 @@ import HttpError from '~/shared/http/error'
 import Uuid from '~/shared/uuid'
 import CommandBusMock from '~/test/mocks/@nestjs/cqrs/command-bus'
 import QueryBusMock from '~/test/mocks/@nestjs/cqrs/query-bus'
+import UserId from '~/user/domain/models/id'
 
 import PutRoutineDto from '../models/http/put-dto'
 import RoutinesController from './routines'
@@ -36,6 +37,7 @@ describe('RoutinesController', () => {
     const id = '481e9d6d-86e4-47c0-ab96-9c02a8218618'
     const name = 'name'
     const description = 'description'
+    const ownerId = '3f3f448e-c57c-4d8a-9eb5-9fe09f8e67fc'
     const workouts = [
       {
         exerciseId: 'exerciseId',
@@ -49,12 +51,14 @@ describe('RoutinesController', () => {
       description,
       id,
       name,
+      ownerId,
       workouts,
     })
     const routineViewTwo = RoutineView.with({
       description,
       id,
       name,
+      ownerId,
       workouts,
     })
 
@@ -95,6 +99,7 @@ describe('RoutinesController', () => {
     const id = '0792bf7d-4104-4bee-82c3-39900969e869'
     const name = 'name'
     const description = 'description'
+    const ownerId = 'dfeb3822-7679-4b90-95d4-2d6c270c3c89'
     const workouts = [
       {
         exerciseId: 'exerciseId',
@@ -104,7 +109,13 @@ describe('RoutinesController', () => {
       },
     ]
 
-    const routineView = RoutineView.with({ description, id, name, workouts })
+    const routineView = RoutineView.with({
+      description,
+      id,
+      name,
+      ownerId,
+      workouts,
+    })
 
     beforeEach(() => {
       queryBus = QueryBusMock.mock()
@@ -169,6 +180,8 @@ describe('RoutinesController', () => {
     const descriptionValue = 'description'
     const description = RoutineDescription.fromString(descriptionValue)
       .value as RoutineDescription
+    const ownerIdValue = 'd9b5cc3d-7977-4aa1-86e1-5a4dbc0e3355'
+    const ownerId = UserId.fromString(ownerIdValue).value as UserId
     const workoutsValue = [
       {
         exerciseId: 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba',
@@ -180,7 +193,7 @@ describe('RoutinesController', () => {
       (workoutValue) =>
         RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
     )
-    const routine = Routine.create({ description, id, name, workouts })
+    const routine = Routine.create({ description, id, name, ownerId, workouts })
     const dto = RoutineDto.fromRoutine(routine)
 
     beforeEach(() => {
@@ -199,6 +212,7 @@ describe('RoutinesController', () => {
         PostRoutineDto.with({
           description: descriptionValue,
           name: nameValue,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )) as RoutineDto
@@ -209,12 +223,14 @@ describe('RoutinesController', () => {
           description: descriptionValue,
           id: idValue,
           name: nameValue,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )
       expect(response.id).toBe(dto.id)
       expect(response.name).toBe(dto.name)
       expect(response.description).toBe(dto.description)
+      expect(response.ownerId).toBe(dto.ownerId)
       expect(response.workouts).toStrictEqual(dto.workouts)
     })
 
@@ -252,6 +268,7 @@ describe('RoutinesController', () => {
           PostRoutineDto.with({
             description: descriptionMock,
             name: nameMock,
+            ownerId: ownerIdValue,
             workouts: workoutsValue,
           }),
         )
@@ -262,6 +279,7 @@ describe('RoutinesController', () => {
             description: descriptionMock,
             id: idValue,
             name: nameMock,
+            ownerId: ownerIdValue,
             workouts: workoutsValue,
           }),
         )
@@ -280,6 +298,8 @@ describe('RoutinesController', () => {
     const descriptionValue = 'description'
     const description = RoutineDescription.fromString(descriptionValue)
       .value as RoutineDescription
+    const ownerIdValue = 'd51e6d74-3fae-494a-ae09-4b85bef2e4a6'
+    const ownerId = UserId.fromString(ownerIdValue).value as UserId
     const workoutsValue = [
       {
         exerciseId: '46a14b1c-14c0-4e7d-be7f-56de38d95984',
@@ -291,7 +311,13 @@ describe('RoutinesController', () => {
       (workoutValue) =>
         RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
     )
-    const routineEdited = Routine.create({ description, id, name, workouts })
+    const routineEdited = Routine.create({
+      description,
+      id,
+      name,
+      ownerId,
+      workouts,
+    })
     const dto = RoutineDto.fromRoutine(routineEdited)
 
     beforeEach(() => {
@@ -308,6 +334,7 @@ describe('RoutinesController', () => {
         PutRoutineDto.with({
           description: descriptionValue,
           name: nameValue,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )) as RoutineDto
@@ -317,6 +344,7 @@ describe('RoutinesController', () => {
           description: descriptionValue,
           id: idValue,
           name: nameValue,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )
@@ -338,6 +366,7 @@ describe('RoutinesController', () => {
         PutRoutineDto.with({
           description: descriptionValue,
           name: nameValue,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )
@@ -347,6 +376,7 @@ describe('RoutinesController', () => {
           description: descriptionValue,
           id: nonExistentUuid,
           name: nameValue,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )
@@ -364,6 +394,8 @@ describe('RoutinesController', () => {
     const descriptionValue = 'description'
     const description = RoutineDescription.fromString(descriptionValue)
       .value as RoutineDescription
+    const ownerIdValue = 'ab17c525-e11b-41f1-96ec-02936a75138f'
+    const ownerId = UserId.fromString(ownerIdValue).value as UserId
     const workoutsValue = [
       {
         exerciseId: 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba',
@@ -375,7 +407,7 @@ describe('RoutinesController', () => {
       (workoutValue) =>
         RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
     )
-    const routine = Routine.create({ description, id, name, workouts })
+    const routine = Routine.create({ description, id, name, ownerId, workouts })
     const dto = RoutineDto.fromRoutine(routine)
 
     beforeEach(() => {

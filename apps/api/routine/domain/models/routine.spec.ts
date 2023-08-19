@@ -1,5 +1,6 @@
 import Either, { Left } from '~/shared/either'
 import { itIsAnEntity } from '~/test/closures/shared/domain/entity'
+import UserId from '~/user/domain/models/id'
 
 import NotFoundRoutine from '../exceptions/not-found'
 import RoutineDescription from './description'
@@ -15,6 +16,8 @@ describe('Routine', () => {
   const name = RoutineName.fromString('squats').value as RoutineName
   const description = RoutineDescription.fromString('description')
     .value as RoutineDescription
+  const ownerId = UserId.fromString('880fa2ec-a051-4351-ace9-06a600c11a38')
+    .value as UserId
   const workoutsValue = [
     {
       exerciseId: 'ea29a364-177c-4751-bb3b-43bed8cb58e5',
@@ -26,7 +29,7 @@ describe('Routine', () => {
     (workoutValue) =>
       RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
   )
-  const routine = Routine.create({ description, id, name, workouts })
+  const routine = Routine.create({ description, id, name, ownerId, workouts })
 
   itIsAnEntity(routine)
 
@@ -36,6 +39,10 @@ describe('Routine', () => {
 
   it.concurrent('has a description', () => {
     expect(routine).toHaveProperty('description')
+  })
+
+  it.concurrent('has an ownerId', () => {
+    expect(routine).toHaveProperty('ownerId')
   })
 
   it.concurrent('has workouts', () => {
@@ -51,6 +58,7 @@ describe('Routine', () => {
     expect(routine.id).toStrictEqual(id)
     expect(routine.name).toStrictEqual(name)
     expect(routine.description).toStrictEqual(description)
+    expect(routine.ownerId).toStrictEqual(ownerId)
     expect(routine.workouts).toStrictEqual(workouts)
     expect(routine.isDeleted).toBe(false)
   })

@@ -17,6 +17,12 @@ import { InvalidUuid } from '~/shared/domain'
 import Either, { Left } from '~/shared/either'
 import ExercisesMock from '~/test/mocks/exercise/domain/services/exercises'
 import RoutinesMock from '~/test/mocks/routine/domain/services/routines'
+import UsersMock from '~/test/mocks/user/domain/services/users'
+import UserEmail from '~/user/domain/models/email'
+import UserId from '~/user/domain/models/id'
+import UserName from '~/user/domain/models/name'
+import User from '~/user/domain/models/user'
+import Users from '~/user/domain/services/users'
 
 import EditRoutine from '../edit-routine'
 import EditRoutineHandler from './edit-routine'
@@ -24,6 +30,7 @@ import EditRoutineHandler from './edit-routine'
 describe('EditRoutineHandler', () => {
   let exercises: Exercises
   let routines: Routines
+  let users: Users
   let editRoutineHandler: EditRoutineHandler
 
   const idValue = '01f11891-a393-487b-a8d2-ce913191d666'
@@ -33,6 +40,8 @@ describe('EditRoutineHandler', () => {
   const descriptionValue = 'description'
   const description = RoutineDescription.fromString(descriptionValue)
     .value as RoutineDescription
+  const ownerIdValue = 'b1c09b96-59bb-4b1e-85c0-e392fdeba5cd'
+  const ownerId = UserId.fromString(ownerIdValue).value as UserId
   const workoutExerciseIdValue = 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba'
   const workoutsValue = [
     {
@@ -45,12 +54,13 @@ describe('EditRoutineHandler', () => {
     (workoutValue) =>
       RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
   )
-  const routine = Routine.create({ description, id, name, workouts })
+  const routine = Routine.create({ description, id, name, ownerId, workouts })
 
   beforeEach(() => {
     routines = RoutinesMock.mock()
     exercises = ExercisesMock.mock()
-    editRoutineHandler = new EditRoutineHandler(routines, exercises)
+    users = UsersMock.mock()
+    editRoutineHandler = new EditRoutineHandler(routines, exercises, users)
   })
 
   it('edits a routine', async () => {
@@ -60,9 +70,11 @@ describe('EditRoutineHandler', () => {
       { exerciseId: workoutExerciseIdValue, reps: 4, sets: 3 },
       { exerciseId: workoutExerciseIdValue, reps: 6, sets: 4 },
     ]
+
     const exercisesWithId = jest.spyOn(exercises, 'withId')
     const routinesWithId = jest.spyOn(routines, 'withId')
     const routinesSave = jest.spyOn(routines, 'save')
+    const usersWithId = jest.spyOn(users, 'withId')
 
     exercisesWithId.mockResolvedValue(
       Either.right(
@@ -75,6 +87,16 @@ describe('EditRoutineHandler', () => {
       ),
     )
 
+    usersWithId.mockResolvedValue(
+      Either.right(
+        User.create({
+          email: UserEmail.fromString('name@gmail.com'),
+          id: UserId.fromString(ownerIdValue).value as UserId,
+          name: UserName.fromString('name'),
+        }),
+      ),
+    )
+
     routinesWithId.mockResolvedValue(Either.right(routine))
 
     const response = await editRoutineHandler.execute(
@@ -82,6 +104,7 @@ describe('EditRoutineHandler', () => {
         description: anotherDescriptionValue,
         id: idValue,
         name: anotherNameValue,
+        ownerId: ownerIdValue,
         workouts: anotherWorkouts,
       }),
     )
@@ -124,6 +147,7 @@ describe('EditRoutineHandler', () => {
       const exercisesWithId = jest.spyOn(exercises, 'withId')
       const routinesWithId = jest.spyOn(routines, 'withId')
       const routinesSave = jest.spyOn(routines, 'save')
+      const usersWithId = jest.spyOn(users, 'withId')
 
       exercisesWithId.mockResolvedValue(
         Either.right(
@@ -137,6 +161,16 @@ describe('EditRoutineHandler', () => {
         ),
       )
 
+      usersWithId.mockResolvedValue(
+        Either.right(
+          User.create({
+            email: UserEmail.fromString('name@gmail.com'),
+            id: UserId.fromString(ownerIdValue).value as UserId,
+            name: UserName.fromString('name'),
+          }),
+        ),
+      )
+
       routinesWithId.mockResolvedValue(Either.right(routine))
 
       const response = (await editRoutineHandler.execute(
@@ -144,6 +178,7 @@ describe('EditRoutineHandler', () => {
           description: descriptionMock,
           id: idMock,
           name: nameMock,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )) as Left<
@@ -201,17 +236,29 @@ describe('EditRoutineHandler', () => {
     const exercisesWithId = jest.spyOn(exercises, 'withId')
     const routinesWithId = jest.spyOn(routines, 'withId')
     const routinesSave = jest.spyOn(routines, 'save')
+    const usersWithId = jest.spyOn(users, 'withId')
     const notFound = NotFoundExercise.withId(workoutExerciseIdValue)
 
     exercisesWithId.mockResolvedValue(Either.left(notFound))
 
     routinesWithId.mockResolvedValue(Either.right(routine))
 
+    usersWithId.mockResolvedValue(
+      Either.right(
+        User.create({
+          email: UserEmail.fromString('name@gmail.com'),
+          id: UserId.fromString(ownerIdValue).value as UserId,
+          name: UserName.fromString('name'),
+        }),
+      ),
+    )
+
     const response = (await editRoutineHandler.execute(
       EditRoutine.with({
         description: descriptionValue,
         id: idValue,
         name: nameValue,
+        ownerId: ownerIdValue,
         workouts: workoutsValue,
       }),
     )) as Left<NotFoundExercise[]>
@@ -229,6 +276,7 @@ describe('EditRoutineHandler', () => {
     const exercisesWithId = jest.spyOn(exercises, 'withId')
     const routinesWithId = jest.spyOn(routines, 'withId')
     const routinesSave = jest.spyOn(routines, 'save')
+    const usersWithId = jest.spyOn(users, 'withId')
     const notFound = NotFoundRoutine.withId(idValue)
 
     exercisesWithId.mockResolvedValue(
@@ -242,6 +290,16 @@ describe('EditRoutineHandler', () => {
       ),
     )
 
+    usersWithId.mockResolvedValue(
+      Either.right(
+        User.create({
+          email: UserEmail.fromString('name@gmail.com'),
+          id: UserId.fromString(ownerIdValue).value as UserId,
+          name: UserName.fromString('name'),
+        }),
+      ),
+    )
+
     routinesWithId.mockResolvedValue(Either.left(notFound))
 
     const response = (await editRoutineHandler.execute(
@@ -249,6 +307,7 @@ describe('EditRoutineHandler', () => {
         description: descriptionValue,
         id: idValue,
         name: nameValue,
+        ownerId: ownerIdValue,
         workouts: workoutsValue,
       }),
     )) as Left<NotFoundRoutine[]>

@@ -20,6 +20,7 @@ describe('RoutineDeletedHandler', () => {
     const id = 'id'
     const name = 'name'
     const description = 'description'
+    const ownerId = 'ownerId'
     const workouts = [
       {
         exerciseId: 'exerciseId',
@@ -28,7 +29,7 @@ describe('RoutineDeletedHandler', () => {
         sets: 8,
       },
     ]
-    const view = RoutineView.with({ description, id, name, workouts })
+    const view = RoutineView.with({ description, id, name, ownerId, workouts })
 
     const viewsDelete = jest.spyOn(views, 'delete')
     const viewsWithId = jest.spyOn(views, 'withId')

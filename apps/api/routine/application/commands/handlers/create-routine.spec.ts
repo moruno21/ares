@@ -16,6 +16,13 @@ import { InvalidUuid } from '~/shared/domain'
 import Either, { Left } from '~/shared/either'
 import ExercisesMock from '~/test/mocks/exercise/domain/services/exercises'
 import RoutinesMock from '~/test/mocks/routine/domain/services/routines'
+import UsersMock from '~/test/mocks/user/domain/services/users'
+import NotFoundUser from '~/user/domain/exceptions/not-found'
+import UserEmail from '~/user/domain/models/email'
+import UserId from '~/user/domain/models/id'
+import UserName from '~/user/domain/models/name'
+import User from '~/user/domain/models/user'
+import Users from '~/user/domain/services/users'
 
 import CreateRoutine from '../create-routine'
 import CreateRoutineHandler from './create-routine'
@@ -23,6 +30,7 @@ import CreateRoutineHandler from './create-routine'
 describe('CreateRoutineHandler', () => {
   let exercises: Exercises
   let routines: Routines
+  let users: Users
   let createRoutineHandler: CreateRoutineHandler
 
   const idValue = '700b5619-9448-44c6-b21b-06ab1392e9e8'
@@ -32,6 +40,8 @@ describe('CreateRoutineHandler', () => {
   const descriptionValue = 'description'
   const description = RoutineDescription.fromString(descriptionValue)
     .value as RoutineDescription
+  const ownerIdValue = '4c3f2a53-5786-49e3-ae88-b8787587018c'
+  const ownerId = UserId.fromString(ownerIdValue).value as UserId
   const workoutExerciseIdValue = 'cda1aca4-ffce-492e-9cf7-b8ded3c7e5ba'
   const workoutsValue = [
     {
@@ -44,17 +54,19 @@ describe('CreateRoutineHandler', () => {
     (workoutValue) =>
       RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
   )
-  const routine = Routine.create({ description, id, name, workouts })
+  const routine = Routine.create({ description, id, name, ownerId, workouts })
 
   beforeEach(() => {
     routines = RoutinesMock.mock()
     exercises = ExercisesMock.mock()
-    createRoutineHandler = new CreateRoutineHandler(routines, exercises)
+    users = UsersMock.mock()
+    createRoutineHandler = new CreateRoutineHandler(routines, exercises, users)
   })
 
   it('creates a routine', async () => {
     const exercisesWithId = jest.spyOn(exercises, 'withId')
     const routinesSave = jest.spyOn(routines, 'save')
+    const usersWithId = jest.spyOn(users, 'withId')
 
     exercisesWithId.mockResolvedValue(
       Either.right(
@@ -67,11 +79,22 @@ describe('CreateRoutineHandler', () => {
       ),
     )
 
+    usersWithId.mockResolvedValue(
+      Either.right(
+        User.create({
+          email: UserEmail.fromString('name@gmail.com'),
+          id: UserId.fromString(ownerIdValue).value as UserId,
+          name: UserName.fromString('name'),
+        }),
+      ),
+    )
+
     const response = await createRoutineHandler.execute(
       CreateRoutine.with({
         description: descriptionValue,
         id: idValue,
         name: nameValue,
+        ownerId: ownerIdValue,
         workouts: workoutsValue,
       }),
     )
@@ -113,6 +136,7 @@ describe('CreateRoutineHandler', () => {
     async ({ descriptionMock, idMock, nameMock }) => {
       const exercisesWithId = jest.spyOn(exercises, 'withId')
       const routinesSave = jest.spyOn(routines, 'save')
+      const usersWithId = jest.spyOn(users, 'withId')
 
       exercisesWithId.mockResolvedValue(
         Either.right(
@@ -126,11 +150,22 @@ describe('CreateRoutineHandler', () => {
         ),
       )
 
+      usersWithId.mockResolvedValue(
+        Either.right(
+          User.create({
+            email: UserEmail.fromString('name@gmail.com'),
+            id: UserId.fromString(ownerIdValue).value as UserId,
+            name: UserName.fromString('name'),
+          }),
+        ),
+      )
+
       const response = (await createRoutineHandler.execute(
         CreateRoutine.with({
           description: descriptionMock,
           id: idMock,
           name: nameMock,
+          ownerId: ownerIdValue,
           workouts: workoutsValue,
         }),
       )) as Left<
@@ -183,18 +218,67 @@ describe('CreateRoutineHandler', () => {
     },
   )
 
-  it('cannot create a routine if one of its workout is using a non existent exercise id', async () => {
+  it('cannot create a routine if there is not a user with its owner id', async () => {
     const exercisesWithId = jest.spyOn(exercises, 'withId')
-    const notFound = NotFoundExercise.withId(workoutExerciseIdValue)
+    const notFound = NotFoundUser.withId(ownerIdValue)
     const routinesSave = jest.spyOn(routines, 'save')
+    const usersWithId = jest.spyOn(users, 'withId')
 
-    exercisesWithId.mockResolvedValue(Either.left(notFound))
+    exercisesWithId.mockResolvedValue(
+      Either.right(
+        Exercise.create({
+          description: ExerciseDescription.fromString('description')
+            .value as ExerciseDescription,
+          id: ExerciseId.fromString(workoutExerciseIdValue).value as ExerciseId,
+          name: ExerciseName.fromString('name').value as ExerciseName,
+        }),
+      ),
+    )
+
+    usersWithId.mockResolvedValue(Either.left(notFound))
 
     const response = (await createRoutineHandler.execute(
       CreateRoutine.with({
         description: descriptionValue,
         id: idValue,
         name: nameValue,
+        ownerId: ownerIdValue,
+        workouts: workoutsValue,
+      }),
+    )) as Left<NotFoundUser[]>
+
+    const responseResult = Either.left(response.value[0] as NotFoundUser)
+
+    expect(routinesSave).not.toHaveBeenCalled()
+    expect(Either.isRight(response)).toBe(false)
+    expect(responseResult.value.__name__).toBe(notFound.__name__)
+    expect(responseResult.value.code).toBe(notFound.code)
+  })
+
+  it('cannot create a routine if one of its workout is using a non existent exercise id', async () => {
+    const exercisesWithId = jest.spyOn(exercises, 'withId')
+    const notFound = NotFoundExercise.withId(workoutExerciseIdValue)
+    const routinesSave = jest.spyOn(routines, 'save')
+    const usersWithId = jest.spyOn(users, 'withId')
+
+    exercisesWithId.mockResolvedValue(Either.left(notFound))
+
+    usersWithId.mockResolvedValue(
+      Either.right(
+        User.create({
+          email: UserEmail.fromString('name@gmail.com'),
+          id: UserId.fromString(ownerIdValue).value as UserId,
+          name: UserName.fromString('name'),
+        }),
+      ),
+    )
+
+    const response = (await createRoutineHandler.execute(
+      CreateRoutine.with({
+        description: descriptionValue,
+        id: idValue,
+        name: nameValue,
+        ownerId: ownerIdValue,
         workouts: workoutsValue,
       }),
     )) as Left<NotFoundExercise[]>

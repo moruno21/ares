@@ -17,6 +17,9 @@ import RoutineWorkout from '~/routine/domain/models/workout'
 import Routines from '~/routine/domain/services/routines'
 import { InvalidUuid } from '~/shared/domain'
 import Either from '~/shared/either'
+import NotFoundUser from '~/user/domain/exceptions/not-found'
+import UserId from '~/user/domain/models/id'
+import Users from '~/user/domain/services/users'
 
 import EditRoutine from '../edit-routine'
 
@@ -25,6 +28,7 @@ class EditRoutineHandler implements ICommandHandler {
   constructor(
     @Inject(Routines) private readonly routines: Routines,
     @Inject(Exercises) private readonly exercises: Exercises,
+    @Inject(Users) private readonly users: Users,
   ) {}
 
   async execute(
@@ -39,6 +43,7 @@ class EditRoutineHandler implements ICommandHandler {
         | InvalidWorkoutSets
         | NotFoundExercise
         | NotFoundRoutine
+        | NotFoundUser
       )[],
       Routine
     >
@@ -51,6 +56,12 @@ class EditRoutineHandler implements ICommandHandler {
 
     const name = RoutineName.fromString(command.name)
     const isInvalidName = Either.isLeft(name)
+
+    const ownerId = UserId.fromString(command.ownerId)
+    const isInvalidOwnerId = Either.isLeft(ownerId)
+    const ownerNotFound =
+      !isInvalidOwnerId &&
+      Either.isLeft(await this.users.withId(ownerId.value as UserId))
 
     const workouts = command.workouts.map((workout) =>
       RoutineWorkout.fromValue(workout),
@@ -80,6 +91,8 @@ class EditRoutineHandler implements ICommandHandler {
     if (isInvalidId) exceptions.push(id.value)
     if (isInvalidDescription) exceptions.push(description.value)
     if (isInvalidName) exceptions.push(name.value)
+    if (isInvalidOwnerId) exceptions.push(ownerId.value)
+    if (ownerNotFound) exceptions.push(NotFoundUser.withId(ownerId.value.value))
     if (isInvalidWorkouts)
       exceptions.push(
         ...workoutExceptions.map((workout) => workout.value).flat(),
@@ -92,6 +105,8 @@ class EditRoutineHandler implements ICommandHandler {
       isInvalidId ||
       isInvalidDescription ||
       isInvalidName ||
+      isInvalidOwnerId ||
+      ownerNotFound ||
       isInvalidWorkouts ||
       isInvalidWorkoutsExercisesId ||
       notFoundRoutine

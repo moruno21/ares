@@ -7,6 +7,7 @@ type CreateRoutineType = NameType<
     description: string
     id: string
     name: string
+    ownerId: string
     workouts: {
       exerciseId: string
       reps: number
@@ -23,6 +24,7 @@ class CreateRoutine implements CreateRoutineType {
     readonly id: CreateRoutineType['id'],
     readonly description: CreateRoutineType['description'],
     readonly name: CreateRoutineType['name'],
+    readonly ownerId: CreateRoutineType['ownerId'],
     readonly workouts: CreateRoutineType['workouts'],
   ) {}
 
@@ -30,9 +32,10 @@ class CreateRoutine implements CreateRoutineType {
     description,
     id,
     name,
+    ownerId,
     workouts,
   }: Omit<CreateRoutineType, '__name__'>): CreateRoutine {
-    return new this(id, description, name, workouts)
+    return new this(id, description, name, ownerId, workouts)
   }
 }
 

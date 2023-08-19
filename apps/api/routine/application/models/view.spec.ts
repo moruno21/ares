@@ -7,6 +7,7 @@ describe('RoutineView', () => {
   const id = 'id'
   const name = 'name'
   const description = 'description'
+  const ownerId = 'ownerId'
   const workouts = [
     {
       exerciseId: 'exerciseId',
@@ -15,7 +16,7 @@ describe('RoutineView', () => {
       sets: 3,
     },
   ]
-  const view = RoutineView.with({ description, id, name, workouts })
+  const view = RoutineView.with({ description, id, name, ownerId, workouts })
 
   itIsNamed(view)
 
@@ -31,6 +32,10 @@ describe('RoutineView', () => {
     expect(view).toHaveProperty('description')
   })
 
+  it.concurrent('has an ownerId', () => {
+    expect(view).toHaveProperty('ownerId')
+  })
+
   it.concurrent('has workouts', () => {
     expect(view).toHaveProperty('workouts')
   })
@@ -40,6 +45,7 @@ describe('RoutineView', () => {
     expect(view.id).toBe(id)
     expect(view.name).toBe(name)
     expect(view.description).toBe(description)
+    expect(view.ownerId).toBe(ownerId)
     expect(view.workouts).toBe(workouts)
   })
 })

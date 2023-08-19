@@ -20,6 +20,7 @@ describe('RoutineRenamedHandler', () => {
     const id = 'id'
     const name = 'name'
     const description = 'description'
+    const ownerId = 'ownerId'
     const workouts = [
       {
         exerciseId: '98747d8b-3f2a-4548-b029-ff163b1e8941',
@@ -28,7 +29,7 @@ describe('RoutineRenamedHandler', () => {
         sets: 6,
       },
     ]
-    const view = RoutineView.with({ description, id, name, workouts })
+    const view = RoutineView.with({ description, id, name, ownerId, workouts })
 
     const viewsRename = jest.spyOn(views, 'rename')
     const viewsWithId = jest.spyOn(views, 'withId')

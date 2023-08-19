@@ -8,6 +8,7 @@ import Routines from '~/routine/domain/services/routines'
 import { InvalidUuid } from '~/shared/domain'
 import Either, { Left } from '~/shared/either'
 import RoutinesMock from '~/test/mocks/routine/domain/services/routines'
+import UserId from '~/user/domain/models/id'
 
 import DeleteRoutine from '../delete-routine'
 import DeleteRoutineHandler from './delete-routine'
@@ -23,6 +24,8 @@ describe('DeleteRoutineHandler', () => {
   const descriptionValue = 'description'
   const description = RoutineDescription.fromString(descriptionValue)
     .value as RoutineDescription
+  const ownerIdValue = 'c449f120-eff4-40e4-aaed-aa40128104dd'
+  const ownerId = UserId.fromString(ownerIdValue).value as UserId
   const workoutsValue = [
     {
       exerciseId: 'bc1ac83d-8dbd-4195-bd43-19fcf3c27cab',
@@ -34,7 +37,7 @@ describe('DeleteRoutineHandler', () => {
     (workoutValue) =>
       RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
   )
-  const routine = Routine.create({ description, id, name, workouts })
+  const routine = Routine.create({ description, id, name, ownerId, workouts })
 
   beforeEach(() => {
     routines = RoutinesMock.mock()

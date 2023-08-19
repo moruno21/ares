@@ -25,6 +25,10 @@ class PostRoutineDto {
   @IsString()
   readonly name: string
 
+  @ApiProperty()
+  @IsString()
+  readonly ownerId: string
+
   @ApiProperty({ type: [PostRoutineWorkoutDto] })
   @Type(() => PostRoutineWorkoutDto)
   @ValidateNested()
@@ -33,23 +37,27 @@ class PostRoutineDto {
   private constructor(
     description: PostRoutineDto['description'],
     name: PostRoutineDto['name'],
+    ownerId: PostRoutineDto['ownerId'],
     workouts: PostRoutineDto['workouts'],
   ) {
     this.description = description
     this.name = name
+    this.ownerId = ownerId
     this.workouts = workouts
   }
 
   static with({
     description,
     name,
+    ownerId,
     workouts,
   }: {
     description: string
     name: string
+    ownerId: string
     workouts: PostRoutineDto['workouts']
   }): PostRoutineDto {
-    return new PostRoutineDto(description, name, workouts)
+    return new PostRoutineDto(description, name, ownerId, workouts)
   }
 }
 

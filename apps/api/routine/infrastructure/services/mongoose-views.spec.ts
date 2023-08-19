@@ -15,6 +15,7 @@ describe('MongooseRoutineViews', () => {
   const id = '628c7043-617a-411a-ad1f-3da814e9e34b'
   const name = 'name'
   const description = 'description'
+  const ownerId = 'bcb64e6d-3093-4a73-957b-8a761d44e0dd'
   const workouts = [
     {
       exerciseId: 'exerciseId',
@@ -23,7 +24,7 @@ describe('MongooseRoutineViews', () => {
       sets: 4,
     },
   ]
-  const view = RoutineView.with({ description, id, name, workouts })
+  const view = RoutineView.with({ description, id, name, ownerId, workouts })
 
   beforeEach(() => {
     views = MongooseRoutineViewModelMock.mock()
@@ -59,6 +60,7 @@ describe('MongooseRoutineViews', () => {
       description: 'description',
       id: 'af3adc50-b5df-4922-8b9e-93082661505c',
       name: 'name',
+      ownerId: '095de9e4-48c4-4688-8747-8fc1956f535a',
       workouts,
     })
     const anotherMongooseView = MongooseRoutineView.fromRoutineView(anotherView)

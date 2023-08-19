@@ -15,6 +15,7 @@ describe('GetRoutine', () => {
   const id = '750b5788-7b43-409b-81b3-91375394897f'
   const name = 'name'
   const description = 'description'
+  const ownerId = 'ownerId'
   const workouts = [
     {
       exerciseId: 'exerciseId',
@@ -32,7 +33,13 @@ describe('GetRoutine', () => {
   it('gets a routine from an id', async () => {
     const viewsWithId = jest.spyOn(views, 'withId')
 
-    const routineView = RoutineView.with({ description, id, name, workouts })
+    const routineView = RoutineView.with({
+      description,
+      id,
+      name,
+      ownerId,
+      workouts,
+    })
 
     viewsWithId.mockResolvedValue(Either.right(routineView))
 

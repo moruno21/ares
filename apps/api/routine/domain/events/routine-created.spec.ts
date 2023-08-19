@@ -7,11 +7,13 @@ describe('RoutineCreated', () => {
   const id = 'id'
   const name = 'name'
   const description = 'description'
+  const ownerId = 'ownerId'
   const workouts = [{ exerciseId: 'exerciseId', reps: 8, sets: 4 }]
   const routineCreated = RoutineCreated.with({
     description,
     id,
     name,
+    ownerId,
     workouts,
   })
 
@@ -29,6 +31,10 @@ describe('RoutineCreated', () => {
     expect(routineCreated).toHaveProperty('description')
   })
 
+  it.concurrent('has an ownerId', () => {
+    expect(routineCreated).toHaveProperty('ownerId')
+  })
+
   it.concurrent('has workouts', () => {
     expect(routineCreated).toHaveProperty('workouts')
   })
@@ -38,6 +44,7 @@ describe('RoutineCreated', () => {
     expect(routineCreated.id).toBe(id)
     expect(routineCreated.name).toBe(name)
     expect(routineCreated.description).toBe(description)
+    expect(routineCreated.ownerId).toBe(ownerId)
     expect(routineCreated.workouts).toBe(workouts)
   })
 })

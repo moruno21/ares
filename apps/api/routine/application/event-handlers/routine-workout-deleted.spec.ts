@@ -21,6 +21,7 @@ describe('RoutineWorkoutDeletedHandler', () => {
     const routineId = 'a75a3307-2942-458a-8dbb-f31c0dbab297'
     const routineName = 'name'
     const routineDescription = 'description'
+    const routineOwnerId = 'routineOwnerId'
     const workoutOne = {
       exerciseId,
       exerciseName: 'exerciseName',
@@ -38,6 +39,7 @@ describe('RoutineWorkoutDeletedHandler', () => {
       description: routineDescription,
       id: routineId,
       name: routineName,
+      ownerId: routineOwnerId,
       workouts: routineWorkouts,
     })
 

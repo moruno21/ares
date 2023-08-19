@@ -10,6 +10,7 @@ import Either, { Left } from '~/shared/either'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 import EventPublisherMock from '~/test/mocks/@nestjs/cqrs/event-publisher'
 import EventStorePublisherMock from '~/test/mocks/shared/eventstore/publisher'
+import UserId from '~/user/domain/models/id'
 
 import EventStoreRoutines from './eventstore-routines'
 
@@ -25,6 +26,8 @@ describe('EventStoreRoutines', () => {
   const descriptionValue = 'description'
   const description = RoutineDescription.fromString(descriptionValue)
     .value as RoutineDescription
+  const ownerIdValue = '8912fc10-ea83-4d60-9d8b-c3249f59bafe'
+  const ownerId = UserId.fromString(ownerIdValue).value as UserId
   const workoutsValue = [
     {
       exerciseId: 'ea29a364-177c-4751-bb3b-43bed8cb58e5',
@@ -36,7 +39,7 @@ describe('EventStoreRoutines', () => {
     (workoutValue) =>
       RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
   )
-  const routine = Routine.create({ description, id, name, workouts })
+  const routine = Routine.create({ description, id, name, ownerId, workouts })
 
   beforeEach(() => {
     eventStorePublisher = EventStorePublisherMock.mock()

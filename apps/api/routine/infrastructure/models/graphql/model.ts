@@ -27,6 +27,9 @@ export class Routine {
   @Field(() => String)
   description?: string
 
+  @Field(() => String)
+  ownerId!: string
+
   @Field(() => [RoutineWorkout])
   workouts?: RoutineWorkout[]
 }
@@ -50,6 +53,9 @@ export class RoutineInput {
 
   @Field(() => String)
   description?: string
+
+  @Field(() => String)
+  ownerId!: string
 
   @Field(() => [RoutineWorkoutInput])
   workouts?: RoutineWorkoutInput[]

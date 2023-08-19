@@ -14,6 +14,7 @@ type RoutineView = NameType<
     description: string
     id: string
     name: string
+    ownerId: string
     workouts: RoutineWorkoutView[]
   }>,
   typeof __name__

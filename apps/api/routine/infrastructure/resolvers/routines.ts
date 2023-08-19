@@ -60,6 +60,7 @@ class RoutinesResolver {
           description: routineInput.description,
           id,
           name: routineInput.name,
+          ownerId: routineInput.ownerId,
           workouts: routineInput.workouts,
         }),
       )
@@ -83,6 +84,7 @@ class RoutinesResolver {
           description: routineInput.description,
           id,
           name: routineInput.name,
+          ownerId: routineInput.ownerId,
           workouts: routineInput.workouts,
         }),
       )

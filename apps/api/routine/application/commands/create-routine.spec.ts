@@ -7,8 +7,15 @@ describe('CreateRoutine', () => {
   const id = 'id'
   const name = 'name'
   const description = 'description'
+  const ownerId = 'ownerId'
   const workouts = [{ exerciseId: 'exerciseId', reps: 6, sets: 4 }]
-  const createRoutine = CreateRoutine.with({ description, id, name, workouts })
+  const createRoutine = CreateRoutine.with({
+    description,
+    id,
+    name,
+    ownerId,
+    workouts,
+  })
 
   itIsNamed(createRoutine)
 
@@ -24,6 +31,10 @@ describe('CreateRoutine', () => {
     expect(createRoutine).toHaveProperty('description')
   })
 
+  it.concurrent('has an ownerId', () => {
+    expect(createRoutine).toHaveProperty('ownerId')
+  })
+
   it.concurrent('has workouts', () => {
     expect(createRoutine).toHaveProperty('workouts')
   })
@@ -33,6 +44,7 @@ describe('CreateRoutine', () => {
     expect(createRoutine.id).toBe(id)
     expect(createRoutine.name).toBe(name)
     expect(createRoutine.description).toBe(description)
+    expect(createRoutine.ownerId).toBe(ownerId)
     expect(createRoutine.workouts).toBe(workouts)
   })
 })

@@ -1,5 +1,6 @@
 import { AggregateRoot, ValueObject } from '~/shared/domain'
 import Either from '~/shared/either'
+import UserId from '~/user/domain/models/id'
 
 import RoutineCreated from '../events/routine-created'
 import RoutineDeleted from '../events/routine-deleted'
@@ -19,6 +20,7 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
 
   private _description: RoutineDescription
   private _name: RoutineName
+  private _ownerId: UserId
   private _workouts: RoutineWorkout[]
   private _isDeleted: boolean
 
@@ -28,6 +30,10 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
 
   get description(): RoutineDescription {
     return this._description
+  }
+
+  get ownerId(): UserId {
+    return this._ownerId
   }
 
   get workouts(): RoutineWorkout[] {
@@ -42,11 +48,13 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
     description,
     id,
     name,
+    ownerId,
     workouts,
   }: {
     description: RoutineDescription
     id: RoutineId
     name: RoutineName
+    ownerId: UserId
     workouts: RoutineWorkout[]
   }): Routine {
     const routine = new this()
@@ -56,6 +64,7 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
         description: description.value,
         id: id.value,
         name: name.value,
+        ownerId: ownerId.value,
         workouts: workouts.map((workout) => workout.value),
       }),
     )
@@ -111,6 +120,7 @@ class Routine extends AggregateRoot<typeof __name__, RoutineId> {
     this._name = RoutineName.fromString(event.name).value as RoutineName
     this._description = RoutineDescription.fromString(event.description)
       .value as RoutineDescription
+    this._ownerId = UserId.fromString(event.ownerId).value as UserId
     this._workouts = event.workouts.map(
       (workout) => RoutineWorkout.fromValue(workout).value as RoutineWorkout,
     )

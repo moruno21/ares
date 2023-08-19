@@ -36,6 +36,10 @@ class RoutineDto {
   @IsString()
   readonly name: string
 
+  @ApiProperty()
+  @IsString()
+  readonly ownerId: string
+
   @ApiProperty({ type: [RoutineWorkoutDto] })
   @Type(() => RoutineWorkoutDto)
   @ValidateNested()
@@ -45,19 +49,28 @@ class RoutineDto {
     id: RoutineDto['id'],
     description: RoutineDto['description'],
     name: RoutineDto['name'],
+    ownerId: RoutineDto['ownerId'],
     workouts: RoutineDto['workouts'],
   ) {
     this.id = id
     this.description = description
     this.name = name
+    this.ownerId = ownerId
     this.workouts = workouts
   }
 
-  static fromRoutine({ description, id, name, workouts }: Routine): RoutineDto {
+  static fromRoutine({
+    description,
+    id,
+    name,
+    ownerId,
+    workouts,
+  }: Routine): RoutineDto {
     return new this(
       id.value,
       description.value,
       name.value,
+      ownerId.value,
       workouts.map((workout) => workout.value),
     )
   }
@@ -66,9 +79,10 @@ class RoutineDto {
     description,
     id,
     name,
+    ownerId,
     workouts,
   }: RoutineView): RoutineDto {
-    return new this(id, description, name, workouts)
+    return new this(id, description, name, ownerId, workouts)
   }
 }
 

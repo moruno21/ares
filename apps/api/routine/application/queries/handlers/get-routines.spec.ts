@@ -11,6 +11,7 @@ describe('GetRoutines', () => {
   const id = '97c0e83d-81bf-481e-9e4e-ba7451947f9d'
   const name = 'name'
   const description = 'description'
+  const ownerId = 'ownerId'
   const workouts = [
     {
       exerciseId: 'exerciseId',
@@ -32,12 +33,14 @@ describe('GetRoutines', () => {
       description,
       id,
       name,
+      ownerId,
       workouts,
     })
     const routineViewTwo = RoutineView.with({
       description,
       id,
       name,
+      ownerId,
       workouts,
     })
 

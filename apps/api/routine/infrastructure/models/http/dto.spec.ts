@@ -4,6 +4,7 @@ import RoutineId from '~/routine/domain/models/id'
 import RoutineName from '~/routine/domain/models/name'
 import Routine from '~/routine/domain/models/routine'
 import RoutineWorkout from '~/routine/domain/models/workout'
+import UserId from '~/user/domain/models/id'
 
 import RoutineDto from './dto'
 
@@ -15,6 +16,8 @@ describe('RoutineDto', () => {
   const descriptionValue = 'description'
   const description = RoutineDescription.fromString(descriptionValue)
     .value as RoutineDescription
+  const ownerIdValue = '62a1aecd-b6df-4436-8240-7795bb6000d5'
+  const ownerId = UserId.fromString(ownerIdValue).value as UserId
   const workoutsValue = [
     {
       exerciseId: '303ce779-d987-470c-9ecc-28758498faa2',
@@ -28,7 +31,7 @@ describe('RoutineDto', () => {
       RoutineWorkout.fromValue(workoutValue).value as RoutineWorkout,
   )
   const dto = RoutineDto.fromRoutine(
-    Routine.create({ description, id, name, workouts }),
+    Routine.create({ description, id, name, ownerId, workouts }),
   )
 
   it.concurrent('has an id', () => {
@@ -43,6 +46,10 @@ describe('RoutineDto', () => {
     expect(dto).toHaveProperty('description')
   })
 
+  it.concurrent('has an ownerId', () => {
+    expect(dto).toHaveProperty('ownerId')
+  })
+
   it.concurrent('has workouts', () => {
     expect(dto).toHaveProperty('workouts')
   })
@@ -51,6 +58,7 @@ describe('RoutineDto', () => {
     expect(dto.id).toBe(idValue)
     expect(dto.name).toBe(nameValue)
     expect(dto.description).toBe(descriptionValue)
+    expect(dto.ownerId).toBe(ownerIdValue)
     expect(dto.workouts).toStrictEqual(workoutsValue)
   })
 
@@ -59,6 +67,7 @@ describe('RoutineDto', () => {
       description: descriptionValue,
       id: idValue,
       name: nameValue,
+      ownerId: ownerIdValue,
       workouts: workoutsValue,
     })
     const convertedDto = RoutineDto.fromRoutineView(view)
@@ -66,6 +75,7 @@ describe('RoutineDto', () => {
     expect(convertedDto.id).toBe(id.value)
     expect(convertedDto.name).toBe(name.value)
     expect(convertedDto.description).toBe(description.value)
+    expect(convertedDto.ownerId).toBe(ownerId.value)
     expect(convertedDto.workouts).toStrictEqual(
       workouts.map((workout) => workout.value),
     )
