@@ -13,7 +13,11 @@ const useRoutines = ({ ownerId }: UseRoutinesProps) => {
   const { data, loading } = useQuery<
     RoutinesByOwnerIdQuery,
     RoutinesByOwnerIdQueryVariables
-  >(ROUTINES_BY_OWNER_ID, { variables: { ownerId } })
+  >(ROUTINES_BY_OWNER_ID, {
+    fetchPolicy: 'cache-first',
+    skip: !ownerId,
+    variables: { ownerId },
+  })
 
   const routines = useMemo(() => data?.routinesByOwnerId ?? [], [data])
 
