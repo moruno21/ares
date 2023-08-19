@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common'
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs'
 
 import NotFoundRoutine from '~/routine/domain/exceptions/not-found'
-import Routine from '~/routine/domain/models/id'
+import RoutineId from '~/routine/domain/models/id'
 import { InvalidUuid } from '~/shared/domain'
 import Either from '~/shared/either'
 
@@ -17,7 +17,7 @@ class GetRoutineHandler implements IQueryHandler {
   async execute(
     query: GetRoutine,
   ): Promise<Either<(InvalidUuid | NotFoundRoutine)[], RoutineView>> {
-    const id = Routine.fromString(query.id)
+    const id = RoutineId.fromString(query.id)
     const isInvalidId = Either.isLeft(id)
 
     const routineView =

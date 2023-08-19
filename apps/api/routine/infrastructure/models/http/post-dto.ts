@@ -15,6 +15,7 @@ class PostRoutineWorkoutDto {
   @IsInt()
   readonly sets: number
 }
+
 class PostRoutineDto {
   @ApiProperty()
   @IsString()

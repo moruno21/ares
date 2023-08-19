@@ -45,6 +45,7 @@ describe('MongooseRoutineView', () => {
 
     expect(convertedView.id).toBe(id)
     expect(convertedView.name).toBe(name)
+    expect(convertedView.description).toBe(description)
     expect(convertedView.workouts).toBe(workouts)
   })
 })

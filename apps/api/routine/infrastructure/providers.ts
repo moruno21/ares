@@ -14,16 +14,16 @@ const routineProviders = [
     useClass: EventStoreExercises,
   },
   {
+    provide: ExerciseViews,
+    useClass: MongooseExerciseViews,
+  },
+  {
     provide: Routines,
     useClass: EventStoreRoutines,
   },
   {
     provide: RoutineViews,
     useClass: MongooseRoutineViews,
-  },
-  {
-    provide: ExerciseViews,
-    useClass: MongooseExerciseViews,
   },
 ]
 
