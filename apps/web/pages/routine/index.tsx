@@ -9,8 +9,15 @@ import { Container, Content, CustomErrorMessage, Workouts } from './styles'
 import Workout from './Workout'
 
 const Layout = () => {
-  const { addWorkoutInitialValues, handleSubmit, initialValues, routine, t } =
-    useLayout()
+  const {
+    addWorkoutInitialValues,
+    exercises,
+    handleSubmit,
+    initialValues,
+    isUserOwnRoutine,
+    routine,
+    t,
+  } = useLayout()
 
   return (
     <Container>
@@ -52,21 +59,25 @@ const Layout = () => {
                         )}
                       </Workouts>
                     )}
-                    {addWorkoutInitialValues ? (
-                      <Button
-                        // eslint-disable-next-line react/jsx-no-bind
-                        onClick={() =>
-                          arrayHelpers.push(addWorkoutInitialValues)
-                        }
-                        type="submit"
-                      >
-                        {t('add_workout.label')}
-                      </Button>
-                    ) : (
-                      <CustomErrorMessage>
-                        {t('add_workout.error')}
-                      </CustomErrorMessage>
-                    )}
+                    {isUserOwnRoutine ? (
+                      <>
+                        {exercises.length < 1 ? (
+                          <CustomErrorMessage>
+                            {t('add_workout.error')}
+                          </CustomErrorMessage>
+                        ) : (
+                          <Button
+                            // eslint-disable-next-line react/jsx-no-bind
+                            onClick={() =>
+                              arrayHelpers.push(addWorkoutInitialValues)
+                            }
+                            type="submit"
+                          >
+                            {t('add_workout.label')}
+                          </Button>
+                        )}
+                      </>
+                    ) : null}
                   </>
                 )}
               </FieldArray>

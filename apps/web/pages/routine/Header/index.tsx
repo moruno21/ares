@@ -7,7 +7,13 @@ import { Trans } from 'react-i18next'
 
 import { ROUTES } from '~/services/routing/Routes/constants'
 
-import { CustomErrorMessage, DeleteIcon, EditIcon, Label } from '../styles'
+import {
+  CopyIcon,
+  CustomErrorMessage,
+  DeleteIcon,
+  EditIcon,
+  Label,
+} from '../styles'
 import useHeader from './hooks'
 import {
   Buttons,
@@ -29,18 +35,23 @@ import { HeaderProps } from './types'
 
 const Header = ({ description, name }: HeaderProps) => {
   const {
+    handleCloseCopyModal,
     handleCloseDeleteModal,
     handleCloseShareModal,
+    handleCopyRoutine,
     handleDeleteRoutine,
     handleGoBack,
+    handleOpenCopyModal,
     handleOpenDeleteModal,
     handleOpenEditHeader,
     handleOpenShareModal,
     handleSaveHeader,
     idHash,
+    isCopyModalOpen,
     isDeleteModalOpen,
     isEditHeaderOpen,
     isShareModalOpen,
+    isUserOwnRoutine,
     t,
   } = useHeader()
 
@@ -92,45 +103,45 @@ const Header = ({ description, name }: HeaderProps) => {
             <IconButton onClick={handleGoBack}>
               <ChevronLeftIcon />
             </IconButton>
-            <IconButton onClick={handleOpenEditHeader}>
-              <EditIcon />
-            </IconButton>
-            <IconButton onClick={handleOpenShareModal}>
-              <ExternalIcon />
-            </IconButton>
-            <IconButton onClick={handleOpenDeleteModal}>
-              <DeleteIcon />
-            </IconButton>
+            {isUserOwnRoutine ? (
+              <>
+                <IconButton onClick={handleOpenEditHeader}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={handleOpenShareModal}>
+                  <ExternalIcon />
+                </IconButton>
+                <IconButton onClick={handleOpenDeleteModal}>
+                  <DeleteIcon />
+                </IconButton>
+              </>
+            ) : (
+              <IconButton onClick={handleOpenCopyModal}>
+                <CopyIcon />
+              </IconButton>
+            )}
           </Buttons>
           <Suspense>
-            {isShareModalOpen ? (
+            {isCopyModalOpen ? (
               <Modal
-                close-aria-label={t('share_modal.close')}
+                close-aria-label={t('copy_modal.close')}
                 footer={
                   <Footer>
-                    <Button onClick={handleCloseShareModal}>
-                      {t('share_modal.buttons.got_it.label')}
+                    <Button variant="secondary" onClick={handleCloseCopyModal}>
+                      {t('copy_modal.buttons.cancel.label')}
+                    </Button>
+                    <Button onClick={handleCopyRoutine}>
+                      {t('copy_modal.buttons.copy.label')}
                     </Button>
                   </Footer>
                 }
                 id="share_routine_modal"
-                onClose={handleCloseShareModal}
-                title={t('share_modal.title')}
+                onClose={handleCloseCopyModal}
+                title={t('copy_modal.title')}
               >
-                <ShareModalDescription>
-                  {t('share_modal.description')}
-                  <ShareLink
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    to={`${ROUTES.LANDING}/${idHash}`}
-                  >
-                    {`${window.location.origin}${ROUTES.LANDING}/${idHash}`}
-                  </ShareLink>
-                </ShareModalDescription>
+                {t('copy_modal.description')}
               </Modal>
             ) : null}
-          </Suspense>
-          <Suspense>
             {isDeleteModalOpen ? (
               <Modal
                 close-aria-label={t('delete_modal.close')}
@@ -172,6 +183,32 @@ const Header = ({ description, name }: HeaderProps) => {
                     values={{ name }}
                   />
                 </span>
+              </Modal>
+            ) : null}
+            {isShareModalOpen ? (
+              <Modal
+                close-aria-label={t('share_modal.close')}
+                footer={
+                  <Footer>
+                    <Button onClick={handleCloseShareModal}>
+                      {t('share_modal.buttons.got_it.label')}
+                    </Button>
+                  </Footer>
+                }
+                id="share_routine_modal"
+                onClose={handleCloseShareModal}
+                title={t('share_modal.title')}
+              >
+                <ShareModalDescription>
+                  {t('share_modal.description')}
+                  <ShareLink
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    to={`${ROUTES.LANDING}/${idHash}`}
+                  >
+                    {`${window.location.origin}${ROUTES.LANDING}/${idHash}`}
+                  </ShareLink>
+                </ShareModalDescription>
               </Modal>
             ) : null}
           </Suspense>
