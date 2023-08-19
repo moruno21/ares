@@ -13,7 +13,8 @@ import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 import CreateUserHandler from '~/user/application/commands/handlers/create-user'
 import UserCreatedHandler from '~/user/application/event-handlers/user-created'
-import GetUserHandler from '~/user/application/queries/handlers/get-user'
+import GetUserByEmailHandler from '~/user/application/queries/handlers/get-user-by-email'
+import GetUserByIdHandler from '~/user/application/queries/handlers/get-user-by-id'
 import GetUsersHandler from '~/user/application/queries/handlers/get-users'
 import UserCreated from '~/user/domain/events/user-created'
 
@@ -26,7 +27,11 @@ const controllers = [UsersController]
 
 const commandHandlers = [CreateUserHandler]
 const eventHandlers = [UserCreatedHandler]
-const queryHandlers = [GetUsersHandler, GetUserHandler]
+const queryHandlers = [
+  GetUserByEmailHandler,
+  GetUserByIdHandler,
+  GetUsersHandler,
+]
 const resolvers = [UsersResolver]
 
 const eventFactories = {

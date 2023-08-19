@@ -6,9 +6,11 @@ import Either from '~/shared/either'
 import Uuid from '~/shared/uuid'
 import CreateUser from '~/user/application/commands/create-user'
 import CreateUserHandler from '~/user/application/commands/handlers/create-user'
-import GetUser from '~/user/application/queries/get-user'
+import GetUserByEmail from '~/user/application/queries/get-user-by-email'
+import GetUserById from '~/user/application/queries/get-user-by-id'
 import GetUsers from '~/user/application/queries/get-users'
-import GetUserHandler from '~/user/application/queries/handlers/get-user'
+import GetUserByEmailHandler from '~/user/application/queries/handlers/get-user-by-email'
+import GetUserByIdHandler from '~/user/application/queries/handlers/get-user-by-id'
 import GetUsersHandler from '~/user/application/queries/handlers/get-users'
 
 import { User, UserInput } from '../models/graphql/model'
@@ -30,9 +32,24 @@ class UsersResolver {
   }
 
   @Query(() => User)
-  async user(@Args('id') id: string): Promise<UserDto | GraphQLError> {
-    const response: Awaited<ReturnType<GetUserHandler['execute']>> =
-      await this.queryBus.execute(GetUser.with({ id }))
+  async userById(@Args('id') id: string): Promise<UserDto | GraphQLError> {
+    const response: Awaited<ReturnType<GetUserByIdHandler['execute']>> =
+      await this.queryBus.execute(GetUserById.with({ id }))
+
+    if (Either.isLeft(response))
+      return new GraphQLError(response.value[0].message, {
+        extensions: { code: response.value[0].code },
+      })
+
+    return UserDto.fromUserView(response.value)
+  }
+
+  @Query(() => User)
+  async userByEmail(
+    @Args('email') email: string,
+  ): Promise<UserDto | GraphQLError> {
+    const response: Awaited<ReturnType<GetUserByEmailHandler['execute']>> =
+      await this.queryBus.execute(GetUserByEmail.with({ email }))
 
     if (Either.isLeft(response))
       return new GraphQLError(response.value[0].message, {

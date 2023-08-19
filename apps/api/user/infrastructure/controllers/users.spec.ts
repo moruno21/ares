@@ -9,7 +9,7 @@ import CommandBusMock from '~/test/mocks/@nestjs/cqrs/command-bus'
 import QueryBusMock from '~/test/mocks/@nestjs/cqrs/query-bus'
 import CreateUser from '~/user/application/commands/create-user'
 import UserView from '~/user/application/models/view'
-import GetUser from '~/user/application/queries/get-user'
+import GetUserById from '~/user/application/queries/get-user-by-id'
 import GetUsers from '~/user/application/queries/get-users'
 import NotFoundUser from '~/user/domain/exceptions/not-found'
 import UserEmail from '~/user/domain/models/email'
@@ -73,7 +73,7 @@ describe('UsersController', () => {
     })
   })
 
-  describe('GetUser', () => {
+  describe('GetUserById', () => {
     const id = 'b3a50b83-bb5b-4b4e-a94b-49e015a3ecba'
     const email = 'name@gmail.com'
     const name = 'name'
@@ -94,7 +94,7 @@ describe('UsersController', () => {
 
       const response = (await usersController.getUser(id)) as UserDto
 
-      expect(queryBusExecute).toHaveBeenCalledWith(GetUser.with({ id }))
+      expect(queryBusExecute).toHaveBeenCalledWith(GetUserById.with({ id }))
       expect(response.id).toStrictEqual(user.id)
       expect(response.name).toStrictEqual(user.name)
       expect(response.email).toStrictEqual(user.email)
@@ -110,7 +110,7 @@ describe('UsersController', () => {
       const response = usersController.getUser(invalidUuid)
 
       expect(queryBusExecute).toHaveBeenCalledWith(
-        GetUser.with({ id: invalidUuid }),
+        GetUserById.with({ id: invalidUuid }),
       )
       await expect(response).rejects.toThrow(
         new BadRequestException(HttpError.fromExceptions(exceptions)),
@@ -127,7 +127,7 @@ describe('UsersController', () => {
       const response = usersController.getUser(nonExistentUuid)
 
       expect(queryBusExecute).toHaveBeenCalledWith(
-        GetUser.with({ id: nonExistentUuid }),
+        GetUserById.with({ id: nonExistentUuid }),
       )
       await expect(response).rejects.toThrow(
         new BadRequestException(HttpError.fromExceptions(exceptions)),

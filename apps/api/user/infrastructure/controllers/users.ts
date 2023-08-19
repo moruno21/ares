@@ -20,9 +20,9 @@ import HttpError from '~/shared/http/error'
 import Uuid from '~/shared/uuid'
 import CreateUser from '~/user/application/commands/create-user'
 import CreateUserHandler from '~/user/application/commands/handlers/create-user'
-import GetUser from '~/user/application/queries/get-user'
+import GetUserById from '~/user/application/queries/get-user-by-id'
 import GetUsers from '~/user/application/queries/get-users'
-import GetUserHandler from '~/user/application/queries/handlers/get-user'
+import GetUserByIdHandler from '~/user/application/queries/handlers/get-user-by-id'
 import GetUsersHandler from '~/user/application/queries/handlers/get-users'
 
 import UserDto from '../models/http/dto'
@@ -58,8 +58,8 @@ class UsersController {
   async getUser(
     @Param('id') id: string,
   ): Promise<UserDto | BadRequestException> {
-    const response: Awaited<ReturnType<GetUserHandler['execute']>> =
-      await this.queryBus.execute(GetUser.with({ id }))
+    const response: Awaited<ReturnType<GetUserByIdHandler['execute']>> =
+      await this.queryBus.execute(GetUserById.with({ id }))
 
     if (Either.isLeft(response))
       throw new BadRequestException(HttpError.fromExceptions(response.value))

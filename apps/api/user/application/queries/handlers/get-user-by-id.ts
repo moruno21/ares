@@ -8,14 +8,14 @@ import UserId from '~/user/domain/models/id'
 
 import UserView from '../../models/view'
 import UserViews from '../../services/views'
-import GetUser from '../get-user'
+import GetUserById from '../get-user-by-id'
 
-@QueryHandler(GetUser)
-class GetUserHandler implements IQueryHandler {
+@QueryHandler(GetUserById)
+class GetUserByIdHandler implements IQueryHandler {
   constructor(@Inject(UserViews) private readonly views: UserViews) {}
 
   async execute(
-    query: GetUser,
+    query: GetUserById,
   ): Promise<Either<(InvalidUuid | NotFoundUser)[], UserView>> {
     const id = UserId.fromString(query.id)
     const isInvalidId = Either.isLeft(id)
@@ -32,4 +32,4 @@ class GetUserHandler implements IQueryHandler {
   }
 }
 
-export default GetUserHandler
+export default GetUserByIdHandler

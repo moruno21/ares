@@ -5,20 +5,20 @@ import NotFoundUser from '~/user/domain/exceptions/not-found'
 
 import UserView from '../../models/view'
 import UserViews from '../../services/views'
-import GetUser from '../get-user'
-import GetUserHandler from './get-user'
+import GetUserById from '../get-user-by-id'
+import GetUserByIdHandler from './get-user-by-id'
 
-describe('GetUser', () => {
+describe('GetUserById', () => {
   let views: UserViews
-  let getUserHandler: GetUserHandler
+  let getUserByIdHandler: GetUserByIdHandler
 
   const id = '949fb41c-de7b-4218-89bf-6252b7e0b03c'
+  const email = 'name@gmail.com'
   const name = 'name'
-  const email = 'email'
 
   beforeEach(() => {
     views = UserViewsMock.mock()
-    getUserHandler = new GetUserHandler(views)
+    getUserByIdHandler = new GetUserByIdHandler(views)
   })
 
   it('gets an user from an id', async () => {
@@ -28,7 +28,7 @@ describe('GetUser', () => {
 
     viewsWithId.mockResolvedValue(Either.right(userView))
 
-    const response = await getUserHandler.execute(GetUser.with({ id }))
+    const response = await getUserByIdHandler.execute(GetUserById.with({ id }))
 
     expect(viewsWithId).toHaveBeenCalledWith(id)
     expect(Either.isRight(response)).toBe(true)
@@ -40,8 +40,8 @@ describe('GetUser', () => {
     const notValidId = 'invalidId'
     const invalidUuid = InvalidUuid.causeTheFormatIsNotValid(notValidId)
 
-    const response = (await getUserHandler.execute(
-      GetUser.with({ id: notValidId }),
+    const response = (await getUserByIdHandler.execute(
+      GetUserById.with({ id: notValidId }),
     )) as Left<InvalidUuid[]>
 
     expect(viewsWithId).not.toHaveBeenCalled()
@@ -56,8 +56,8 @@ describe('GetUser', () => {
 
     viewsWithId.mockResolvedValue(Either.left(NotFoundUser.withId(id)))
 
-    const response = (await getUserHandler.execute(
-      GetUser.with({ id }),
+    const response = (await getUserByIdHandler.execute(
+      GetUserById.with({ id }),
     )) as Left<NotFoundUser[]>
 
     expect(viewsWithId).toHaveBeenCalledWith(id)
