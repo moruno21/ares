@@ -4,16 +4,25 @@ import { FocusEvent, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useExercises from '~/hooks/useExercises'
+import useMe from '~/hooks/useMe'
 
 import { Routine } from '../types'
 import { UseWorkoutProps } from './types'
 
 const useWorkout = ({ exerciseId, index }: UseWorkoutProps) => {
-  const { errors, handleBlur, handleSubmit, initialValues, setFieldValue } =
-    useFormikContext<Routine>()
+  const {
+    errors,
+    handleBlur,
+    handleSubmit,
+    initialValues,
+    setFieldValue,
+    values,
+  } = useFormikContext<Routine>()
   const [exercise, setExercise] = useState<string>(exerciseId)
   const { exercises } = useExercises()
   const [isEditWorkoutOpen, setIsEditWorkoutOpen] = useState(false)
+  const { me } = useMe()
+  const isUserOwnRoutine = values?.ownerId === me?.id
   const { t } = useTranslation('routine')
 
   const dropdownOptions = useMemo(
@@ -70,6 +79,7 @@ const useWorkout = ({ exerciseId, index }: UseWorkoutProps) => {
     handleSaveWorkout,
     initialValues,
     isEditWorkoutOpen,
+    isUserOwnRoutine,
     t,
   }
 }

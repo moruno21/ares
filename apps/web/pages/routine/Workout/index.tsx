@@ -35,6 +35,7 @@ const Workout = ({
     handleSaveWorkout,
     initialValues,
     isEditWorkoutOpen,
+    isUserOwnRoutine,
     t,
   } = useWorkout({ exerciseId, index })
 
@@ -114,18 +115,20 @@ const Workout = ({
               </Field>
             </WorkoutSettings>
           </Info>
-          <Buttons>
-            <IconButton onClick={handleOpenEditWorkout}>
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              // eslint-disable-next-line react/jsx-no-bind
-              onClick={() => handleDeleteWorkout(index)}
-              type="submit"
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Buttons>
+          {isUserOwnRoutine ? (
+            <Buttons>
+              <IconButton onClick={handleOpenEditWorkout}>
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                // eslint-disable-next-line react/jsx-no-bind
+                onClick={() => handleDeleteWorkout(index)}
+                type="submit"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Buttons>
+          ) : null}
         </Content>
       )}
     </Container>
