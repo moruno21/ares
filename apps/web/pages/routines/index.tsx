@@ -1,4 +1,4 @@
-import { H1, H3 } from '@ares/ui/components/Text'
+import { H3 } from '@ares/ui/components/Text'
 import { Formik } from 'formik'
 
 import { initialValues, validationSchema } from './constants'
@@ -15,6 +15,7 @@ import {
   Header,
   IconButton,
   Routines,
+  Title,
 } from './styles'
 
 const Layout = () => {
@@ -23,6 +24,7 @@ const Layout = () => {
     handleOpenCreateRoutine,
     handleSubmit,
     isCreateRoutineOpen,
+    isUserOwnRoutines,
     routines,
     t,
   } = useLayout()
@@ -30,33 +32,43 @@ const Layout = () => {
   return (
     <Container>
       <Header>
-        <H1>{t('title')}</H1>
-        <H3>{t('description')}</H3>
+        {isUserOwnRoutines ? (
+          <>
+            <Title>{t('title')}</Title>
+            <H3>{t('description')}</H3>
+          </>
+        ) : (
+          <Title>{t('other_user_routines')}</Title>
+        )}
       </Header>
       {routines.length < 1 && !isCreateRoutineOpen ? (
         <EmptyMessage>{t('no_routines')}</EmptyMessage>
       ) : null}
-      <CreateRoutineSection>
-        {isCreateRoutineOpen ? (
-          <Card>
-            <IconButton onClick={handleCloseCreateRoutine}>
-              <CloseIcon />
-            </IconButton>
-            <Formik
-              enableReinitialize
-              initialValues={initialValues}
-              onSubmit={handleSubmit}
-              validateOnBlur={true}
-              validateOnMount
-              validationSchema={validationSchema}
-            >
-              <Form />
-            </Formik>
-          </Card>
-        ) : (
-          <Button onClick={handleOpenCreateRoutine}>{t('create.label')}</Button>
-        )}
-      </CreateRoutineSection>
+      {isUserOwnRoutines ? (
+        <CreateRoutineSection>
+          {isCreateRoutineOpen ? (
+            <Card>
+              <IconButton onClick={handleCloseCreateRoutine}>
+                <CloseIcon />
+              </IconButton>
+              <Formik
+                enableReinitialize
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                validateOnBlur={true}
+                validateOnMount
+                validationSchema={validationSchema}
+              >
+                <Form />
+              </Formik>
+            </Card>
+          ) : (
+            <Button onClick={handleOpenCreateRoutine}>
+              {t('create.label')}
+            </Button>
+          )}
+        </CreateRoutineSection>
+      ) : null}
       <Routines>
         {routines.map(({ description, id, name }) => (
           <Item id={id} description={description} key={id} name={name}></Item>

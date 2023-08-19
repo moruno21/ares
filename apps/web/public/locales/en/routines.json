@@ -12,5 +12,6 @@
     "save": { "label": "Save" }
   },
   "no_routines": "Create yout first routine below!",
+  "other_user_routines": "User's routines",
   "title": "Welcome"
 }

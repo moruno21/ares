@@ -1,7 +1,7 @@
 import { ReactComponent as DefaultCloseIcon } from '@ares/ui/assets/icons/close.svg'
 import DefaultButton from '@ares/ui/components/Button'
 import DefaultIconButton from '@ares/ui/components/IconButton'
-import { Body3Styles } from '@ares/ui/components/Text'
+import { Body3Styles, H1 } from '@ares/ui/components/Text'
 import pxToRem from '@ares/ui/lib/px-to-rem'
 import styled from 'styled-components'
 
@@ -68,4 +68,8 @@ export const Routines = styled.div`
     grid-template-columns: 1fr;
     padding: 0;
   }
+`
+
+export const Title = styled(H1)`
+  text-align: center;
 `

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import useMe from '~/hooks/useMe'
 import useRoutine from '~/hooks/useRoutine'
@@ -11,10 +11,12 @@ import { Routine } from './types'
 
 const useLayout = () => {
   const { create: createRoutine } = useRoutine({})
+  const { id } = useParams()
   const [isCreateRoutineOpen, setIsCreateRoutineOpen] = useState(false)
+  const isUserOwnRoutines = !id
   const { me } = useMe()
   const navigate = useNavigate()
-  const { routines } = useRoutines({ ownerId: me?.id ?? '' })
+  const { routines } = useRoutines({ ownerId: id ?? me?.id ?? '' })
   const { t } = useTranslation('routines')
 
   const handleCloseCreateRoutine = useCallback(() => {
@@ -41,6 +43,7 @@ const useLayout = () => {
     handleOpenCreateRoutine,
     handleSubmit,
     isCreateRoutineOpen,
+    isUserOwnRoutines,
     routines,
     t,
   }
