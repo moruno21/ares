@@ -1,6 +1,7 @@
 import { ApolloError, useApolloClient, useQuery } from '@apollo/client'
 import { useCallback, useMemo } from 'react'
 
+import InternalException from '~/exceptions/Internal'
 import CREATE_ROUTINE from '~/graphql/mutations/createRoutine'
 import DELETE_ROUTINE from '~/graphql/mutations/deleteRoutine'
 import EDIT_ROUTINE from '~/graphql/mutations/editRoutine'
@@ -18,6 +19,7 @@ import {
   RoutineQueryVariables,
   RoutinesQuery,
 } from '~/graphql/types'
+import useMe from '~/hooks/useMe'
 
 import { UseRoutineProps } from './types'
 
@@ -32,11 +34,14 @@ const useRoutine = ({ id }: UseRoutineProps) => {
       variables: { routineId: id ?? '' },
     },
   )
+  const { me } = useMe()
 
   const routine = useMemo(() => (data ? data.routine : undefined), [data])
 
   const create = useCallback(
-    async ({ description, name, workouts }: RoutineInput) => {
+    async ({ description, name, workouts }: Omit<RoutineInput, 'ownerId'>) => {
+      if (!me) throw InternalException
+
       try {
         const response = await mutate<
           CreateRoutineMutation,
@@ -47,6 +52,7 @@ const useRoutine = ({ id }: UseRoutineProps) => {
             routineInput: {
               description,
               name,
+              ownerId: me.id,
               workouts,
             },
           },
@@ -76,14 +82,16 @@ const useRoutine = ({ id }: UseRoutineProps) => {
           }
       }
     },
-    [cache, mutate],
+    [cache, me, mutate],
   )
 
   const edit = useCallback(
     async (
       editRoutineId: string,
-      { description, name, workouts }: RoutineInput,
+      { description, name, workouts }: Omit<RoutineInput, 'ownerId'>,
     ) => {
+      if (!me) throw InternalException
+
       try {
         const response = await mutate<
           EditRoutineMutation,
@@ -95,6 +103,7 @@ const useRoutine = ({ id }: UseRoutineProps) => {
             routineInput: {
               description,
               name,
+              ownerId: me.id,
               workouts: workouts.map(({ exerciseId, reps, sets }) => ({
                 exerciseId,
                 reps,
@@ -117,7 +126,7 @@ const useRoutine = ({ id }: UseRoutineProps) => {
         throw err
       }
     },
-    [cache, mutate, refetch],
+    [cache, me, mutate, refetch],
   )
 
   const remove = useCallback(

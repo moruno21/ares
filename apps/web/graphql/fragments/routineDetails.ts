@@ -5,6 +5,7 @@ const ROUTINE_DETAILS_FRAGMENT = gql`
     description
     id
     name
+    ownerId
     workouts {
       exerciseId
       exerciseName

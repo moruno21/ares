@@ -5,6 +5,7 @@ const ROUTINE_FRAGMENT = gql`
     description
     id
     name
+    ownerId
   }
 `
 

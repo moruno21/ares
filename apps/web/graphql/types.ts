@@ -91,6 +91,7 @@ export type Query = {
   exercises: Array<Exercise>
   routine: Routine
   routines: Array<Routine>
+  routinesByOwnerId: Array<Routine>
   userByEmail: User
   userById: User
   users: Array<User>
@@ -108,6 +109,10 @@ export type QueryRoutineArgs = {
   id: Scalars['String']['input']
 }
 
+export type QueryRoutinesByOwnerIdArgs = {
+  ownerId: Scalars['String']['input']
+}
+
 export type QueryUserByEmailArgs = {
   email: Scalars['String']['input']
 }
@@ -121,12 +126,14 @@ export type Routine = {
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
   name: Scalars['String']['output']
+  ownerId: Scalars['String']['output']
   workouts: Array<RoutineWorkout>
 }
 
 export type RoutineInput = {
   description: Scalars['String']['input']
   name: Scalars['String']['input']
+  ownerId: Scalars['String']['input']
   workouts: Array<RoutineWorkoutInput>
 }
 
@@ -180,6 +187,7 @@ export type RoutineFragment = {
   description: string
   id: string
   name: string
+  ownerId: string
 }
 
 export type RoutineDetailsFragment = {
@@ -187,6 +195,7 @@ export type RoutineDetailsFragment = {
   description: string
   id: string
   name: string
+  ownerId: string
   workouts: Array<{
     __typename?: 'RoutineWorkout'
     exerciseId: string
@@ -228,6 +237,7 @@ export type CreateRoutineMutation = {
     description: string
     id: string
     name: string
+    ownerId: string
   }
 }
 
@@ -265,6 +275,7 @@ export type DeleteRoutineMutation = {
     description: string
     id: string
     name: string
+    ownerId: string
   }
 }
 
@@ -295,6 +306,7 @@ export type EditRoutineMutation = {
     description: string
     id: string
     name: string
+    ownerId: string
   }
 }
 
@@ -321,6 +333,7 @@ export type RoutineQuery = {
     description: string
     id: string
     name: string
+    ownerId: string
     workouts: Array<{
       __typename?: 'RoutineWorkout'
       exerciseId: string
@@ -340,6 +353,29 @@ export type RoutinesQuery = {
     description: string
     id: string
     name: string
+    ownerId: string
+  }>
+}
+
+export type RoutinesByOwnerIdQueryVariables = Exact<{
+  ownerId: Scalars['String']['input']
+}>
+
+export type RoutinesByOwnerIdQuery = {
+  __typename?: 'Query'
+  routinesByOwnerId: Array<{
+    __typename?: 'Routine'
+    description: string
+    id: string
+    name: string
+    ownerId: string
+    workouts: Array<{
+      __typename?: 'RoutineWorkout'
+      exerciseId: string
+      exerciseName?: string
+      reps: number
+      sets: number
+    }>
   }>
 }
 
