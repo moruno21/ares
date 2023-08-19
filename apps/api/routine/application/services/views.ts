@@ -12,6 +12,7 @@ type RoutineViews = Readonly<{
   rename: (id: string, name: string) => Promise<void>
   withExercise: (id: string) => Promise<RoutineView[]>
   withId: (id: string) => Promise<Either<NotFoundRoutine, RoutineView>>
+  withOwnerId: (id: string) => Promise<RoutineView[]>
 }>
 
 const RoutineViews = 'RoutineViews' as const

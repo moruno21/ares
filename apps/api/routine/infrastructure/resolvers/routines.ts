@@ -10,8 +10,10 @@ import DeleteRoutineHandler from '~/routine/application/commands/handlers/delete
 import EditRoutineHandler from '~/routine/application/commands/handlers/edit-routine'
 import GetRoutine from '~/routine/application/queries/get-routine'
 import GetRoutines from '~/routine/application/queries/get-routines'
+import GetRoutinesByOwnerId from '~/routine/application/queries/get-routines-by-owner-id'
 import GetRoutineHandler from '~/routine/application/queries/handlers/get-routine'
 import GetRoutinesHandler from '~/routine/application/queries/handlers/get-routines'
+import GetRoutinesByOwnerIdHandler from '~/routine/application/queries/handlers/get-routines-by-owner-id'
 import Either from '~/shared/either'
 import Uuid from '~/shared/uuid'
 
@@ -31,6 +33,24 @@ class RoutinesResolver {
       await this.queryBus.execute(GetRoutines.all())
 
     return response.map((routineView) =>
+      RoutineDto.fromRoutineView(routineView),
+    )
+  }
+
+  @Query(() => Routine)
+  async routinesByOwnerId(
+    @Args('ownerId') ownerId: string,
+  ): Promise<RoutineDto[] | GraphQLError> {
+    const response: Awaited<
+      ReturnType<GetRoutinesByOwnerIdHandler['execute']>
+    > = await this.queryBus.execute(GetRoutinesByOwnerId.with({ ownerId }))
+
+    if (Either.isLeft(response))
+      return new GraphQLError(response.value[0].message, {
+        extensions: { code: response.value[0].code },
+      })
+
+    return response.value.map((routineView) =>
       RoutineDto.fromRoutineView(routineView),
     )
   }

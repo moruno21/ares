@@ -33,6 +33,7 @@ import EventStoreModule from '~/shared/eventstore/module'
 import EventStorePublisher from '~/shared/eventstore/publisher'
 import MongooseUserView from '~/user/infrastructure/models/mongoose/view'
 
+import GetRoutinesByOwnerIdHandler from '../application/queries/handlers/get-routines-by-owner-id'
 import RoutinesController from './controllers/routines'
 import MongooseRoutineView from './models/mongoose/view'
 import routineProviders from './providers'
@@ -54,7 +55,11 @@ const eventHandlers = [
   RoutineWorkoutRenamedHandler,
   RoutineWorkoutsChangedHandler,
 ]
-const queryHandlers = [GetRoutinesHandler, GetRoutineHandler]
+const queryHandlers = [
+  GetRoutinesHandler,
+  GetRoutineHandler,
+  GetRoutinesByOwnerIdHandler,
+]
 const resolvers = [RoutinesResolver]
 
 const eventFactories = {

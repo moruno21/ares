@@ -69,7 +69,7 @@ describe('GetRoutine', () => {
     const viewsWithId = jest.spyOn(views, 'withId')
     const notFoundRoutine = NotFoundRoutine.withId(id)
 
-    viewsWithId.mockResolvedValue(Either.left(NotFoundRoutine.withId(id)))
+    viewsWithId.mockResolvedValue(Either.left(notFoundRoutine))
 
     const response = (await getRoutineHandler.execute(
       GetRoutine.with({ id }),

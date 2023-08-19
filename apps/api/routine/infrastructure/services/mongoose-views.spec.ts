@@ -40,6 +40,7 @@ describe('MongooseRoutineViews', () => {
     expect(mongooseViews).toHaveProperty('rename')
     expect(mongooseViews).toHaveProperty('withExercise')
     expect(mongooseViews).toHaveProperty('withId')
+    expect(mongooseViews).toHaveProperty('withOwnerId')
   })
 
   it('adds a view', async () => {
@@ -142,6 +143,24 @@ describe('MongooseRoutineViews', () => {
     expect(viewsFind).toHaveBeenCalledWith({
       workouts: { $elemMatch: { exerciseId } },
     })
+    expect(response[0]).toStrictEqual(
+      MongooseRoutineView.toRoutineView(mongooseView),
+    )
+  })
+
+  it('finds a view that has certain owner id', async () => {
+    const viewsFind = jest.spyOn(views, 'find')
+    const mongooseView = MongooseRoutineView.fromRoutineView(view)
+
+    viewsFind.mockReturnValue({
+      lean: () => ({
+        exec: async () => [mongooseView],
+      }),
+    } as Query<unknown[], unknown>)
+
+    const response = await mongooseViews.withOwnerId(ownerId)
+
+    expect(viewsFind).toHaveBeenCalledWith({ ownerId })
     expect(response[0]).toStrictEqual(
       MongooseRoutineView.toRoutineView(mongooseView),
     )

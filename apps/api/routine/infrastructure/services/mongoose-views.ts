@@ -69,6 +69,14 @@ class MongooseRoutineViews implements RoutineViews {
 
     return Either.right(MongooseRoutineView.toRoutineView(mongooseView))
   }
+
+  async withOwnerId(id: string): Promise<RoutineView[]> {
+    const mongooseViews = await this.views.find({ ownerId: id }).lean().exec()
+
+    return mongooseViews.map((mongooseView) =>
+      MongooseRoutineView.toRoutineView(mongooseView),
+    )
+  }
 }
 
 export default MongooseRoutineViews
