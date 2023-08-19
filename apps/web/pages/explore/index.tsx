@@ -5,15 +5,15 @@ import { Container, Header, UserCards } from './styles'
 import UserCard from './UserCard'
 
 const Explore = () => {
-  const { t, users } = useExplore()
+  const { filteredUsers, handleSearch, t } = useExplore()
 
   return (
     <Container>
       <Header>
-        <Search placeholder={t('search.placeholder')} />
+        <Search onChange={handleSearch} placeholder={t('search.placeholder')} />
       </Header>
       <UserCards>
-        {users.map(({ id, name }) => (
+        {filteredUsers.map(({ id, name }) => (
           <UserCard id={id} key={id} name={name} />
         ))}
       </UserCards>

@@ -1,24 +1,29 @@
-import { useMemo } from 'react'
+import { ChangeEventHandler, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { User } from '~/graphql/types'
+import useUsers from '~/hooks/useUsers'
 
 const useExplore = () => {
   const { t } = useTranslation('explore')
+  const { users } = useUsers()
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([])
 
-  const users = useMemo(
-    () => [
-      {
-        id: 'user1',
-        name: 'Mock User 1',
-      },
-      {
-        id: 'user2',
-        name: 'Mock User 2',
-      },
-    ],
-    [],
+  const handleSearch: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (event) => {
+      if (!event.target.value) {
+        setFilteredUsers([])
+        return
+      }
+
+      setFilteredUsers(
+        users.filter(({ name }) => name.startsWith(event.target.value)),
+      )
+    },
+    [users],
   )
 
-  return { t, users }
+  return { filteredUsers, handleSearch, t }
 }
 
 export default useExplore
