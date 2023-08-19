@@ -1,10 +1,10 @@
+import Button from '@ares/ui/components/Button'
+import Modal from '@ares/ui/components/Modal'
+import { H4 } from '@ares/ui/components/Text'
 import { Suspense } from 'react'
 
 import { useAuth } from '~/hooks/useAuth'
 
-import Button from '../../../../libs/ui/components/Button'
-import Modal from '../../../../libs/ui/components/Modal'
-import { H4 } from '../../../../libs/ui/components/Text'
 import useLayout from './hooks'
 import { Card, Container, Field, Footer, Title } from './styles'
 
