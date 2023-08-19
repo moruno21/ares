@@ -11,6 +11,7 @@ const Landing = lazy(() => import('~/pages/landing'))
 const Auth = lazy(() => import('~/pages/auth'))
 const Layout = lazy(() => import('~/pages/layout'))
 const PreventAuth = lazy(() => import('../PreventAuth'))
+const Profile = lazy(() => import('~/pages/profile'))
 const RequireAuth = lazy(() => import('../RequireAuth'))
 const Routine = lazy(() => import('~/pages/routine'))
 const Routines = lazy(() => import('~/pages/routines'))
@@ -28,6 +29,7 @@ const AppRoutes = () => (
           <Route path={`${ROUTES.ROUTINE}/:id`} element={<Routine />}></Route>
           <Route path={ROUTES.EXPLORE} element={<Explore />}></Route>
           <Route path={ROUTES.EXERCISES} element={<Exercises />}></Route>
+          <Route path={ROUTES.PROFILE} element={<Profile />}></Route>
           <Route path="*" element={<Navigate to={ROUTES.HOME} />}></Route>
         </Route>
       </Route>

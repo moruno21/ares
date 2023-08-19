@@ -1,0 +1,17 @@
+{
+  "email": "Email: ",
+  "log_out": {
+    "button": { "label": "Log out" },
+    "modal": {
+      "buttons": {
+        "cancel": { "label": "Cancel" },
+        "confirm": { "label": "Log out" }
+      },
+      "close": "Close",
+      "description": "This action will log you out of the system.",
+      "title": "Are you sure you want to log out?"
+    }
+  },
+  "title": "Your profile",
+  "username": "Username: "
+}
