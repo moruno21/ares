@@ -46,6 +46,7 @@ export type Mutation = {
   __typename?: 'Mutation'
   createExercise: Exercise
   createRoutine: Routine
+  createUser: User
   deleteExercise: Exercise
   deleteRoutine: Routine
   editExercise: Exercise
@@ -58,6 +59,10 @@ export type MutationCreateExerciseArgs = {
 
 export type MutationCreateRoutineArgs = {
   routineInput: RoutineInput
+}
+
+export type MutationCreateUserArgs = {
+  userInput: UserInput
 }
 
 export type MutationDeleteExerciseArgs = {
@@ -86,6 +91,9 @@ export type Query = {
   exercises: Array<Exercise>
   routine: Routine
   routines: Array<Routine>
+  userByEmail: User
+  userById: User
+  users: Array<User>
 }
 
 export type Query_EntitiesArgs = {
@@ -97,6 +105,14 @@ export type QueryExerciseArgs = {
 }
 
 export type QueryRoutineArgs = {
+  id: Scalars['String']['input']
+}
+
+export type QueryUserByEmailArgs = {
+  email: Scalars['String']['input']
+}
+
+export type QueryUserByIdArgs = {
   id: Scalars['String']['input']
 }
 
@@ -128,7 +144,18 @@ export type RoutineWorkoutInput = {
   sets: Scalars['Float']['input']
 }
 
-export type _Entity = Exercise | Routine
+export type User = {
+  __typename?: 'User'
+  email: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  name: Scalars['String']['output']
+}
+
+export type UserInput = {
+  email: Scalars['String']['input']
+}
+
+export type _Entity = Exercise | Routine | User
 
 export type _Service = {
   __typename?: '_Service'
@@ -169,6 +196,13 @@ export type RoutineDetailsFragment = {
   }>
 }
 
+export type UserFragment = {
+  __typename?: 'User'
+  email: string
+  id: string
+  name: string
+}
+
 export type CreateExerciseMutationVariables = Exact<{
   exerciseInput: ExerciseInput
 }>
@@ -195,6 +229,15 @@ export type CreateRoutineMutation = {
     id: string
     name: string
   }
+}
+
+export type CreateUserMutationVariables = Exact<{
+  userInput: UserInput
+}>
+
+export type CreateUserMutation = {
+  __typename?: 'Mutation'
+  createUser: { __typename?: 'User'; email: string; id: string; name: string }
 }
 
 export type DeleteExerciseMutationVariables = Exact<{
@@ -298,4 +341,29 @@ export type RoutinesQuery = {
     id: string
     name: string
   }>
+}
+
+export type UserByEmailQueryVariables = Exact<{
+  userEmail: Scalars['String']['input']
+}>
+
+export type UserByEmailQuery = {
+  __typename?: 'Query'
+  userByEmail: { __typename?: 'User'; email: string; id: string; name: string }
+}
+
+export type UserByIdQueryVariables = Exact<{
+  userId: Scalars['String']['input']
+}>
+
+export type UserByIdQuery = {
+  __typename?: 'Query'
+  userById: { __typename?: 'User'; email: string; id: string; name: string }
+}
+
+export type UsersQueryVariables = Exact<{ [key: string]: never }>
+
+export type UsersQuery = {
+  __typename?: 'Query'
+  users: Array<{ __typename?: 'User'; email: string; id: string; name: string }>
 }

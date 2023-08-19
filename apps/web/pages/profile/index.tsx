@@ -14,6 +14,8 @@ const Layout = () => {
     handleOpenLogOutModal,
     isLogOutModalOpen,
     t,
+    userEmail,
+    userName,
   } = useLayout()
 
   const { logout } = useAuth()
@@ -24,11 +26,11 @@ const Layout = () => {
       <Card>
         <Field>
           <H4>{t('username')}</H4>
-          Mock username
+          {userName}
         </Field>
         <Field>
           <H4>{t('email')}</H4>
-          Mock email
+          {userEmail}
         </Field>
         <Button onClick={handleOpenLogOutModal}>
           {t('log_out.button.label')}

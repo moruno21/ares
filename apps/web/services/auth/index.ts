@@ -4,13 +4,13 @@ import { getAuth, removeAuth } from '~/services/storage'
 
 import { Token } from './types'
 
+export const decodeAuthToken = (auth: string) => jwtDecode(auth) as Token
+
 export const getAuthToken = () => {
   const auth = getAuth()
   if (!auth) return
 
-  const decodedAuth = jwtDecode(auth) as Token
-
-  if (decodedAuth.exp < Date.now() / 1000) {
+  if (decodeAuthToken(auth).exp < Date.now() / 1000) {
     removeAuth()
     return
   }
