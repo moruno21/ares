@@ -37,7 +37,7 @@ class RoutinesResolver {
     )
   }
 
-  @Query(() => Routine)
+  @Query(() => [Routine])
   async routinesByOwnerId(
     @Args('ownerId') ownerId: string,
   ): Promise<RoutineDto[] | GraphQLError> {
