@@ -2,10 +2,18 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '~/services/routing/Routes/constants'
-import { removeAuth } from '~/services/storage'
+import { removeAuth, setAuth } from '~/services/storage'
 
 export const useAuth = () => {
   const navigate = useNavigate()
+
+  const login = useCallback(
+    (auth: string) => {
+      setAuth(auth)
+      navigate(ROUTES.HOME)
+    },
+    [navigate],
+  )
 
   const logout = useCallback(() => {
     removeAuth()
@@ -13,6 +21,7 @@ export const useAuth = () => {
   }, [navigate])
 
   return {
+    login,
     logout,
   }
 }
