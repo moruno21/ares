@@ -60,7 +60,7 @@ describe('CreateRoutineHandler', () => {
     routines = RoutinesMock.mock()
     exercises = ExercisesMock.mock()
     users = UsersMock.mock()
-    createRoutineHandler = new CreateRoutineHandler(routines, exercises, users)
+    createRoutineHandler = new CreateRoutineHandler(exercises, routines, users)
   })
 
   it('creates a routine', async () => {

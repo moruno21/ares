@@ -25,8 +25,8 @@ import CreateRoutine from '../create-routine'
 @CommandHandler(CreateRoutine)
 class CreateRoutineHandler implements ICommandHandler {
   constructor(
-    @Inject(Routines) private readonly routines: Routines,
     @Inject(Exercises) private readonly exercises: Exercises,
+    @Inject(Routines) private readonly routines: Routines,
     @Inject(Users) private readonly users: Users,
   ) {}
 

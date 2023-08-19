@@ -26,8 +26,8 @@ import EditRoutine from '../edit-routine'
 @CommandHandler(EditRoutine)
 class EditRoutineHandler implements ICommandHandler {
   constructor(
-    @Inject(Routines) private readonly routines: Routines,
     @Inject(Exercises) private readonly exercises: Exercises,
+    @Inject(Routines) private readonly routines: Routines,
     @Inject(Users) private readonly users: Users,
   ) {}
 

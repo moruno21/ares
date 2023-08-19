@@ -60,7 +60,7 @@ describe('EditRoutineHandler', () => {
     routines = RoutinesMock.mock()
     exercises = ExercisesMock.mock()
     users = UsersMock.mock()
-    editRoutineHandler = new EditRoutineHandler(routines, exercises, users)
+    editRoutineHandler = new EditRoutineHandler(exercises, routines, users)
   })
 
   it('edits a routine', async () => {
