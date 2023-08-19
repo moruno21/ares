@@ -9,11 +9,7 @@ const useRoutines = () => {
     ROUTINES,
   )
 
-  const routines = useMemo(() => {
-    if (!data) return []
-
-    return data.routines
-  }, [data])
+  const routines = useMemo(() => data?.routines ?? [], [data])
 
   return { loading, routines }
 }
