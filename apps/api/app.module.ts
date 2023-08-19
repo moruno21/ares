@@ -5,13 +5,13 @@ import { CqrsModule, EventBus } from '@nestjs/cqrs'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConsoleModule } from 'nestjs-console'
 
+import ExerciseModule from '~/exercise/infrastructure/module'
+import EventPublishersHandler from '~/middleware/event-publishers-handler'
 import LoggerMiddleware from '~/middleware/logger'
-
-import ExerciseModule from './exercise/infrastructure/module'
-import EventPublishersHandler from './middleware/event-publishers-handler'
-import RoutineModule from './routine/infrastructure/module'
-import EventStoreModule from './shared/eventstore/module'
-import EventStorePublisher from './shared/eventstore/publisher'
+import RoutineModule from '~/routine/infrastructure/module'
+import EventStoreModule from '~/shared/eventstore/module'
+import EventStorePublisher from '~/shared/eventstore/publisher'
+import UserModule from '~/user/infrastructure/module'
 
 @Module({
   imports: [
@@ -32,6 +32,7 @@ import EventStorePublisher from './shared/eventstore/publisher'
       useFactory: () => ({ uri: process.env.MONGODB_URI }),
     }),
     RoutineModule,
+    UserModule,
   ],
   providers: [
     {
