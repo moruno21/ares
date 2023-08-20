@@ -1,8 +1,9 @@
 {
+  "no_workouts": "This routine has no workouts added.",
+  "not_found": "Routine not found.",
   "workout": {
     "exercise_name": { "label": "Exercise" },
     "reps": { "label": "Reps" },
     "sets": { "label": "Sets" }
-  },
-  "not_found": "Routine not found."
+  }
 }

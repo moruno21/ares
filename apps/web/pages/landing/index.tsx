@@ -23,26 +23,30 @@ const Layout = ({}) => {
             <H1>{routine.name}</H1>
             <H3>{routine.description}</H3>
           </Header>
-          <Workouts>
-            {routine.workouts.map(({ exerciseName, reps, sets }, index) => (
-              <Workout key={index}>
-                <Field>
-                  <H4>{t('workout.exercise_name.label')}</H4>
-                  {exerciseName}
-                </Field>
-                <Settings>
+          {routine.workouts.length < 1 ? (
+            <>{t('no_workouts')}</>
+          ) : (
+            <Workouts>
+              {routine.workouts.map(({ exerciseName, reps, sets }, index) => (
+                <Workout key={index}>
                   <Field>
-                    <H4>{t('workout.sets.label')}</H4>
-                    {sets}
+                    <H4>{t('workout.exercise_name.label')}</H4>
+                    {exerciseName}
                   </Field>
-                  <Field>
-                    <H4>{t('workout.reps.label')}</H4>
-                    {reps}
-                  </Field>
-                </Settings>
-              </Workout>
-            ))}
-          </Workouts>
+                  <Settings>
+                    <Field>
+                      <H4>{t('workout.sets.label')}</H4>
+                      {sets}
+                    </Field>
+                    <Field>
+                      <H4>{t('workout.reps.label')}</H4>
+                      {reps}
+                    </Field>
+                  </Settings>
+                </Workout>
+              ))}
+            </Workouts>
+          )}
         </Routine>
       ) : (
         <NotFoundMessage>{t('not_found')}</NotFoundMessage>
