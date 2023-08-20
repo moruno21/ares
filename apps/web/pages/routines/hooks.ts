@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -37,6 +37,10 @@ const useLayout = () => {
     },
     [createRoutine, handleCloseCreateRoutine, navigate],
   )
+
+  useEffect(() => {
+    if (id === me?.id) navigate(ROUTES.HOME)
+  }, [id, me, navigate])
 
   return {
     handleCloseCreateRoutine,
