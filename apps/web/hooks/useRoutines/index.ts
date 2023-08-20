@@ -14,7 +14,7 @@ const useRoutines = ({ ownerId }: UseRoutinesProps) => {
     RoutinesByOwnerIdQuery,
     RoutinesByOwnerIdQueryVariables
   >(ROUTINES_BY_OWNER_ID, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
     skip: !ownerId,
     variables: { ownerId },
   })
