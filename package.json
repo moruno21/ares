@@ -60,7 +60,6 @@
     "@babel/preset-typescript": "7.12.13",
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
-    "@cucumber/cucumber": "9.1.2",
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-operations": "4.0.1",
