@@ -1,5 +1,7 @@
 {
-  "create": { "label": "Create New Routine" },
+  "create": {
+    "label": "Create New Routine"
+  },
   "description": "Your routines",
   "form": {
     "inputs": {
@@ -7,11 +9,16 @@
         "label": "Routine Description",
         "placeholder": "Description"
       },
-      "name": { "label": "Routine Name", "placeholder": "Name" }
+      "name": {
+        "label": "Routine Name",
+        "placeholder": "Name"
+      }
     },
-    "save": { "label": "Save" }
+    "save": {
+      "label": "Save"
+    }
   },
-  "no_routines": "Create yout first routine below!",
+  "no_routines": "Create your first routine below!",
   "other_user_routines": "User's routines",
   "title": "Welcome"
 }
